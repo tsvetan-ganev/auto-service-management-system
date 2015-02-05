@@ -13,12 +13,12 @@ namespace AutoServiceManagementSystem.Controllers
 {
     public class CarsController : Controller
     {
-		private ICarRepository carRepo;
+	private ICarRepository carRepo;
 
-		public CarsController()
-		{
-			this.carRepo = new CarRepository(new ASMSContext());
-		}
+	public CarsController()
+	{
+		this.carRepo = new CarRepository(new ASMSContext());
+	}
 
         // GET: Cars
         public ActionResult Index()
@@ -58,8 +58,8 @@ namespace AutoServiceManagementSystem.Controllers
         {
             if (ModelState.IsValid)
             {
-				carRepo.InsertCar(car);
-				carRepo.Save();
+		carRepo.InsertCar(car);
+		carRepo.Save();
                 return RedirectToAction("Index");
             }
 
@@ -74,7 +74,7 @@ namespace AutoServiceManagementSystem.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-			Car car = carRepo.GetCarById(id);
+	    Car car = carRepo.GetCarById(id);
 
             if (car == null)
             {
@@ -92,8 +92,8 @@ namespace AutoServiceManagementSystem.Controllers
         {
             if (ModelState.IsValid)
             {
-				carRepo.UpdateCar(car);
-				carRepo.Save();
+		carRepo.UpdateCar(car);
+		carRepo.Save();
                 return RedirectToAction("Index");
             }
             return View(car);
@@ -106,7 +106,9 @@ namespace AutoServiceManagementSystem.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-			Car car = carRepo.GetCarById(id);
+            
+	    Car car = carRepo.GetCarById(id);
+	    
             if (car == null)
             {
                 return HttpNotFound();
@@ -119,9 +121,9 @@ namespace AutoServiceManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-			Car car = carRepo.GetCarById(id);
-			carRepo.DeleteCar(id);
-			carRepo.Save();
+	    Car car = carRepo.GetCarById(id);
+	    carRepo.DeleteCar(id);
+	    carRepo.Save();
 
             return RedirectToAction("Index");
         }
@@ -130,7 +132,7 @@ namespace AutoServiceManagementSystem.Controllers
         {
             if (disposing)
             {
-				carRepo.Dispose();
+		carRepo.Dispose();
             }
             base.Dispose(disposing);
         }
