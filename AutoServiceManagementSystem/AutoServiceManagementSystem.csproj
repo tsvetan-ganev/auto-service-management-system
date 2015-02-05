@@ -156,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\CustomersController.cs" />
+    <Compile Include="Helpers\VinDecoder.cs" />
     <Compile Include="Models\ASMContext.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />

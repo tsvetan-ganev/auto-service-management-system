@@ -64,9 +64,6 @@ namespace AutoServiceManagementSystem.Models
 			}
 		}
 
-		[Range(1.0, 8.4)]
-        public float? Displacement { get; set; }
-
 		[Display(Name="Fuel Type")]
         public Fuel? FuelType { get; set; }
 
