@@ -29,8 +29,7 @@ namespace AutoServiceManagementSystem.Migrations
 				FuelType = Car.Fuel.Diesel,
 				PlateCode = "P 6666 KH",
 				VIN = "5GZCZ43D13S812715",
-				Year = 2010,
-				Displacement = 3.0f,
+				Year = 2010
 			};
 
 			var lada = new Car
@@ -40,8 +39,7 @@ namespace AutoServiceManagementSystem.Migrations
 				FuelType = Car.Fuel.Petrol,
 				PlateCode = "P 7584 KH",
 				VIN = "LDZCZ43D13S812715",
-				Year = 1981,
-				Displacement = 1.2f
+				Year = 1981
 			};
 
 			var mercedes = new Car
@@ -51,8 +49,7 @@ namespace AutoServiceManagementSystem.Migrations
 				FuelType = Car.Fuel.Diesel,
 				PlateCode = "P 777777 P",
 				VIN = "1GTGG25R721773607",
-				Year = 2014,
-				Displacement = 5.0f
+				Year = 2014
 			};
 
 			context.Cars.AddOrUpdate(lada);
