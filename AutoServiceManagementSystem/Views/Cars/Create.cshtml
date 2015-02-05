@@ -22,7 +22,6 @@
                  model => model.Manufacturer,
                  new SelectList(ManufacturersList.Manufacturers, ""),
                  new { @class = "form-control" })
-
                 @Html.ValidationMessageFor(model => model.Manufacturer, "", new { @class = "text-danger" })
             </div>
         </div>

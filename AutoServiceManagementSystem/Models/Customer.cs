@@ -25,15 +25,19 @@ namespace AutoServiceManagementSystem.Models
 
 		[Required()]
 		[StringLength(maximumLength: 15, MinimumLength=3)]
+		[Display(Name="First Name")]
         public string FirstName { get; set; }
 
 		[StringLength(maximumLength: 15, MinimumLength = 3)]
-        public string LastName { get; set; }
+		[Display(Name = "Last Name")]
+		public string LastName { get; set; }
 
 		// Mobile phone numbers in BG: 
 		// 08YXXXXXXX or +3598YXXXXXXX
+		// TODO: Custom validation for phone numbers.
 		[StringLength(maximumLength: 13, MinimumLength = 10)]
-        public string PhoneNumber { get; set; }
+		[Display(Name = "Phone Number")]
+		public string PhoneNumber { get; set; }
 
         public virtual ICollection<Car> Cars
         {
