@@ -23,31 +23,22 @@ namespace AutoServiceManagementSystem.Models
         // properties
         public int CustomerId { get; set; }
 
+		[Required()]
+		[StringLength(maximumLength: 15, MinimumLength=3)]
         public string FirstName { get; set; }
+
+		[StringLength(maximumLength: 15, MinimumLength = 3)]
         public string LastName { get; set; }
+
+		// Mobile phone numbers in BG: 
+		// 08YXXXXXXX or +3598YXXXXXXX
+		[StringLength(maximumLength: 13, MinimumLength = 10)]
         public string PhoneNumber { get; set; }
 
         public virtual ICollection<Car> Cars
         {
             get { return cars; }
             set { cars = value; }
-        }
-        
-
-        // financial statistics
-        public decimal MoneyOwed { get; set; }
-        public decimal TotalRevenue { get; set; }
-        public decimal TotalProfit { get; set; }
-
-        // methods
-        public override string ToString()
-        {
-            string owner = String.Format("{0} {1}; Cars :\n", FirstName, LastName);
-            StringBuilder carsSb = new StringBuilder();
-            carsSb.Append("\t");
-            foreach (var car in Cars)
-		        carsSb.Append(car.ToString() + "\n\t ");
-            return owner + carsSb.ToString();
         }
     }
 }
