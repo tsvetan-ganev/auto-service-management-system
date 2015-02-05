@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using AutoServiceManagementSystem.Models.Services;
 using AutoServiceManagementSystem.Contracts;
+using System.ComponentModel.DataAnnotations;
 
 namespace AutoServiceManagementSystem.Models
 {
@@ -16,17 +17,23 @@ namespace AutoServiceManagementSystem.Models
 
         public Job()
         {
-            parts = new List<SparePart>();
-            diagnosis = new Diag();
-            oilChange = new OilChange();
-            labour = new Labour();
+           this.parts = new List<SparePart>();
+           this.diagnosis = new Diag();
+           this.oilChange = new OilChange();
+           this.labour = new Labour();
         }
 
         public int JobId { get; set; }
 
+		[Range(1, 999999)]
         public int CurrentMileage { get; set; }
+
+		[DataType(DataType.Date)]
         public DateTime? DateStarted { get; set; }
+
+		[DataType(DataType.Date)]
         public DateTime? DateFinished { get; set; }
+
         public Boolean Finished { get; set; }
         public Boolean Paid { get; set; }
         public decimal TotalCost
@@ -61,16 +68,22 @@ namespace AutoServiceManagementSystem.Models
             get { return parts; }
             set { parts = value; }
         }
+
+		public int DiagnosisId { get; set; }
         public virtual Diag Diagnosis
         {
             get { return diagnosis; }
             set { diagnosis = value; }
         }
+
+		public int OilChangeId { get; set; }
         public virtual OilChange OilChange
         {
             get { return oilChange; }
             set { oilChange = value; }
         }
+
+		public int LabourId { get; set; }
         public virtual Labour Labour
         {
             get { return labour; }
