@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
-using AutoServiceManagementSystem.Models;
 using AutoServiceManagementSystem.Models.Services;
 
 
-namespace AutoServiceManagementSystem.Data
+namespace AutoServiceManagementSystem.Models
 {
     /// <summary>
     /// Auto Service Management Context

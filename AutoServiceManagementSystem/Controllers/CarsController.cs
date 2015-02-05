@@ -6,19 +6,24 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using AutoServiceManagementSystem.Data;
 using AutoServiceManagementSystem.Models;
+using AutoServiceManagementSystem.DAL;
 
 namespace AutoServiceManagementSystem.Controllers
 {
     public class CarsController : Controller
     {
-        private ASMSContext db = new ASMSContext();
+		private ICarRepository carRepo;
+
+		public CarsController()
+		{
+			this.carRepo = new CarRepository(new ASMSContext());
+		}
 
         // GET: Cars
         public ActionResult Index()
         {
-            return View(db.Cars.ToList());
+            return View(carRepo.GetCars());
         }
 
         // GET: Cars/Details/5
@@ -28,7 +33,9 @@ namespace AutoServiceManagementSystem.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Car car = db.Cars.Find(id);
+
+            Car car = carRepo.GetCarById(id);
+
             if (car == null)
             {
                 return HttpNotFound();
@@ -51,8 +58,8 @@ namespace AutoServiceManagementSystem.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Cars.Add(car);
-                db.SaveChanges();
+				carRepo.InsertCar(car);
+				carRepo.Save();
                 return RedirectToAction("Index");
             }
 
@@ -66,7 +73,9 @@ namespace AutoServiceManagementSystem.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Car car = db.Cars.Find(id);
+
+			Car car = carRepo.GetCarById(id);
+
             if (car == null)
             {
                 return HttpNotFound();
@@ -83,8 +92,8 @@ namespace AutoServiceManagementSystem.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(car).State = EntityState.Modified;
-                db.SaveChanges();
+				carRepo.UpdateCar(car);
+				carRepo.Save();
                 return RedirectToAction("Index");
             }
             return View(car);
@@ -97,7 +106,7 @@ namespace AutoServiceManagementSystem.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Car car = db.Cars.Find(id);
+			Car car = carRepo.GetCarById(id);
             if (car == null)
             {
                 return HttpNotFound();
@@ -110,9 +119,10 @@ namespace AutoServiceManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Car car = db.Cars.Find(id);
-            db.Cars.Remove(car);
-            db.SaveChanges();
+			Car car = carRepo.GetCarById(id);
+			carRepo.DeleteCar(id);
+			carRepo.Save();
+
             return RedirectToAction("Index");
         }
 
@@ -120,7 +130,7 @@ namespace AutoServiceManagementSystem.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+				carRepo.Dispose();
             }
             base.Dispose(disposing);
         }
