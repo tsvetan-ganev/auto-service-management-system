@@ -7,17 +7,23 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AutoServiceManagementSystem.Models;
+using AutoServiceManagementSystem.DAL;
 
 namespace AutoServiceManagementSystem.Controllers
 {
     public class SuppliersController : Controller
     {
-        private ASMSContext db = new ASMSContext();
+		private ISupplierRepository supplierRepo;
+
+		public SuppliersController()
+		{
+			this.supplierRepo = new SupplierRepository(new ASMSContext());
+		}
 
         // GET: Suppliers
         public ActionResult Index()
         {
-            return View(db.Suppliers.ToList());
+            return View(supplierRepo.GetSuppliers());
         }
 
         // GET: Suppliers/Details/5
@@ -27,7 +33,7 @@ namespace AutoServiceManagementSystem.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Supplier supplier = db.Suppliers.Find(id);
+            Supplier supplier = supplierRepo.GetSupplierById(id);
             if (supplier == null)
             {
                 return HttpNotFound();
@@ -50,8 +56,8 @@ namespace AutoServiceManagementSystem.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Suppliers.Add(supplier);
-                db.SaveChanges();
+				supplierRepo.InsertSupplier(supplier);
+				supplierRepo.Save();
                 return RedirectToAction("Index");
             }
 
@@ -65,7 +71,7 @@ namespace AutoServiceManagementSystem.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Supplier supplier = db.Suppliers.Find(id);
+            Supplier supplier = supplierRepo.GetSupplierById(id);
             if (supplier == null)
             {
                 return HttpNotFound();
@@ -82,8 +88,8 @@ namespace AutoServiceManagementSystem.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(supplier).State = EntityState.Modified;
-                db.SaveChanges();
+				supplierRepo.UpdateSupplier(supplier);
+				supplierRepo.Save();
                 return RedirectToAction("Index");
             }
             return View(supplier);
@@ -96,7 +102,7 @@ namespace AutoServiceManagementSystem.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Supplier supplier = db.Suppliers.Find(id);
+            Supplier supplier = supplierRepo.GetSupplierById(id);
             if (supplier == null)
             {
                 return HttpNotFound();
@@ -109,9 +115,8 @@ namespace AutoServiceManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Supplier supplier = db.Suppliers.Find(id);
-            db.Suppliers.Remove(supplier);
-            db.SaveChanges();
+			supplierRepo.DeleteSupplier(id);
+			supplierRepo.Save();
             return RedirectToAction("Index");
         }
 
@@ -119,7 +124,7 @@ namespace AutoServiceManagementSystem.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+				supplierRepo.Dispose();
             }
             base.Dispose(disposing);
         }

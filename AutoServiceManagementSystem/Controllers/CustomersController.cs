@@ -115,7 +115,6 @@ namespace AutoServiceManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Customer customer = customersRepo.GetCustomerById(id);
 			customersRepo.DeleteCustomer(id);
             customersRepo.Save();
             return RedirectToAction("Index");

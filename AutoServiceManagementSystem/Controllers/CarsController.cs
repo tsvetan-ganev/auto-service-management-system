@@ -121,7 +121,6 @@ namespace AutoServiceManagementSystem.Controllers
 		[ValidateAntiForgeryToken]
 		public ActionResult DeleteConfirmed(int id)
 		{
-			Car car = carRepo.GetCarById(id);
 			carRepo.DeleteCar(id);
 			carRepo.Save();
 
