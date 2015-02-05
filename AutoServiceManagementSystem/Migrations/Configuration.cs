@@ -1,6 +1,5 @@
 namespace AutoServiceManagementSystem.Migrations
 {
-	using AutoServiceManagementSystem.Data;
 	using AutoServiceManagementSystem.Models;
 	using System;
 	using System.Data.Entity;
@@ -19,7 +18,7 @@ namespace AutoServiceManagementSystem.Migrations
 			pendingMigrations = migrator.GetPendingMigrations().Any();
         }
 
-        protected override void Seed(AutoServiceManagementSystem.Data.ASMSContext context)
+        protected override void Seed(AutoServiceManagementSystem.Models.ASMSContext context)
         {
             //  This method will be called after migrating to the latest version.
 

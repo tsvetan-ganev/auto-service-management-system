@@ -7,7 +7,6 @@ using Microsoft.Owin.Security.Google;
 using Owin;
 using AutoServiceManagementSystem.Models;
 using System.Data.Entity;
-using AutoServiceManagementSystem.Data;
 
 namespace AutoServiceManagementSystem
 {
