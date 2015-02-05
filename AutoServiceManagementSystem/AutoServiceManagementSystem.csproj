@@ -166,7 +166,9 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="DAL\CarRepository.cs" />
+    <Compile Include="DAL\CustomerRepository.cs" />
     <Compile Include="DAL\ICarRepository.cs" />
+    <Compile Include="DAL\ICustomerRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
