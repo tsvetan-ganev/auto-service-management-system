@@ -23,9 +23,6 @@
         <th>
             @Html.DisplayNameFor(model => model.WebsiteUrl)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LogoUrl)
-        </th>
         <th></th>
     </tr>
 
@@ -42,9 +39,6 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.WebsiteUrl)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LogoUrl)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.SupplierId }) |
