@@ -8,7 +8,7 @@ namespace AutoServiceManagementSystem.DAL
 	public interface ICarRepository : IDisposable
 	{
 		IEnumerable<Car> GetCars();
-		Car GetCarById(int carId);
+		Car GetCarById(int? carId);
 		void InsertCar(Car car);
 		void DeleteCar(int carId);
 		void UpdateCar(Car car);

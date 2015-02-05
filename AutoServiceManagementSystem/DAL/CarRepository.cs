@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
-using AutoServiceManagementSystem.Data;
 using AutoServiceManagementSystem.Models;
 
 namespace AutoServiceManagementSystem.DAL
@@ -23,7 +22,7 @@ namespace AutoServiceManagementSystem.DAL
 			return context.Cars.ToList();
 		}
 
-		public Car GetCarById(int carId)
+		public Car GetCarById(int? carId)
 		{
 			return context.Cars.Find(carId);
 		}

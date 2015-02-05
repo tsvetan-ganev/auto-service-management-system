@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
-using AutoServiceManagementSystem.Data;
 using AutoServiceManagementSystem.Models;
+
 
 namespace AutoServiceManagementSystem.DAL
 {
@@ -23,7 +23,7 @@ namespace AutoServiceManagementSystem.DAL
 			return context.Customers.ToList();
 		}
 
-		public Customer GetCustomerById(int customerId)
+		public Customer GetCustomerById(int? customerId)
 		{
 			return context.Customers.Find(customerId);
 		}
