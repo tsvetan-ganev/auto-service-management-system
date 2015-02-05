@@ -16,12 +16,16 @@ namespace AutoServiceManagementSystem.Models
 		public string City { get; set; }
 
 		[Range(0, 99)]
+		[DisplayFormat(DataFormatString = "{0:0.00}%", ApplyFormatInEditMode=true)]
+		[Display(Name="Discount")]
 		public decimal DiscountPercentage { get; set; }
 
 		[DataType(DataType.Url)]
+		[Display(Name="Website")]
         public string WebsiteUrl { get; set; }
 
 		[DataType(DataType.Url)]
+		[Display(Name = "Logo Url")]
         public string LogoUrl { get; set; }
 	}
 }
