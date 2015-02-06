@@ -159,6 +159,7 @@
     <Compile Include="Controllers\SuppliersController.cs" />
     <Compile Include="DAL\ISupplierRepository.cs" />
     <Compile Include="DAL\SupplierRepository.cs" />
+    <Compile Include="Validation\MaxWordsAttribute.cs" />
     <Compile Include="Helpers\VinDecoder.cs" />
     <Compile Include="Models\ASMContext.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -190,7 +191,6 @@
     <Compile Include="Models\Contracts\IService.cs" />
     <Compile Include="Models\Job.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Services\Diag.cs" />
     <Compile Include="Models\Services\Labour.cs" />
     <Compile Include="Models\Services\OilChange.cs" />
     <Compile Include="Models\Services\SparePart.cs" />

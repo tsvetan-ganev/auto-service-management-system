@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
+using AutoServiceManagementSystem.Validation;
 
 namespace AutoServiceManagementSystem.Models
 {
@@ -25,6 +26,7 @@ namespace AutoServiceManagementSystem.Models
 
 		[Required()]
 		[StringLength(maximumLength: 15, MinimumLength=3)]
+		[MaxWords(3, ErrorMessage = "There are too many words in {0}")]
 		[Display(Name="First Name")]
         public string FirstName { get; set; }
 

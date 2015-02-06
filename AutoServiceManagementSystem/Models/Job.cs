@@ -11,14 +11,12 @@ namespace AutoServiceManagementSystem.Models
     public class Job
     {
         private ICollection<SparePart> parts;
-        private Diag diagnosis;
         private OilChange oilChange;
         private Labour labour;
 
         public Job()
         {
            this.parts = new List<SparePart>();
-           this.diagnosis = new Diag();
            this.oilChange = new OilChange();
            this.labour = new Labour();
         }
@@ -55,10 +53,8 @@ namespace AutoServiceManagementSystem.Models
             {
                 decimal totalProfit = Parts.Sum(p => p.Price) 
                     - Parts.Sum(p => p.YourPrice);
-                totalProfit += Diagnosis.Price;
                 totalProfit += OilChange.Price;
                 totalProfit += Labour.Price;
-
                 return totalProfit;
             }
         }
@@ -69,14 +65,6 @@ namespace AutoServiceManagementSystem.Models
             set { parts = value; }
         }
 
-		public int DiagnosisId { get; set; }
-        public virtual Diag Diagnosis
-        {
-            get { return diagnosis; }
-            set { diagnosis = value; }
-        }
-
-		public int OilChangeId { get; set; }
         public virtual OilChange OilChange
         {
             get { return oilChange; }
