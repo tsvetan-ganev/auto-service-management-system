@@ -25,12 +25,13 @@ namespace AutoServiceManagementSystem.Models
         public int CustomerId { get; set; }
 
 		[Required()]
-		[StringLength(maximumLength: 15, MinimumLength=3)]
-		[MaxWords(3, ErrorMessage = "There are too many words in {0}")]
+		[StringLength(maximumLength: 25, MinimumLength=3)]
+		[MaxWords(3, ErrorMessage = "There are too many words in {0}.")]
 		[Display(Name="First Name")]
         public string FirstName { get; set; }
 
-		[StringLength(maximumLength: 15, MinimumLength = 3)]
+		[StringLength(maximumLength: 25, MinimumLength = 3)]
+		[MaxWords(3, ErrorMessage = "There are too many words in {0}.")]
 		[Display(Name = "Last Name")]
 		public string LastName { get; set; }
 

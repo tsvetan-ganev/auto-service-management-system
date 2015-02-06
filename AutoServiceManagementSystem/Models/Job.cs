@@ -39,7 +39,6 @@ namespace AutoServiceManagementSystem.Models
             get
             {
                 decimal result = Parts.Count > 0 ? Parts.Sum(p => p.Price) : 0;
-                result += Diagnosis.Price;
                 result += OilChange.Price;
                 result += Labour.Price;
 
