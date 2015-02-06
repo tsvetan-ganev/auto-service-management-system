@@ -17,13 +17,7 @@ namespace AutoServiceManagementSystem.Models
 
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Car> Cars { get; set; }
-
         public DbSet<Job> Jobs { get; set; }
-		public DbSet<Diag> Diagnoses { get; set; }
-		public DbSet<TroubleCode> TroubleCodes { get; set; }
-        public DbSet<SparePart> Parts { get; set; }
-        public DbSet<OilChange> OilChanges { get; set; }
-        public DbSet<Labour> Labour { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
 
         // methods
