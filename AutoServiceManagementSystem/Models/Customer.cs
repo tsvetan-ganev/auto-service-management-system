@@ -26,6 +26,7 @@ namespace AutoServiceManagementSystem.Models
 
 		[Required()]
 		[StringLength(maximumLength: 25, MinimumLength=3)]
+		[DisallowSpecialCharacters(allowDigits: false)]
 		[MaxWords(3, ErrorMessage = "There are too many words in {0}.")]
 		[Display(Name="First Name")]
         public string FirstName { get; set; }
@@ -38,7 +39,9 @@ namespace AutoServiceManagementSystem.Models
 		// Mobile phone numbers in BG: 
 		// 08YXXXXXXX or +3598YXXXXXXX
 		// TODO: Custom validation for phone numbers.
-		[StringLength(maximumLength: 13, MinimumLength = 10)]
+		[PhoneNumber()]
+		[MinLength(10, ErrorMessage="Phone number length is exactly 10 digits.")]
+		[MaxLength(10, ErrorMessage = "Phone number length is exactly 10 digits.")]
 		[Display(Name = "Phone Number")]
 		public string PhoneNumber { get; set; }
 

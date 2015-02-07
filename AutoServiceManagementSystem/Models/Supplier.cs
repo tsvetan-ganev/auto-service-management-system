@@ -11,8 +11,10 @@ namespace AutoServiceManagementSystem.Models
 		public int SupplierId { get; set; }
 
 		[Required()]
+		[StringLength(maximumLength: 40, MinimumLength = 3)]
 		public string Name { get; set; }
 
+		[StringLength(maximumLength: 25, MinimumLength = 3)]
 		public string City { get; set; }
 
 		[Range(0, 99)]
