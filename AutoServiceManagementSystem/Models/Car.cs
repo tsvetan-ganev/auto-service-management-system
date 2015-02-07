@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoServiceManagementSystem.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace AutoServiceManagementSystem.Models
 		[Required()]
         public string Manufacturer { get; set; }
 
+		[MaxLength(20)]
         public string Model { get; set; }
 
 		[Display(Name="Plate Code")]
@@ -31,23 +33,29 @@ namespace AutoServiceManagementSystem.Models
 			ErrorMessage="Plate codes consist of between 4 and 12 symbols.")]
 		public string PlateCode { get; set; }
 
-		[StringLength(17, MinimumLength = 17)]
+		[Required(AllowEmptyStrings = true)]
+		// TODO: improve on live error display
+		[Vin]
 		[Display(Description = "Vehicle Identification Number")]
-		[Required(AllowEmptyStrings=true)]
         public string VIN 
 		{ 
 			get { return vin; }
 			set
 			{
 				/// TODO: Actual validation
-				if (value.Length != 17)
-				{
-					throw new ArgumentOutOfRangeException(
-						"VIN codes consist of exactly 17 symbols.");
-				}
-				vin = value;
+				//if (value.Length != 17)
+				//{
+				//	throw new ArgumentOutOfRangeException(
+				//		"VIN codes consist of exactly 17 symbols.");
+				//}
+				vin = value.ToString().ToUpper();
 			}
 		}
+
+		[Required(AllowEmptyStrings = true)]
+		[DisallowSpecialCharacters(allowDigits: true)]
+		[Display(Description = "Engine Code")]
+		public string EngineCode { get; set; }
 
 		[Range(1950, 2015)]
         public int? Year 
