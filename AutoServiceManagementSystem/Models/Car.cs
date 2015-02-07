@@ -28,6 +28,14 @@ namespace AutoServiceManagementSystem.Models
 		[MaxLength(20)]
         public string Model { get; set; }
 
+		/* Bulgarian plate codes are in the following format:
+		 * X(X) NNNN Y(Y) 
+		 * - X(X) is a district character code
+		 * - NNNN is a number
+		 * - Y(Y) is a series containing up to two chars
+		 * Note: Rich people tend to buy letter plates with
+		 * format outside of the standard, e.g. X(X) NNNNNNN 
+		 */
 		[Display(Name="Plate Code")]
 		[StringLength(maximumLength: 12, MinimumLength = 4,
 			ErrorMessage="Plate codes consist of between 4 and 12 symbols.")]
@@ -36,7 +44,6 @@ namespace AutoServiceManagementSystem.Models
 		[Required(AllowEmptyStrings = true)]
 		// TODO: improve on live error display
 		[Vin]
-		[Display(Description = "Vehicle Identification Number")]
         public string VIN 
 		{ 
 			get { return vin; }
@@ -74,8 +81,8 @@ namespace AutoServiceManagementSystem.Models
 		[Display(Name = "Fuel Type")]
         public Fuel? FuelType { get; set; }
 
-		public int OwnerId { get; set; }
-        public virtual Customer Owner { get; set; }
+		[Display(Name = "Owner")]
+        public Customer Customer { get; set; }
 
         public virtual ICollection<Job> Jobs
         {
