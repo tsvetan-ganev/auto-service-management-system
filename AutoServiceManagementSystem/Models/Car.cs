@@ -52,9 +52,8 @@ namespace AutoServiceManagementSystem.Models
 			}
 		}
 
-		[Required(AllowEmptyStrings = true)]
 		[DisallowSpecialCharacters(allowDigits: true)]
-		[Display(Description = "Engine Code")]
+		[Display(Name = "Engine Code")]
 		public string EngineCode { get; set; }
 
 		[Range(1950, 2015)]
@@ -72,7 +71,7 @@ namespace AutoServiceManagementSystem.Models
 			}
 		}
 
-		[Display(Name="Fuel Type")]
+		[Display(Name = "Fuel Type")]
         public Fuel? FuelType { get; set; }
 
 		public int OwnerId { get; set; }
