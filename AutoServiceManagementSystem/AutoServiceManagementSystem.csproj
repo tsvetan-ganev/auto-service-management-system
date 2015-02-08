@@ -161,6 +161,7 @@
     <Compile Include="DAL\ISupplierRepository.cs" />
     <Compile Include="DAL\SupplierRepository.cs" />
     <Compile Include="DAL\ASMSContext.cs" />
+    <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Validation\DisallowSpecialCharactersAttribute.cs" />
     <Compile Include="Validation\MaxWordsAttribute.cs" />
     <Compile Include="Helpers\VinDecoder.cs" />
