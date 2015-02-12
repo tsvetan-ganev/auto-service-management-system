@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using AutoServiceManagementSystem.ViewModels.Manage;
+using AutoServiceManagementSystem.Models;
 
 namespace AutoServiceManagementSystem.Controllers
 {
@@ -75,13 +76,27 @@ namespace AutoServiceManagementSystem.Controllers
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
 				UserInfo = user.UserInfo
             };
+
             return View(model);
         }
 
 		// TODO:
-		public async Task<ActionResult> _EditUserInfo()
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult _ManageUserDetails([Bind()]UserInfo userInfo)
 		{
-			return PartialView();
+			var user = UserManager.FindById
+				(User.Identity.GetUserId());
+
+			if (userInfo != null)
+			{
+				userInfo.FirstName = user.UserInfo.FirstName;
+				userInfo.LastName = user.UserInfo.LastName;
+				userInfo.CompanyName = user.UserInfo.CompanyName;
+				userInfo.City = user.UserInfo.City;
+			}
+				
+			return PartialView(userInfo);
 		}
 
         //

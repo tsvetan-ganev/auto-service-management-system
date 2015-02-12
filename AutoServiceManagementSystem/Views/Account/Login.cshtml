@@ -1,5 +1,5 @@
 ﻿@using AutoServiceManagementSystem.Models
-@model LoginViewModel
+@model AutoServiceManagementSystem.ViewModels.Account.LoginViewModel
 @{
     ViewBag.Title = "Log in";
 }
@@ -53,7 +53,7 @@
     </div>
     <div class="col-md-4">
         <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+            @Html.Partial("_ExternalLoginsListPartial", new AutoServiceManagementSystem.ViewModels.Account.ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
         </section>
     </div>
 </div>
