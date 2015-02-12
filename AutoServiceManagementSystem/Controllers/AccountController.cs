@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using AutoServiceManagementSystem.ViewModels.Account;
 using AutoServiceManagementSystem.Models;
 
 namespace AutoServiceManagementSystem.Controllers

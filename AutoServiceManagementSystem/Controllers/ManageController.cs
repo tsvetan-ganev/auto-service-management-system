@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using AutoServiceManagementSystem.Models;
+using AutoServiceManagementSystem.ViewModels.Manage;
 
 namespace AutoServiceManagementSystem.Controllers
 {
@@ -64,16 +64,25 @@ namespace AutoServiceManagementSystem.Controllers
                 : "";
 
             var userId = User.Identity.GetUserId();
-            var model = new IndexViewModel
+			var user = UserManager.FindById(userId);
+
+            var model = new AccountDetailsViewModel
             {
                 HasPassword = HasPassword(),
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
+				UserInfo = user.UserInfo
             };
             return View(model);
         }
+
+		// TODO:
+		public async Task<ActionResult> _EditUserInfo()
+		{
+			return PartialView();
+		}
 
         //
         // POST: /Manage/RemoveLogin

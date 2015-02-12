@@ -17,5 +17,8 @@ namespace AutoServiceManagementSystem.Models
 
 		[Display(Name = "Company Name")]
 		public string CompanyName { get; set; }
+
+		[Display(Name = "City")]
+		public string City { get; set; }
 	}
 }
