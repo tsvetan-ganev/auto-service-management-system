@@ -29,5 +29,7 @@ namespace AutoServiceManagementSystem.Models
 		[DataType(DataType.Url)]
 		[Display(Name = "Logo Url")]
         public string LogoUrl { get; set; }
+
+		public ApplicationUser User { get; set; }
 	}
 }

@@ -84,6 +84,8 @@ namespace AutoServiceManagementSystem.Models
 		[Display(Name = "Owner")]
         public Customer Customer { get; set; }
 
+		public ApplicationUser User { get; set; }
+
         public virtual ICollection<Job> Jobs
         {
             get { return this.jobs; }

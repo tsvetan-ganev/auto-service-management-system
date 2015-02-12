@@ -8,27 +8,40 @@ using System.Web;
 using System.Web.Mvc;
 using AutoServiceManagementSystem.Models;
 using AutoServiceManagementSystem.DAL;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity;
 
 namespace AutoServiceManagementSystem.Controllers
 {
     public class CustomersController : Controller
     {
         private ICustomerRepository customersRepo;
+		private ApplicationUserManager manager;
 
 		public CustomersController()
 		{
-			this.customersRepo = new CustomerRepository(new ASMSContext());
+			var context = new MyDbContext();
+			this.customersRepo = new CustomerRepository(context);
+			var store = new UserStore<ApplicationUser>(context);
+			store.AutoSaveChanges = false;
+			this.manager = new ApplicationUserManager(store);
 		}
 
         // GET: Customers
+		[Authorize()]
         public ActionResult Index()
         {
-            return View(customersRepo.GetCustomers());
+			var currentUser = manager.FindById(User.Identity.GetUserId());
+			var customersList = customersRepo.GetCustomers()
+				.Where(c => c.User == currentUser);
+			return View(customersList);
         }
 
         // GET: Customers/Details/5
+		[Authorize()]
         public ActionResult Details(int? id)
         {
+			var currentUser = manager.FindById(User.Identity.GetUserId());
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -38,10 +51,15 @@ namespace AutoServiceManagementSystem.Controllers
             {
                 return HttpNotFound();
             }
+			if (customer.User != currentUser)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+			}
             return View(customer);
         }
 
         // GET: Customers/Create
+		[Authorize()]
         public ActionResult Create()
         {
             return View();
@@ -50,12 +68,15 @@ namespace AutoServiceManagementSystem.Controllers
         // POST: Customers/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+		[Authorize()]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CustomerId,FirstName,LastName,PhoneNumber")] Customer customer)
+        public ActionResult Create([Bind(Include = "CustomerId,FirstName,LastName,PhoneNumber,User")] Customer customer)
         {
+			var currentUser = manager.FindById(User.Identity.GetUserId());
             if (ModelState.IsValid)
             {
+				customer.User = currentUser;
 				customersRepo.InsertCustomer(customer);
                 customersRepo.Save();
                 return RedirectToAction("Index");
@@ -65,9 +86,11 @@ namespace AutoServiceManagementSystem.Controllers
         }
 
         // GET: Customers/Edit/5
+		[Authorize()]
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+			var currentUser = manager.FindById(User.Identity.GetUserId());
+			if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -76,15 +99,20 @@ namespace AutoServiceManagementSystem.Controllers
             {
                 return HttpNotFound();
             }
+			if (customer.User != currentUser)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+			}
             return View(customer);
         }
 
         // POST: Customers/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+		[Authorize()]        
+		[HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CustomerId,FirstName,LastName,PhoneNumber")] Customer customer)
+        public ActionResult Edit([Bind(Include = "CustomerId,FirstName,LastName,PhoneNumber,User")] Customer customer)
         {
             if (ModelState.IsValid)
             {
@@ -96,8 +124,10 @@ namespace AutoServiceManagementSystem.Controllers
         }
 
         // GET: Customers/Delete/5
+		[Authorize()]
         public ActionResult Delete(int? id)
         {
+			var currentUser = manager.FindById(User.Identity.GetUserId());
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -107,6 +137,10 @@ namespace AutoServiceManagementSystem.Controllers
             {
                 return HttpNotFound();
             }
+			if (customer.User != currentUser)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+			}
             return View(customer);
         }
 

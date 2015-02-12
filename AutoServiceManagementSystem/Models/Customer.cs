@@ -45,6 +45,9 @@ namespace AutoServiceManagementSystem.Models
 		[Display(Name = "Phone Number")]
 		public string PhoneNumber { get; set; }
 
+		public int UserId { get; set; }
+		public ApplicationUser User { get; set; }
+
         public virtual ICollection<Car> Cars
         {
             get { return cars; }

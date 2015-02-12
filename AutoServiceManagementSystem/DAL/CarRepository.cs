@@ -8,9 +8,9 @@ namespace AutoServiceManagementSystem.DAL
 {
 	public class CarRepository : ICarRepository, IDisposable
 	{
-		private ASMSContext context;
+		private MyDbContext context;
 
-		public CarRepository(ASMSContext context)
+		public CarRepository(MyDbContext context)
 		{
 			this.context = context;
 		}

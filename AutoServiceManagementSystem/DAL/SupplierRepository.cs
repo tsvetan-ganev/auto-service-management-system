@@ -9,9 +9,9 @@ namespace AutoServiceManagementSystem.DAL
 {
 	public class SupplierRepository : ISupplierRepository, IDisposable
 	{
-		private ASMSContext context;
+		private MyDbContext context;
 
-		public SupplierRepository(ASMSContext context)
+		public SupplierRepository(MyDbContext context)
 		{
 			this.context = context;
 		}

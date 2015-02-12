@@ -8,27 +8,40 @@ using System.Web;
 using System.Web.Mvc;
 using AutoServiceManagementSystem.Models;
 using AutoServiceManagementSystem.DAL;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity;
 
 namespace AutoServiceManagementSystem.Controllers
 {
     public class SuppliersController : Controller
     {
 		private ISupplierRepository supplierRepo;
+		private ApplicationUserManager manager;
 
 		public SuppliersController()
 		{
-			this.supplierRepo = new SupplierRepository(new ASMSContext());
+			var context = new MyDbContext();
+			this.supplierRepo = new SupplierRepository(context);
+			var store = new UserStore<ApplicationUser>(context);
+			store.AutoSaveChanges = false;
+			this.manager = new ApplicationUserManager(store);
 		}
 
         // GET: Suppliers
+		[Authorize()]
         public ActionResult Index()
         {
-            return View(supplierRepo.GetSuppliers());
+			var currentUser = manager.FindById(User.Identity.GetUserId());
+			var suppliersList = supplierRepo.GetSuppliers()
+				.Where(s => s.User == currentUser);
+            return View(suppliersList);
         }
 
         // GET: Suppliers/Details/5
+		[Authorize()]
         public ActionResult Details(int? id)
         {
+			var currentUser = manager.FindById(User.Identity.GetUserId());
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -38,10 +51,15 @@ namespace AutoServiceManagementSystem.Controllers
             {
                 return HttpNotFound();
             }
+			if (supplier.User != currentUser)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+			}
             return View(supplier);
         }
 
         // GET: Suppliers/Create
+		[Authorize()]
         public ActionResult Create()
         {
             return View();
@@ -50,12 +68,15 @@ namespace AutoServiceManagementSystem.Controllers
         // POST: Suppliers/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+		[Authorize()]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "SupplierId,Name,City,DiscountPercentage,WebsiteUrl,LogoUrl")] Supplier supplier)
+        public ActionResult Create([Bind(Include = "SupplierId,Name,City,DiscountPercentage,WebsiteUrl,LogoUrl,User")] Supplier supplier)
         {
+			var currentUser = manager.FindById(User.Identity.GetUserId());
             if (ModelState.IsValid)
             {
+				supplier.User = currentUser;
 				supplierRepo.InsertSupplier(supplier);
 				supplierRepo.Save();
                 return RedirectToAction("Index");
@@ -65,6 +86,7 @@ namespace AutoServiceManagementSystem.Controllers
         }
 
         // GET: Suppliers/Edit/5
+		[Authorize()]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -82,22 +104,28 @@ namespace AutoServiceManagementSystem.Controllers
         // POST: Suppliers/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+		[Authorize()]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "SupplierId,Name,City,DiscountPercentage,WebsiteUrl,LogoUrl")] Supplier supplier)
+        public ActionResult Edit([Bind(Include = "SupplierId,Name,City,DiscountPercentage,WebsiteUrl,LogoUrl,User")] Supplier supplier)
         {
+			var currentUser = manager.FindById(User.Identity.GetUserId());
             if (ModelState.IsValid)
             {
+				supplier.User = currentUser;
 				supplierRepo.UpdateSupplier(supplier);
 				supplierRepo.Save();
                 return RedirectToAction("Index");
             }
+
             return View(supplier);
         }
 
         // GET: Suppliers/Delete/5
+		[Authorize()]
         public ActionResult Delete(int? id)
         {
+			var currentUser = manager.FindById(User.Identity.GetUserId());
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -107,6 +135,10 @@ namespace AutoServiceManagementSystem.Controllers
             {
                 return HttpNotFound();
             }
+			if (supplier.User != currentUser)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+			}
             return View(supplier);
         }
 

@@ -11,6 +11,14 @@ namespace AutoServiceManagementSystem.Models
 {
 	public class ApplicationUser : IdentityUser
 	{
+
+		public UserInfo UserInfo { get; set; }
+
+		public virtual List<Customer> Customers { get; set; }
+
+		public virtual List<Supplier> Suppliers { get; set; }
+
+		// methods
 		public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
 		{
 			// Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

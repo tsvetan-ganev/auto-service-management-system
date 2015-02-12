@@ -14,9 +14,12 @@ namespace AutoServiceManagementSystem
     public class MvcApplication : System.Web.HttpApplication
     {
         protected void Application_Start()
-        {
-			Database.SetInitializer(
-				new DropCreateDatabaseIfModelChanges<ASMSContext>());
+		{
+			Database.SetInitializer<MyDbContext>(new InitializeIdentity());
+			//Database.SetInitializer<MyDbContext>(
+			//	new DropCreateDatabaseIfModelChanges<MyDbContext>());
+			//Database.SetInitializer<ASMSContext>(
+			//	new DropCreateDatabaseIfModelChanges<ASMSContext>());
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

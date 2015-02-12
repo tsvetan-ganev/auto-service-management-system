@@ -54,7 +54,7 @@ namespace AutoServiceManagementSystem.Controllers
 
         //
         // GET: /Account/Login
-		[RequireHttps]
+		//[RequireHttps]
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {

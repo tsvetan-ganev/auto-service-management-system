@@ -8,19 +8,19 @@ namespace AutoServiceManagementSystem.Migrations
 	using System.Data.Entity.Migrations;
 	using System.Linq;
 
-	internal sealed class Configuration : DbMigrationsConfiguration<ASMSContext>
+	internal sealed class Configuration : DbMigrationsConfiguration<MyDbContext>
 	{
 		private readonly bool pendingMigrations;
 
 		public Configuration()
 		{
 			AutomaticMigrationsEnabled = true;
-			AutomaticMigrationDataLossAllowed = false;
+			AutomaticMigrationDataLossAllowed = true;
 			var migrator = new DbMigrator(this);
 			pendingMigrations = migrator.GetPendingMigrations().Any();
 		}
 
-		protected override void Seed(ASMSContext context)
+		protected override void Seed(MyDbContext context)
 		{
 			//  This method will be called after migrating to the latest version.
 

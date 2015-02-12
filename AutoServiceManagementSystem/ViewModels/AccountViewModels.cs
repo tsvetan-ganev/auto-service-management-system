@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using AutoServiceManagementSystem.Validation;
 
 namespace AutoServiceManagementSystem.Models
 {
