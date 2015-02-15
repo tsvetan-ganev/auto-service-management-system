@@ -278,6 +278,7 @@
     <Content Include="Views\Suppliers\Edit.cshtml" />
     <Content Include="Views\Suppliers\Index.cshtml" />
     <Content Include="Views\Manage\_EditUserDetails.cshtml" />
+    <Content Include="Views\Home\_DailySupplier.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

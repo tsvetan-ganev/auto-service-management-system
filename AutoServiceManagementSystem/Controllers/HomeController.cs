@@ -4,14 +4,50 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+using AutoServiceManagementSystem.Models;
+using AutoServiceManagementSystem.DAL;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity;
+
 namespace AutoServiceManagementSystem.Controllers
 {
 	public class HomeController : Controller
 	{
+        private ISupplierRepository supplierRepo;
+        private ApplicationUserManager manager;
+
+        public HomeController()
+        {
+            var context = new MyDbContext();
+            this.supplierRepo = new SupplierRepository(context);
+            var store = new UserStore<ApplicationUser>(context);
+            store.AutoSaveChanges = false;
+            this.manager = new ApplicationUserManager(store);
+        }
+        
 		public ActionResult Index()
 		{
 			return View();
 		}
+
+        /* AJAX TEST BEGIN */
+        public ActionResult DailySupplier()
+        {
+            var supplier = GetDailySupplier();
+            return PartialView("_DailySupplier", supplier);
+        }
+
+        private Supplier GetDailySupplier()
+        {
+            var currentUser = manager.FindById(User.Identity.GetUserId());
+            var supplier = supplierRepo.GetSuppliers()
+                .Where(s => s.User == currentUser)
+                .OrderBy(s => System.Guid.NewGuid())
+                .First();
+
+            return supplier;
+        }
+        /* AJAX TEST END */
 
 		public ActionResult About()
 		{

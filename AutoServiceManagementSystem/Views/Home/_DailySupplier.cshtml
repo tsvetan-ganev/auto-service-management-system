@@ -1,0 +1,23 @@
+﻿@model AutoServiceManagementSystem.Models.Supplier
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Your daily supplier: @Model.Name</h3>
+    </div>
+    <div class="panel-body">
+        <div id="supplier-details">
+            <p>
+                <em>City:</em>
+                @Model.City
+            </p>
+            <p>
+                <em>Discount:</em>
+                @String.Format("{0:0.00}%", Model.DiscountPercentage)
+            </p>
+            <p>
+                <em>Website:</em>
+                @Html.DisplayFor(m => m.WebsiteUrl)
+            </p>
+        </div>
+    </div>
+</div>
