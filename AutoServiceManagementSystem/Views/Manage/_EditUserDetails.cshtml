@@ -1,6 +1,5 @@
 ﻿@model AutoServiceManagementSystem.Models.UserInfo
 
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -57,4 +56,5 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/ajax")
 }
