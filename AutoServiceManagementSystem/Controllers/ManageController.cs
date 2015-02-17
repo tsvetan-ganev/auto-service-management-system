@@ -10,6 +10,7 @@ using AutoServiceManagementSystem.ViewModels.Manage;
 using AutoServiceManagementSystem.Models;
 using System.Net;
 using AutoServiceManagementSystem.DAL;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace AutoServiceManagementSystem.Controllers
 {
@@ -18,20 +19,16 @@ namespace AutoServiceManagementSystem.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private IUserInfoRepository _userInfoRepo;
-
-        public ManageController()
-        {
-            _userInfoRepo = new UserInfoRepository(
-                new MyDbContext());
-        }
 
         public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
-            _userInfoRepo = new UserInfoRepository(
-                new MyDbContext());
+        }
+
+        public ManageController()
+        {
+            
         }
 
         public ApplicationSignInManager SignInManager
@@ -73,65 +70,38 @@ namespace AutoServiceManagementSystem.Controllers
 
             var userId = User.Identity.GetUserId();
 			var user = UserManager.FindById(userId);
-
+            ViewBag.UserDetails = user.UserDetails;
             var model = new AccountDetailsViewModel
             {
                 HasPassword = HasPassword(),
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
-				UserInfo = user.UserInfo
+                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
             };
 
             return View(model);
         }
 
-		// TODO:
-        public ActionResult _EditUserDetails(int? id)
+        /* not working */
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditUserDetails(
+            [Bind(Include="FirstName,LastName,City,CompanyName")]
+            UserDetails userDetails)
         {
-            var currentUser = _userManager.FindById(User.Identity.GetUserId());
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            UserInfo userInfo = _userInfoRepo.GetUserInfoById(id);
-
-            if (userInfo == null)
-            {
-                return HttpNotFound();
-            }
-            // UserInfo should have a pointer to AppUser
-            // todo
-            return PartialView(userInfo);
-        }
-
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public ActionResult _EditUserDetails([Bind(Include = "UserInfoId,FirstName,LastName,CompanyName,City")]
-            UserInfo userInfo)
-		{
-            //var user = UserManager.FindById
-            //    (User.Identity.GetUserId());
-
-            //if (userInfo != null)
-            //{
-            //    userInfo.FirstName = user.UserInfo.FirstName;
-            //    userInfo.LastName = user.UserInfo.LastName;
-            //    userInfo.CompanyName = user.UserInfo.CompanyName;
-            //    userInfo.City = user.UserInfo.City;
-            //}
-
             if (ModelState.IsValid)
             {
-                _userInfoRepo.UpdateUserInfo(userInfo);
-                _userInfoRepo.Save();
-                //return PartialView(userInfo);
-            }
-			return PartialView(userInfo);
-		}
+                var user = UserManager.FindById(User.Identity.GetUserId());
+                if (user == null)
+                {
+                    throw new InvalidOperationException();
+                }
 
+                user.UserDetails = userDetails;
+            }
+            return View(userDetails);
+        }
         //
         // POST: /Manage/RemoveLogin
         [HttpPost]

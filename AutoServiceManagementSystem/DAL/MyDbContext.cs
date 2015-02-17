@@ -25,15 +25,15 @@ namespace AutoServiceManagementSystem.DAL
 			base.OnModelCreating(modelBuilder);
 			// Change the name of the table to be Users instead of AspNetUsers
 			modelBuilder.Entity<IdentityUser>()
-			.ToTable("Users");
-			modelBuilder.Entity<ApplicationUser>()
-			.ToTable("Users");
+			.ToTable("AppUsers");
+
+            modelBuilder.Entity<ApplicationUser>()
+            .ToTable("AppUsers");
 		}
 
 		public DbSet<Customer> Customers { get; set; }
+        public DbSet<Car> Cars { get; set; }
 		public DbSet<Supplier> Suppliers { get; set; }
-		public DbSet<UserInfo> UserInfo { get; set; }
 
-		public DbSet<Car> Cars { get; set; }
 	}
 }

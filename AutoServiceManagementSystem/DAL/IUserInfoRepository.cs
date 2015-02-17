@@ -9,10 +9,11 @@ namespace AutoServiceManagementSystem.DAL
 {
     public interface IUserInfoRepository : IDisposable
     {
-        UserInfo GetUserInfoById(int? userInfoId);
-        void InsertUserInfo(UserInfo userInfo);
+        UserDetails GetUserInfoById(int? userInfoId);
+        UserDetails GetUserInfoByCurrentUser(ApplicationUser currentUser);
+        void InsertUserInfo(UserDetails userInfo);
         void DeleteUserInfo(int? userInfoId);
-        void UpdateUserInfo(UserInfo userInfo);
+        void UpdateUserInfo(UserDetails userInfo);
         void Save();
     }
 }

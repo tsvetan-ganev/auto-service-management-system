@@ -43,8 +43,8 @@ namespace AutoServiceManagementSystem.Controllers
             var supplier = supplierRepo.GetSuppliers()
                 .Where(s => s.User == currentUser)
                 .OrderBy(s => System.Guid.NewGuid())
-                .First();
-
+                .FirstOrDefault();
+            
             return supplier;
         }
         /* AJAX TEST END */

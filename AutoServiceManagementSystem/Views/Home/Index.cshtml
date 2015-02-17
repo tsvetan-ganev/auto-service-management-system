@@ -7,8 +7,11 @@
     <p class="lead">This application will help you keep track of your clients and their cars' repairs history.</p>
 </div>
 
-<div id="daily-supplier" class="row">
-    @Ajax.ActionLink("Click to see today's supplier.",
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div id="daily-supplier" class="row">
+        @Ajax.ActionLink("Click to see today's supplier.",
             "DailySupplier",
                 null,
                 new AjaxOptions
@@ -18,7 +21,10 @@
                     HttpMethod = "GET"
                 },
                 new { @class = "btn btn-primary" })
-</div>
+    </div>
+  
+}
+
 
 @section Scripts{
     <script src="~/Scripts/Vendor/jquery.unobtrusive-ajax.min.js"></script>

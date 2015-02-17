@@ -34,6 +34,7 @@ namespace AutoServiceManagementSystem.Controllers
 			var currentUser = manager.FindById(User.Identity.GetUserId());
 			var carsList = carRepo.GetCars()
 				.Where(c => c.User == currentUser);
+
 			return View(carsList);
 		}
 

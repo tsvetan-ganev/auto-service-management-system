@@ -6,10 +6,9 @@ using System.Linq;
 using System.Web;
 namespace AutoServiceManagementSystem.Models
 {
-	public class UserInfo
+    [ComplexType()]
+	public class UserDetails
 	{
-		public int UserInfoId { get; set; }
-
 		[Display(Name = "First Name")]
 		public string FirstName { get; set; }
 

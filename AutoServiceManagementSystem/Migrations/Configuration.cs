@@ -43,16 +43,15 @@ namespace AutoServiceManagementSystem.Migrations
                     UserName = "test1@test.com",
                     Email = "test1@test.com",
                     PhoneNumber = "088888888",
-                    UserInfo = new UserInfo
+                    UserDetails = new UserDetails
                     {
-                        FirstName = "Ali",
-                        LastName = "Reza",
-                        CompanyName = "Turkish Airlines"
+                        FirstName = "Ivan",
+                        LastName = "Petrov",
+                        CompanyName = "Auto Repair"
                     }
                 };
 
                 manager.Create(user, "Password@123");
-
 
                 //// adding cars
                 var manufacturers = ManufacturersList.Manufacturers;
@@ -60,161 +59,134 @@ namespace AutoServiceManagementSystem.Migrations
                 int min = 0;
                 int max = manufacturers.Count;
 
-                #region Cars Seed Data
-                var carsToAdd = new List<Car>{
-                    new Car
-                    {
-                        Manufacturer = manufacturers.ElementAt(rand.Next(min, max)),
-                        EngineCode = "XXYYZZ",
-                        VIN = "1D8HS58N93F387970",
-                        FuelType = Car.Fuel.Diesel,
-                        User = user
-                    },
-                    new Car
-                    {
-                        Manufacturer = manufacturers.ElementAt(rand.Next(min, max)),
-                        EngineCode = "ZZZYYYXXX",
-                        VIN = "JTHBC1KSXB5307152",
-                        FuelType = Car.Fuel.Petrol,
-                        User = user
-                    },
-                     new Car
-                    {
-                        Manufacturer = manufacturers.ElementAt(rand.Next(min, max)),
-                        EngineCode = "ZKL",
-                        VIN = "2D8GP74L03R827449",
-                        FuelType = Car.Fuel.Petrol,
-                        User = user
-                    },
-                    new Car
-                    {
-                        Manufacturer = manufacturers.ElementAt(rand.Next(min, max)),
-                        EngineCode = "AEZM",
-                        VIN = "SALTW12422A939559",
-                        FuelType = Car.Fuel.Gas,
-                        User = user
-                    },
-                    new Car
-                    {
-                        Manufacturer = manufacturers.ElementAt(rand.Next(min, max)),
-                        EngineCode = "KKL",
-                        VIN = "1GT121E84BF673442",
-                        FuelType = Car.Fuel.Gas,
-                        User = user
-                    },
-                    new Car
-                    {
-                        Manufacturer = manufacturers.ElementAt(rand.Next(min, max)),
-                        EngineCode = "QWER",
-                        VIN = "1FTRF14V48K950702",
-                        FuelType = Car.Fuel.Diesel
-                    },
-                    new Car
-                    {
-                        Manufacturer = manufacturers.ElementAt(rand.Next(min, max)),
-                        EngineCode = "JGKLT",
-                        VIN = "WBAEU33492P793624",
-                        FuelType = Car.Fuel.Diesel,
-                        User = user
-                    },
-                    new Car
-                    {
-                        Manufacturer = manufacturers.ElementAt(rand.Next(min, max)),
-                        EngineCode = "NBGJK",
-                        VIN = "1J8FF48W17D850420",
-                        FuelType = Car.Fuel.Petrol
-                    },
-                    new Car
-                    {
-                        Manufacturer = manufacturers.ElementAt(rand.Next(min, max)),
-                        EngineCode = "BGFR",
-                        VIN = "1FTPW12597F436264",
-                        FuelType = Car.Fuel.Petrol,
-                        User = user
-                    },
-                    new Car
-                    {
-                        Manufacturer = manufacturers.ElementAt(rand.Next(min, max)),
-                        EngineCode = "MKLBG",
-                        VIN = "1GTHC39R9XF262667",
-                        FuelType = Car.Fuel.Petrol,
-                        User = user
-                    }
-                };
-
-                carsToAdd.ForEach(c => context.Cars.Add(c));
-                context.SaveChanges();
-
-                #endregion
-
-                #region Customers Seed Data
-                var customersToAdd = new List<Customer> 
+                #region Customers and their cars seeding
+                var ivan = new Customer
                 {
-                    new Customer
-                    {
-                        FirstName = "Ivan",
-                        LastName = "Georgiev",
-                        PhoneNumber = "0816136258",
-                        User = user
+                    FirstName = "Ivan",
+                    LastName = "Georgiev",
+                    PhoneNumber = "0816136258",
+                    Cars = new List<Car>{
+                        new Car
+                        {
+                            Manufacturer = manufacturers.ElementAt(rand.Next(min, max)),
+                            EngineCode = "XXYYZZ",
+                            VIN = "1D8HS58N93F387970",
+                            FuelType = Car.Fuel.Diesel,
+                            User = user
+                        },
+                        new Car
+                        {
+                            Manufacturer = manufacturers.ElementAt(rand.Next(min, max)),
+                            EngineCode = "ZZZYYYXXX",
+                            VIN = "JTHBC1KSXB5307152",
+                            FuelType = Car.Fuel.Petrol,
+                            User = user
+                        },
+                         new Car
+                        {
+                            Manufacturer = manufacturers.ElementAt(rand.Next(min, max)),
+                            EngineCode = "ZKL",
+                            VIN = "2D8GP74L03R827449",
+                            FuelType = Car.Fuel.Petrol,
+                            User = user
+                        }
                     },
-                    new Customer
-                    {
-                        FirstName = "Georgi Ivanov",
-                        LastName = "Georgiev",
-                        PhoneNumber = "0875259779",
-                        User = user
-                    },
-                    new Customer
-                    {
-                        FirstName = "Petar",
-                        LastName = "Petrov",
-                        PhoneNumber = "0886472046",
-                        User = user
-                    },
-                    new Customer
-                    {
-                        CustomerId = 14,
-                        FirstName = "Maria",
-                        LastName = "Ilieva",
-                        PhoneNumber = "0836140833",
-                        User = user
-                    },
-                    new Customer
-                    {
-                        FirstName = "Haralampi",
-                        LastName = "Karaivanov",
-                        PhoneNumber = "0853748786",
-                        User = user
-                    },
-                    new Customer
-                    {
-                        FirstName = "Hristian",
-                        LastName = "Georgiev",
-                        PhoneNumber = "0863933157",
-                        User = user
-                    }, new Customer
-                    {
-                        FirstName = "Ivan",
-                        LastName = "Ivanov",
-                        PhoneNumber = "0819116973",
-                        User = user
-                    },
-                    new Customer
-                    {
-                        FirstName = "Евлоги",
-                        LastName = "Христов",
-                        PhoneNumber = "0847900455",
-                        User = user
-                    }
+                    User = user
                 };
-                customersToAdd.ForEach(c => context.Customers.Add(c));
-                context.SaveChanges();
-                #endregion
 
-                #region Suppliers Seed Data
+                var georgi = new Customer
+                {
+                    FirstName = "Georgi Ivanov",
+                    LastName = "Georgiev",
+                    PhoneNumber = "0875259779",
+                    Cars = new List<Car>{
+                        new Car
+                        {
+                            Manufacturer = manufacturers.ElementAt(rand.Next(min, max)),
+                            EngineCode = "AEZM",
+                            VIN = "SALTW12422A939559",
+                            FuelType = Car.Fuel.Gas,
+                            User = user
+                        },
+                        new Car
+                        {
+                            Manufacturer = manufacturers.ElementAt(rand.Next(min, max)),
+                            EngineCode = "KKL",
+                            VIN = "1GT121E84BF673442",
+                            FuelType = Car.Fuel.Gas,
+                            User = user
+                        }
+                    },
+                    User = user
+                };
+
+                var peter = new Customer
+                {
+                    FirstName = "Petar",
+                    LastName = "Petrov",
+                    PhoneNumber = "0886472046",
+                    Cars = new List<Car>
+                    {
+                        new Car
+                        {
+                            Manufacturer = manufacturers.ElementAt(rand.Next(min, max)),
+                            EngineCode = "QWER",
+                            VIN = "1FTRF14V48K950702",
+                            FuelType = Car.Fuel.Diesel,
+                            User = user
+                        }
+                    },
+                    User = user
+                };
+
+                var maria = new Customer
+                {
+                    CustomerId = 14,
+                    FirstName = "Maria",
+                    LastName = "Ilieva",
+                    PhoneNumber = "0836140833",
+                    Cars = new List<Car>{
+                        new Car
+                        {
+                            Manufacturer = manufacturers.ElementAt(rand.Next(min, max)),
+                            EngineCode = "JGKLT",
+                            VIN = "WBAEU33492P793624",
+                            FuelType = Car.Fuel.Diesel,
+                            User = user
+                        },
+                        new Car
+                        {
+                            Manufacturer = manufacturers.ElementAt(rand.Next(min, max)),
+                            EngineCode = "NBGJK",
+                            VIN = "1J8FF48W17D850420",
+                            FuelType = Car.Fuel.Petrol,
+                            User = user
+                        },
+                        new Car
+                        {
+                            Manufacturer = manufacturers.ElementAt(rand.Next(min, max)),
+                            EngineCode = "BGFR",
+                            VIN = "1FTPW12597F436264",
+                            FuelType = Car.Fuel.Petrol,
+                            User = user
+                        }
+                    },
+                    User = user
+                };
+
+                var customers = new List<Customer>();
+                customers.Add(georgi);
+                customers.Add(maria);
+                customers.Add(ivan);
+                customers.Add(peter);
+                context.Customers.AddRange(customers);
+                context.SaveChanges();
+#endregion
+
+                #region Suppliers seeding
                 var suppliersToAdd = new List<Supplier>
                 {
-                     new Supplier
+                    new Supplier
                     {
                         Name = "Euro07",
                         DiscountPercentage = 45.0m,
@@ -258,21 +230,7 @@ namespace AutoServiceManagementSystem.Migrations
                 suppliersToAdd.ForEach(s => context.Suppliers.Add(s));
                 context.SaveChanges();
                 #endregion
-            }
-
-
-
-            //context.SaveChanges();
-
-            //base.Seed(context);
-
-            //if (!(context.Users.Any(u => u.UserName == "dj@dj.com")))
-            //{
-            //    var userStore = new UserStore<ApplicationUser>(context);
-            //    var userManager = new UserManager<ApplicationUser>(userStore);
-            //    var userToInsert = new ApplicationUser { UserName = "dj@dj.com", PhoneNumber = "0797697898" };
-            //    userManager.Create(userToInsert, "Password@123");
-            //}
+            };
         }
 
         public static void ClearDatabase<T>() where T : DbContext, new()
@@ -300,7 +258,9 @@ namespace AutoServiceManagementSystem.Migrations
             }
         }
     }
-
 }
+
+
+
 
 

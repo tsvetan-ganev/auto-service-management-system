@@ -17,23 +17,28 @@ namespace AutoServiceManagementSystem.DAL
         }
 
         #region IUserInfoRepository Implementation
-        public UserInfo GetUserInfoById(int? userInfoId)
+        public UserDetails GetUserInfoById(int? userInfoId)
         {
-            return context.UserInfo.Find(userInfoId);
+            return context.UsersInfo.Find(userInfoId);
         }
 
-        public void InsertUserInfo(UserInfo userInfo)
+        public UserDetails GetUserInfoByCurrentUser(ApplicationUser currentUser)
         {
-            context.UserInfo.Add(userInfo);
+            throw new NotImplementedException();
+        }
+
+        public void InsertUserInfo(UserDetails userInfo)
+        {
+            context.UsersInfo.Add(userInfo);
         }
 
         public void DeleteUserInfo(int? userInfoId)
         {
-            UserInfo userInfo = context.UserInfo.Find(userInfoId);
-            context.UserInfo.Remove(userInfo);
+            UserDetails userInfo = context.UsersInfo.Find(userInfoId);
+            context.UsersInfo.Remove(userInfo);
         }
 
-        public void UpdateUserInfo(UserInfo userInfo)
+        public void UpdateUserInfo(UserDetails userInfo)
         {
             context.Entry(userInfo).State = EntityState.Modified;
         }

@@ -11,8 +11,12 @@ namespace AutoServiceManagementSystem.Models
 {
 	public class ApplicationUser : IdentityUser
 	{
+        public ApplicationUser()
+        {
+            UserDetails = new UserDetails();
+        }
 
-		public UserInfo UserInfo { get; set; }
+		public UserDetails UserDetails { get; set; }
 
 		public virtual List<Customer> Customers { get; set; }
 
