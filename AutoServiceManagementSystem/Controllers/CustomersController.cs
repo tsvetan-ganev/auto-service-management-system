@@ -16,12 +16,14 @@ namespace AutoServiceManagementSystem.Controllers
     public class CustomersController : Controller
     {
         private ICustomerRepository customersRepo;
+        private ICarRepository carsRepo;
 		private ApplicationUserManager manager;
 
 		public CustomersController()
 		{
 			var context = new MyDbContext();
 			this.customersRepo = new CustomerRepository(context);
+            this.carsRepo = new CarRepository(context);
 			var store = new UserStore<ApplicationUser>(context);
 			store.AutoSaveChanges = false;
 			this.manager = new ApplicationUserManager(store);
@@ -153,6 +155,15 @@ namespace AutoServiceManagementSystem.Controllers
             customersRepo.Save();
             return RedirectToAction("Index");
         }
+
+        //// GET: Customer/{id}/Cars
+        //[Route("Customer/{id}/Cars")]
+        //public ActionResult DisplayAllCarsByCustomer(int id)
+        //{
+        //    //var currentUser = manager.FindById(User.Identity.GetUserId());
+        //    var cars = carsRepo.GetCarsByCustomer(id);
+        //    return View("~/Views/Cars/DisplayAllCarsByCustomer.cshtml", cars);
+        //}
 
         protected override void Dispose(bool disposing)
         {

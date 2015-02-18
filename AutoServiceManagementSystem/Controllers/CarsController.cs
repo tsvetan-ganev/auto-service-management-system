@@ -13,6 +13,7 @@ using Microsoft.AspNet.Identity;
 
 namespace AutoServiceManagementSystem.Controllers
 {
+    [Authorize()]
 	public class CarsController : Controller
 	{
 		private ICarRepository carRepo;
@@ -28,7 +29,6 @@ namespace AutoServiceManagementSystem.Controllers
 		}
 
 		// GET: Cars
-		[Authorize()]
 		public ActionResult Index()
 		{
 			var currentUser = manager.FindById(User.Identity.GetUserId());
@@ -39,7 +39,6 @@ namespace AutoServiceManagementSystem.Controllers
 		}
 
 		// GET: Cars/Details/5
-		[Authorize()]
 		public ActionResult Details(int? id)
 		{
 			var currentUser = manager.FindById(User.Identity.GetUserId());
@@ -72,7 +71,7 @@ namespace AutoServiceManagementSystem.Controllers
 		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Create([Bind(Include = "CarId,Manufacturer,Model,PlateCode,VIN,EngineCode,Year,FuelType, User")] Car car)
+		public ActionResult Create([Bind(Include = "CarId,Manufacturer,Model,PlateCode,VIN,EngineCode,Year,FuelType,User")] Car car)
 		{
 			var currentUser = manager.FindById(User.Identity.GetUserId());
 			if (ModelState.IsValid)
@@ -109,18 +108,18 @@ namespace AutoServiceManagementSystem.Controllers
 			return View(car);
 		}
 
-		// POST: Cars/Edit/5
-		// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Customer/{customerId}/Car/{carId}/Edit
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Edit([Bind(Include = "CarId,Manufacturer,Model,PlateCode,VIN,EngineCode,Year,FuelType,User")] Car car)
+        [Route("Customer/{customerId}/Car/{carId}/Edit")]
+		public ActionResult Edit([Bind(Include = "CarId,Manufacturer,Model,PlateCode,VIN,EngineCode,Year,FuelType,User,Customer")] Car car,
+            int customerId)
 		{
 			if (ModelState.IsValid)
 			{
 				carRepo.UpdateCar(car);
 				carRepo.Save();
-				return RedirectToAction("Index");
+                return RedirectToAction("DisplayAllCarsByCustomer", customerId);
 			}
 			return View(car);
 		}
@@ -156,6 +155,42 @@ namespace AutoServiceManagementSystem.Controllers
 			carRepo.Save();
 			return RedirectToAction("Index");
 		}
+
+        
+        // GET: Customer/{id}/Cars
+        [Route("Customer/{id}/Cars")]
+        public ActionResult DisplayAllCarsByCustomer(int id)
+        {
+            //var currentUser = manager.FindById(User.Identity.GetUserId());
+            var cars = carRepo.GetCarsByCustomer(id);
+            return View(cars);
+        }
+
+        // GET: Customer/{customerId}/Car/{carId}/Edit
+        [Route("Customer/{customerId}/Car/{carId}/Edit")]
+        public ActionResult Edit(int? customerId, int? carId)
+        {
+            var currentUser = manager.FindById(User.Identity.GetUserId());
+
+            if (customerId == null || carId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Car car = carRepo.GetCarByCustomerId(carId, customerId);
+
+            if (car == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (car.User != currentUser)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+            }
+
+            return View(car);
+        }
 
 		protected override void Dispose(bool disposing)
 		{

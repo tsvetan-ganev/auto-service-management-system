@@ -22,10 +22,30 @@ namespace AutoServiceManagementSystem.DAL
 			return context.Cars.ToList();
 		}
 
+        public IEnumerable<Car> GetCarsByCustomer(int id)
+        {
+            return context.Cars
+                .Where(c => c.Customer.CustomerId == id)
+                .ToList();
+        }
+
 		public Car GetCarById(int? carId)
 		{
 			return context.Cars.Find(carId);
 		}
+
+        public Car GetCarByCustomerId(int? carId, int? customerId)
+        {
+            var car = context.Cars.Find(carId);
+            if (car != null
+                //&& car.Customer.CustomerId == customerId
+                )
+            {
+                return car;
+            }
+            else car = null;
+            return car;
+        }
 
 		public void InsertCar(Car car)
 		{
@@ -66,5 +86,5 @@ namespace AutoServiceManagementSystem.DAL
 			Dispose(true);
 			GC.SuppressFinalize(this);
 		}
-	}
+    }
 }
