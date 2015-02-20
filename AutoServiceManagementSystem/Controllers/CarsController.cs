@@ -111,15 +111,15 @@ namespace AutoServiceManagementSystem.Controllers
         // POST: Customer/{customerId}/Car/{carId}/Edit
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-        [Route("Customer/{customerId}/Car/{carId}/Edit")]
+        [Route("Customer/{customerId:int}/Car/{carId:int}/Edit")]
 		public ActionResult Edit([Bind(Include = "CarId,Manufacturer,Model,PlateCode,VIN,EngineCode,Year,FuelType,User,Customer")] Car car,
-            int customerId)
+            int customerId, int carId)
 		{
 			if (ModelState.IsValid)
 			{
 				carRepo.UpdateCar(car);
 				carRepo.Save();
-                return RedirectToAction("DisplayAllCarsByCustomer", customerId);
+				return RedirectToAction("DisplayAllCarsByCustomer", customerId);
 			}
 			return View(car);
 		}
