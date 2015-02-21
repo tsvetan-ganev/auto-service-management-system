@@ -165,6 +165,7 @@
     <Compile Include="DAL\ISupplierRepository.cs" />
     <Compile Include="DAL\MyDbContext.cs" />
     <Compile Include="DAL\SupplierRepository.cs" />
+    <Compile Include="Helpers\DataSeeder.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\UserDetails.cs" />
     <Compile Include="Validation\DisallowSpecialCharactersAttribute.cs" />

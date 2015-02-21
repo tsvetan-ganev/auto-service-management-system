@@ -34,16 +34,14 @@ namespace AutoServiceManagementSystem.DAL
 			return context.Cars.Find(carId);
 		}
 
-        public Car GetCarByCustomerId(int? carId, int? customerId)
+		public Car GetCarByCustomerId(int? customerId, int? carId)
         {
-            var car = context.Cars.Find(carId);
-            if (car != null
-                //&& car.Customer.CustomerId == customerId
-                )
-            {
-                return car;
-            }
-            else car = null;
+			var car = context.Cars
+				.Include(c => c.Customer)
+				.Where(c => c.Customer.CustomerId == customerId)
+				.Where(c => c.CarId == carId)
+				.First();
+
             return car;
         }
 

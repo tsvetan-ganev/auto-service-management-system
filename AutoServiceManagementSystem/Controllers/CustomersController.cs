@@ -156,15 +156,6 @@ namespace AutoServiceManagementSystem.Controllers
             return RedirectToAction("Index");
         }
 
-        //// GET: Customer/{id}/Cars
-        //[Route("Customer/{id}/Cars")]
-        //public ActionResult DisplayAllCarsByCustomer(int id)
-        //{
-        //    //var currentUser = manager.FindById(User.Identity.GetUserId());
-        //    var cars = carsRepo.GetCarsByCustomer(id);
-        //    return View("~/Views/Cars/DisplayAllCarsByCustomer.cshtml", cars);
-        //}
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

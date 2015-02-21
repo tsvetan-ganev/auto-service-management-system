@@ -7,7 +7,8 @@
 <h2>All</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create", "Create",
+        new { customerId = ViewBag.CustomerId}, new { @class = "btn btn-primary" })
 </p>
 
 <section id="cars-list">
@@ -93,11 +94,11 @@
                     </ul>
                     <p>
                         @Html.ActionLink("Edit", "Edit",
-                            new { id = car.CarId }, new { @class = "btn btn-primary" })
+                            new { customerId = ViewBag.CustomerId, carId = car.CarId }, new { @class = "btn btn-primary" })
                         @Html.ActionLink("Details", "Details",
-                            new { id = car.CarId }, new { @class = "btn btn-default" })
+                            new { customerId = ViewBag.CustomerId, carId = car.CarId }, new { @class = "btn btn-default" })
                         @Html.ActionLink("Delete", "Delete",
-                            new { id = car.CarId }, new { @class = "btn btn-danger" })
+                            new { customerId = ViewBag.CustomerId, carId = car.CarId }, new { @class = "btn btn-danger" })
                     </p>
                 </div>
             </div>

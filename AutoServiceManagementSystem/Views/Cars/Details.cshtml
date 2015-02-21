@@ -69,6 +69,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.CarId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit", "Edit", new { carId = Model.CarId, customerId = Model.Customer.CustomerId }) |
+    @Html.ActionLink("Back to List", "DisplayAllCarsByCustomer", new { customerId = Model.Customer.CustomerId})
 </p>

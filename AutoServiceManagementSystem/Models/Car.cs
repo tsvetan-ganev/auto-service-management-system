@@ -17,6 +17,7 @@ namespace AutoServiceManagementSystem.Models
         public Car()
         {
             Jobs = new List<Job>();
+			Customer = new Customer();
         }
 
         // properties

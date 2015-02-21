@@ -17,18 +17,23 @@ namespace AutoServiceManagementSystem.Controllers
 	public class CarsController : Controller
 	{
 		private ICarRepository carRepo;
+		private ICustomerRepository customerRepo;
 		private ApplicationUserManager manager;
 
 		public CarsController()
 		{
 			var context = new MyDbContext();
 			this.carRepo = new CarRepository(context);
+			this.customerRepo = new CustomerRepository(context);
 			var store = new UserStore<ApplicationUser>(context);
 			store.AutoSaveChanges = false;
 			this.manager = new ApplicationUserManager(store);
 		}
 
 		// GET: Cars
+		[Route("Cars")]
+		[Route("Index")]
+		[Route("Cars/All")]
 		public ActionResult Index()
 		{
 			var currentUser = manager.FindById(User.Identity.GetUserId());
@@ -39,29 +44,27 @@ namespace AutoServiceManagementSystem.Controllers
 		}
 
 		// GET: Cars/Details/5
-		public ActionResult Details(int? id)
+		public ActionResult Details(int customerId, int carId)
 		{
 			var currentUser = manager.FindById(User.Identity.GetUserId());
-			if (id == null)
-			{
-				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-			}
 
-			Car car = carRepo.GetCarById(id);
+			Car car = carRepo.GetCarByCustomerId(customerId, carId);
 
 			if (car == null)
 			{
 				return HttpNotFound();
 			}
+
 			if (car.User != currentUser)
 			{
-				return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+				return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
 			}
+
 			return View(car);
 		}
 
 		// GET: Cars/Create
-		public ActionResult Create()
+		public ActionResult Create(int customerId)
 		{
 			return View();
 		}
@@ -71,35 +74,51 @@ namespace AutoServiceManagementSystem.Controllers
 		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Create([Bind(Include = "CarId,Manufacturer,Model,PlateCode,VIN,EngineCode,Year,FuelType,User")] Car car)
+		public ActionResult Create([Bind(Include = "CarId,Manufacturer,Model,PlateCode,VIN,EngineCode,Year,FuelType,User,Customer")] Car car, int customerId)
 		{
 			var currentUser = manager.FindById(User.Identity.GetUserId());
+			var customer = customerRepo.GetCustomerById(customerId);
+
+			if (customer.User != currentUser)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+			}
+
 			if (ModelState.IsValid)
 			{
 				car.User = currentUser;
+				car.Customer = customer;
 				carRepo.InsertCar(car);
 				carRepo.Save();
-				return RedirectToAction("Index");
+				return RedirectToAction("DisplayAllCarsByCustomer", customerId);
 			}
 
 			return View(car);
 		}
 
-		// GET: Cars/Edit/5
-		public ActionResult Edit(int? id)
+
+        // GET: Customers/{id}/Cars
+        [Route("Customers/{id}/Cars")]
+        public ActionResult DisplayAllCarsByCustomer(int id)
+        {
+            //var currentUser = manager.FindById(User.Identity.GetUserId());
+			ViewBag.CustomerId = id;
+            var cars = carRepo.GetCarsByCustomer(id);
+            return View(cars);
+        }
+
+		// GET: Customer/{customerId}/Car/{carId}/Edit
+		public ActionResult Edit(int customerId, int carId)
 		{
 			var currentUser = manager.FindById(User.Identity.GetUserId());
-			if (id == null)
-			{
-				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-			}
 
-			Car car = carRepo.GetCarById(id);
+			Car car = carRepo.GetCarByCustomerId(customerId, carId);
 
 			if (car == null)
 			{
 				return HttpNotFound();
 			}
+
 			if (car.User != currentUser)
 			{
 				return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
@@ -108,12 +127,11 @@ namespace AutoServiceManagementSystem.Controllers
 			return View(car);
 		}
 
-        // POST: Customer/{customerId}/Car/{carId}/Edit
+		// POST: Customer/{customerId}/Car/Edit/{carId}
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-        [Route("Customer/{customerId:int}/Car/{carId:int}/Edit")]
 		public ActionResult Edit([Bind(Include = "CarId,Manufacturer,Model,PlateCode,VIN,EngineCode,Year,FuelType,User,Customer")] Car car,
-            int customerId, int carId)
+			int customerId, int carId)
 		{
 			if (ModelState.IsValid)
 			{
@@ -124,73 +142,36 @@ namespace AutoServiceManagementSystem.Controllers
 			return View(car);
 		}
 
-		// GET: Cars/Delete/5
-		public ActionResult Delete(int? id)
+
+		// GET: Customers/{customerId}/Cars/Delete/{carId}
+		public ActionResult Delete(int customerId, int carId)
 		{
 			var currentUser = manager.FindById(User.Identity.GetUserId());
-			if (id == null)
-			{
-				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-			}
 
-			Car car = carRepo.GetCarById(id);
+			Car car = carRepo.GetCarByCustomerId(customerId, carId);
 
 			if (car == null)
 			{
 				return HttpNotFound();
 			}
+
 			if (car.User != currentUser)
 			{
-				return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+				return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
 			}
+
 			return View(car);
 		}
 
-		// POST: Cars/Delete/5
+		// POST: Customers/{customerId}/Cars/Delete/{carId}
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
-		public ActionResult DeleteConfirmed(int id)
+		public ActionResult DeleteConfirmed(int customerId, int carId)
 		{
-			carRepo.DeleteCar(id);
+			carRepo.DeleteCar(carId);
 			carRepo.Save();
-			return RedirectToAction("Index");
+			return RedirectToAction("DisplayAllCarsByCustomer", customerId);
 		}
-
-        
-        // GET: Customer/{id}/Cars
-        [Route("Customer/{id}/Cars")]
-        public ActionResult DisplayAllCarsByCustomer(int id)
-        {
-            //var currentUser = manager.FindById(User.Identity.GetUserId());
-            var cars = carRepo.GetCarsByCustomer(id);
-            return View(cars);
-        }
-
-        // GET: Customer/{customerId}/Car/{carId}/Edit
-        [Route("Customer/{customerId}/Car/{carId}/Edit")]
-        public ActionResult Edit(int? customerId, int? carId)
-        {
-            var currentUser = manager.FindById(User.Identity.GetUserId());
-
-            if (customerId == null || carId == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            Car car = carRepo.GetCarByCustomerId(carId, customerId);
-
-            if (car == null)
-            {
-                return HttpNotFound();
-            }
-
-            if (car.User != currentUser)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
-            }
-
-            return View(car);
-        }
 
 		protected override void Dispose(bool disposing)
 		{
