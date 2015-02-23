@@ -43,7 +43,7 @@ namespace AutoServiceManagementSystem.Controllers
 			return View(carsList);
 		}
 
-		// GET: Cars/Details/5
+		// GET: Customers/{customerId}/Cars/Details/{carId}
 		public ActionResult Details(int customerId, int carId)
 		{
 			var currentUser = manager.FindById(User.Identity.GetUserId());
@@ -63,13 +63,13 @@ namespace AutoServiceManagementSystem.Controllers
 			return View(car);
 		}
 
-		// GET: Cars/Create
+        // GET: Customers/{customerId}/Cars/Create
 		public ActionResult Create(int customerId)
 		{
 			return View();
 		}
 
-		// POST: Cars/Create
+        // POST: Customers/{customerId}/Cars/Create
 		// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
 		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
