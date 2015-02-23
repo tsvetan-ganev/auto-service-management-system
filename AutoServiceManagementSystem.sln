@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoServiceManagementSystem", "AutoServiceManagementSystem\AutoServiceManagementSystem.csproj", "{6C49CA10-6F9C-473B-A6DF-CD030D7FA73B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoServiceManagementSystem.Tests", "..\..\..\Documents\Visual Studio 2013\Projects\AutoServiceManagementSystem\AutoServiceManagementSystem.Tests\AutoServiceManagementSystem.Tests.csproj", "{ACA98410-3D49-4BCD-AEAB-7520A00A8700}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoServiceManagementSystem.Tests", "AutoServiceManagementSystem.Tests\AutoServiceManagementSystem.Tests.csproj", "{C395C8F5-7D0E-431F-8390-FB51998E4D25}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,9 +17,10 @@ Global
 		{6C49CA10-6F9C-473B-A6DF-CD030D7FA73B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C49CA10-6F9C-473B-A6DF-CD030D7FA73B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C49CA10-6F9C-473B-A6DF-CD030D7FA73B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ACA98410-3D49-4BCD-AEAB-7520A00A8700}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ACA98410-3D49-4BCD-AEAB-7520A00A8700}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ACA98410-3D49-4BCD-AEAB-7520A00A8700}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C395C8F5-7D0E-431F-8390-FB51998E4D25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C395C8F5-7D0E-431F-8390-FB51998E4D25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C395C8F5-7D0E-431F-8390-FB51998E4D25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C395C8F5-7D0E-431F-8390-FB51998E4D25}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

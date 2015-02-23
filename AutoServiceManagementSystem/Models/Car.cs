@@ -50,12 +50,6 @@ namespace AutoServiceManagementSystem.Models
 			get { return vin; }
 			set
 			{
-				/// TODO: Actual validation
-				//if (value.Length != 17)
-				//{
-				//	throw new ArgumentOutOfRangeException(
-				//		"VIN codes consist of exactly 17 symbols.");
-				//}
 				vin = value.ToString().ToUpper();
 			}
 		}
@@ -64,17 +58,12 @@ namespace AutoServiceManagementSystem.Models
 		[Display(Name = "Engine Code")]
 		public string EngineCode { get; set; }
 
-		[Range(1950, 2015)]
+		[Range(1950, 2021)]
         public int? Year 
 		{ 
 			get {return year;}
 			set
 			{
-				if (value > DateTime.Now.Year || value < 1950)
-				{
-					throw new ArgumentOutOfRangeException(
-						"The year of manufacturing must be larger than 1950 and less or equal than the current year.");
-				}
 				year = value;
 			}
 		}
