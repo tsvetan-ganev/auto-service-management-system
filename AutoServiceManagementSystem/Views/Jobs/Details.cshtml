@@ -1,0 +1,58 @@
+﻿@model AutoServiceManagementSystem.Models.Job
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Job</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentMileage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CurrentMileage)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateStarted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateStarted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateFinished)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateFinished)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Finished)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Finished)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Paid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Paid)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.JobId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

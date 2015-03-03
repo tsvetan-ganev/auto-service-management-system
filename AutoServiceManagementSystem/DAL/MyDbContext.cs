@@ -34,6 +34,8 @@ namespace AutoServiceManagementSystem.DAL
 		public DbSet<Customer> Customers { get; set; }
         public DbSet<Car> Cars { get; set; }
 		public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<Job> Jobs { get; set; }
+        public DbSet<SparePart> SpareParts { get; set; }
 
 	}
 }
