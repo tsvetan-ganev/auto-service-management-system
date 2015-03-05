@@ -18,7 +18,10 @@ namespace AutoServiceManagementSystem.DAL
         #region IJobRepository Implementation
         public IEnumerable<Job> GetJobs()
         {
-            return context.Jobs.ToList();
+            return context.Jobs
+                .Include(j => j.Car)
+                // .Include(j => j.SpareParts
+                .ToList();
         }
 
         public IEnumerable<Job> GetJobsByCar(int carId)
@@ -31,6 +34,18 @@ namespace AutoServiceManagementSystem.DAL
         public Job GetJobById(int? id)
         {
             return context.Jobs.Find(id);
+        }
+
+
+
+        public Job GetJobById(int customerId, int carId, int jobId)
+        {
+            return context.Jobs
+                .Include(j => j.Car)
+                .Where(j => j.Car.Customer.CustomerId == customerId)
+                .Where(j => j.Car.CarId == carId)
+                .Where(j => j.JobId == jobId)
+                .SingleOrDefault();
         }
 
         public void InsertJob(Job job)
@@ -71,5 +86,6 @@ namespace AutoServiceManagementSystem.DAL
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
     }
 }

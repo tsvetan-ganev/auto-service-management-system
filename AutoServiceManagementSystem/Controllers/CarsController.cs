@@ -74,14 +74,15 @@ namespace AutoServiceManagementSystem.Controllers
 		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Create([Bind(Include = "CarId,Manufacturer,Model,PlateCode,VIN,EngineCode,Year,FuelType,User,Customer")] Car car, int customerId)
+		public ActionResult Create([Bind(Include = "CarId,Manufacturer,Model,PlateCode,VIN,EngineCode,Year,FuelType,User,Customer")] Car car,
+            int customerId)
 		{
 			var currentUser = manager.FindById(User.Identity.GetUserId());
 			var customer = customerRepo.GetCustomerById(customerId);
 
 			if (customer.User != currentUser)
 			{
-				return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+				return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
 			}
 
 			if (ModelState.IsValid)
@@ -121,7 +122,7 @@ namespace AutoServiceManagementSystem.Controllers
 
 			if (car.User != currentUser)
 			{
-				return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
 			}
 
 			return View(car);
@@ -157,7 +158,8 @@ namespace AutoServiceManagementSystem.Controllers
 
 			if (car.User != currentUser)
 			{
-				return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+				return new HttpStatusCodeResult(
+                    HttpStatusCode.Forbidden);
 			}
 
 			return View(car);

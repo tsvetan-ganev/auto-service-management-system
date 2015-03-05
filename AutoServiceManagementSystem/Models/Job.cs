@@ -63,6 +63,11 @@ namespace AutoServiceManagementSystem.Models
 
         public List<SparePart> SpareParts { get; set; }
 
+
         public Car Car { get; set; }
+
+        public Customer Customer { get; set; }
+
+        public ApplicationUser User { get; set; }
     }
 }

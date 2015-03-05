@@ -7,30 +7,36 @@ using System.Web.Routing;
 
 namespace AutoServiceManagementSystem
 {
-	public class RouteConfig
-	{
-		public static void RegisterRoutes(RouteCollection routes)
-		{
-			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+    public class RouteConfig
+    {
+        public static void RegisterRoutes(RouteCollection routes)
+        {
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.MapMvcAttributeRoutes();
 
-			routes.MapRoute(
-				name: "Customers",
-				url: "Customers/{action}/{id}",
-				defaults: new { controller = "Customers", action = "Details", id = UrlParameter.Optional }
-			);
+            routes.MapRoute(
+                name: "Customers",
+                url: "Customers/{action}/{id}",
+                defaults: new { controller = "Customers", action = "Details", id = UrlParameter.Optional }
+            );
 
-			routes.MapRoute(
-				name: "CustomerCars",
-				url: "Customers/{customerId}/Cars/{action}/{carId}",
-				defaults: new { controller = "Cars", action = "DisplayAllCarsByCustomer", carId = UrlParameter.Optional }
-			);
+            routes.MapRoute(
+                name: "Jobs",
+                url: "Customers/{customerId}/Cars/{carId}/Jobs/{action}/{jobId}",
+                defaults: new { controller = "Jobs", action = "Index", jobId = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "CustomerCars",
+                url: "Customers/{customerId}/Cars/{action}/{carId}",
+                defaults: new { controller = "Cars", action = "DisplayAllCarsByCustomer", carId = UrlParameter.Optional }
+            );
 
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
-		}
-	}
+        }
+    }
 }
