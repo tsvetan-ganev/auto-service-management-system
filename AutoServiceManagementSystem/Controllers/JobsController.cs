@@ -35,14 +35,42 @@ namespace AutoServiceManagementSystem.Controllers
         // GET: Jobs
         //[Route("Jobs")]
         //[Route("Jobs/All")]
-        public ActionResult Index()
-        {
-            var currentUser = manager.FindById(User.Identity.GetUserId());
-            var jobsList = jobRepo.GetJobs()
-                .Where(j => j.Car.User == currentUser)
-                .OrderByDescending(j => j.DateStarted);
-            return View(jobsList);
-        }
+		//public ActionResult Index()
+		//{
+		//	var currentUser = manager.FindById(User.Identity.GetUserId());
+		//	var jobsList = jobRepo.GetJobs()
+		//		.Where(j => j.Car.User == currentUser)
+		//		.OrderByDescending(j => j.DateStarted);
+		//	return View(jobsList);
+		//}
+
+		public ActionResult Index(int customerId, int carId)
+		{
+			var currentUser = manager.FindById(User.Identity.GetUserId());
+			var customer = customerRepo.GetCustomerById(customerId);
+			var car = carRepo.GetCarById(carId);
+
+			if (customer == null || car == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+			}
+
+			if (customer.User != currentUser || car.Customer != customer)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+			}
+
+			var jobsList = jobRepo.GetJobs(customerId, carId)
+				.OrderByDescending(j => j.DateStarted);
+
+			ViewBag.CustomerId = customerId;
+			ViewBag.CarId = carId;
+			ViewBag.CustomerName = customer.FirstName + " " + customer.LastName;
+			ViewBag.CarManufacturer = car.Manufacturer;
+			ViewBag.CarPlateNumber = car.PlateCode;
+
+			return View(jobsList);
+		}
 
         // GET: Customers/{customerId}/Cars/{carId}/Jobs/Details/{jobId}
         public ActionResult Details(int customerId, int carId, int jobId)
@@ -57,8 +85,12 @@ namespace AutoServiceManagementSystem.Controllers
 
             if (job.Car.User != currentUser || job.Car.CarId != carId)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
+
+			ViewBag.CustomerId = customerId;
+			ViewBag.CarId = carId;
+			ViewBag.JobId = jobId;
 
             return View(job);
         }
@@ -72,7 +104,7 @@ namespace AutoServiceManagementSystem.Controllers
         // POST: Customers/{customerId}/Cars/{carId}/Jobs/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "JobId,CurrentMileage,DateStarted,DateFinished,Finished,Paid,Car,User,Customer")] Job job,
+		public ActionResult Create([Bind(Include = "JobId,Mileage,Description,DateStarted,DateFinished,Finished,Paid,Car,User,Customer")] Job job,
             int customerId, int carId)
         {
             var currentUser = manager.FindById(User.Identity.GetUserId());
@@ -81,7 +113,7 @@ namespace AutoServiceManagementSystem.Controllers
 
             if (customer.User != currentUser || car.Customer != customer)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+				return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
 
             if (ModelState.IsValid)
@@ -118,7 +150,7 @@ namespace AutoServiceManagementSystem.Controllers
 
             if (car.Customer != customer || job.Car != car)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
 
             return View(job);
@@ -127,7 +159,7 @@ namespace AutoServiceManagementSystem.Controllers
         // POST: Customers/{id}/Cars/{carId}/Jobs/Edit/{jobId}
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "JobId,CurrentMileage,DateStarted,DateFinished,Finished,Paid,Car,User,Customer")] Job job,
+        public ActionResult Edit([Bind(Include = "JobId,Mileage,Description,DateStarted,DateFinished,Finished,Paid,Car,User,Customer")] Job job,
             int customerId, int carId, int jobId)
         {
             var currentUser = manager.FindById(User.Identity.GetUserId());
@@ -150,7 +182,8 @@ namespace AutoServiceManagementSystem.Controllers
         public ActionResult Delete(int customerId, int carId, int jobId)
         {
             var currentUser = manager.FindById(User.Identity.GetUserId());
-
+			var customer = customerRepo.GetCustomerById(customerId);
+			var car = carRepo.GetCarByCustomerId(customerId, carId);
             Job job = jobRepo.GetJobById(customerId, carId, jobId);
             
             if (job == null)
@@ -158,12 +191,10 @@ namespace AutoServiceManagementSystem.Controllers
                 return HttpNotFound();
             }
 
-            if (job.Car.User != currentUser 
-                || job.Car.Customer.CustomerId != customerId)
-            {
-                return new HttpStatusCodeResult(
-                    HttpStatusCode.Forbidden);
-            }
+			if (car.Customer != customer || job.Car != car)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+			}
 
             return View(job);
         }

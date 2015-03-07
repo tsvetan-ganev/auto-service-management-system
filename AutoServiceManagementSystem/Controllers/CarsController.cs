@@ -32,15 +32,11 @@ namespace AutoServiceManagementSystem.Controllers
 
 		// GET: Cars
 		[Route("Cars")]
-		[Route("Index")]
+		[Route("Cars/Index")]
 		[Route("Cars/All")]
 		public ActionResult Index()
 		{
-			var currentUser = manager.FindById(User.Identity.GetUserId());
-			var carsList = carRepo.GetCars()
-				.Where(c => c.User == currentUser);
-
-			return View(carsList);
+			throw new NotImplementedException();
 		}
 
 		// GET: Customers/{customerId}/Cars/Details/{carId}
@@ -102,8 +98,24 @@ namespace AutoServiceManagementSystem.Controllers
         [Route("Customers/{id}/Cars")]
         public ActionResult DisplayAllCarsByCustomer(int id)
         {
-            //var currentUser = manager.FindById(User.Identity.GetUserId());
+            var currentUser = manager.FindById(User.Identity.GetUserId());
+			var customer = customerRepo.GetCustomerById(id);
+
+			if (customer == null)
+			{
+				// no such customer
+				return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+			}
+
+			if (customer.User != currentUser)
+			{
+				// this user tries to access other user's customer data
+				return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+			}
+
 			ViewBag.CustomerId = id;
+			ViewBag.Title = string.Format("{0} {1}'s cars.",
+				customer.FirstName, customer.LastName);
             var cars = carRepo.GetCarsByCustomer(id);
             return View(cars);
         }
