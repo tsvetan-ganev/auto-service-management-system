@@ -11,59 +11,33 @@ namespace AutoServiceManagementSystem.Models
         public Job()
         {
             SpareParts = new List<SparePart>();
+			DateStarted = DateTime.Now;
+			Finished = false;
+			Paid = false;
         }
 
         public int JobId { get; set; }
 
 		[Range(1, 999999)]
-        public int CurrentMileage { get; set; }
+        public int Mileage { get; set; }
+
+		[DataType(DataType.MultilineText)]
+		public string Description { get; set; }
 
 		[DataType(DataType.Date)]
+		[Display(Name="Date Started")]
         public DateTime? DateStarted { get; set; }
 
 		[DataType(DataType.Date)]
+		[Display(Name = "Date Finished")]
         public DateTime? DateFinished { get; set; }
 
         public Boolean Finished { get; set; }
         public Boolean Paid { get; set; }
 
-		public decimal TotalCost 
-        {
-            get
-            {
-                decimal total = 0;
-                foreach (var part in SpareParts)
-                {
-                    total += part.Quantity * part.Price;
-                }
-                return total;
-            }
-        }
-
-        public decimal TotalCostWithDiscount 
-        {
-            get
-            {
-                decimal total = 0;
-                foreach (var part in SpareParts)
-                {
-                    total += part.Quantity * part.PriceWithDiscount;
-                }
-                return total;
-            }
-        }
-
-		public decimal Profit 
-        { 
-            get
-            {
-                return TotalCost - TotalCostWithDiscount;
-            }
-        }
-
         public List<SparePart> SpareParts { get; set; }
 
-
+		// navigation properties
         public Car Car { get; set; }
 
         public Customer Customer { get; set; }
