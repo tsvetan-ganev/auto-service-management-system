@@ -17,7 +17,7 @@ namespace AutoServiceManagementSystem
             routes.MapRoute(
                 name: "Customers",
                 url: "Customers/{action}/{id}",
-                defaults: new { controller = "Customers", action = "Details", id = UrlParameter.Optional }
+                defaults: new { controller = "Customers", action = "Index", id = UrlParameter.Optional }
             );
 
             routes.MapRoute(
@@ -27,7 +27,7 @@ namespace AutoServiceManagementSystem
             );
 
             routes.MapRoute(
-                name: "CustomerCars",
+                name: "Cars",
                 url: "Customers/{customerId}/Cars/{action}/{carId}",
                 defaults: new { controller = "Cars", action = "DisplayAllCarsByCustomer", carId = UrlParameter.Optional }
             );
