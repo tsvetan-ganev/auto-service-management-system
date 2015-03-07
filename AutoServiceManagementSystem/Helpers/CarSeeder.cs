@@ -201,6 +201,7 @@ namespace AutoServiceManagementSystem.Helpers
             car.PlateCode = GeneratePlateNumber();
             car.Year = GetYear(car.VIN);
             car.EngineCode = GenerateEngineCode();
+			car.Jobs = new List<Job>();
             car.User = user;
             car.Customer = owner;
 
