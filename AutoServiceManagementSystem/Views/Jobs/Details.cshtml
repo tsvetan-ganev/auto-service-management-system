@@ -1,4 +1,4 @@
-﻿@model AutoServiceManagementSystem.Models.Job
+﻿@model Job
 
 @{
     ViewBag.Title = "Details";
@@ -11,11 +11,11 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.CurrentMileage)
+            @Html.DisplayNameFor(model => model.Mileage)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CurrentMileage)
+            @Html.DisplayFor(model => model.Mileage)
         </dd>
 
         <dt>
@@ -53,6 +53,7 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.JobId }) |
+    @Html.ActionLink("Edit", "Edit", "Jobs",
+                new { customerId = ViewBag.CustomerId, carId = ViewBag.CarId, jobId = Model.JobId }, new { @class = "btn btn-default" }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

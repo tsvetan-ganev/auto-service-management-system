@@ -68,7 +68,9 @@
 
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { carId = Model.CarId, customerId = Model.Customer.CustomerId }) |
-    @Html.ActionLink("Back to List", "DisplayAllCarsByCustomer", new { customerId = Model.Customer.CustomerId})
-</p>
+<div class="col-lg-offset-1 col-md-offset-1 col-sm-offset-1">
+    @Html.ActionLink("Edit", "Edit", new { carId = Model.CarId, customerId = Model.Customer.CustomerId },
+        new {@class = "btn btn-primary"})
+    @Html.ActionLink("Back to List", "DisplayAllCarsByCustomer", new { customerId = Model.Customer.CustomerId },
+        new {@class = "btn btn-default"})
+</div>

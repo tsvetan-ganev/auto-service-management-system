@@ -43,7 +43,7 @@
         </dd>
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.SupplierId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<div class="col-md-offset-1 col-sm-offset-2">
+    @Html.ActionLink("Edit", "Edit", new { id = Model.SupplierId }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
+</div>
