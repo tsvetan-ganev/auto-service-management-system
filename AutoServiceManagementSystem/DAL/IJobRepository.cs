@@ -8,6 +8,7 @@ namespace AutoServiceManagementSystem.DAL
     public interface IJobRepository : IDisposable
     {
         IEnumerable<Job> GetJobs();
+		IEnumerable<Job> GetJobs(int customerId, int carId);
         Job GetJobById(int? id);
         Job GetJobById(int customerId, int carId, int jobId);
         void InsertJob(Job job);

@@ -24,6 +24,15 @@ namespace AutoServiceManagementSystem.DAL
                 .ToList();
         }
 
+		public IEnumerable<Job> GetJobs(int customerId, int carId)
+		{
+			return context.Jobs
+				.Where(j =>
+					j.Customer.CustomerId == customerId &&
+					j.Car.CarId == carId)
+				.ToList();
+		}
+
         public IEnumerable<Job> GetJobsByCar(int carId)
         {
             return context.Jobs
@@ -86,6 +95,5 @@ namespace AutoServiceManagementSystem.DAL
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-
-    }
+	}
 }
