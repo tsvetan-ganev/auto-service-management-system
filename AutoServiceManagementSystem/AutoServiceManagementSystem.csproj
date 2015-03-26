@@ -289,7 +289,7 @@
     <Content Include="Views\Suppliers\Index.cshtml" />
     <Content Include="Views\Home\_DailySupplier.cshtml" />
     <Content Include="Views\Manage\_EditUserDetails.cshtml" />
-    <Content Include="Views\Cars\DisplayAllCarsByCustomer.cshtml" />
+    <Content Include="Views\Cars\CarsByCustomer.cshtml" />
     <Content Include="Views\Jobs\Create.cshtml" />
     <Content Include="Views\Jobs\Delete.cshtml" />
     <Content Include="Views\Jobs\Details.cshtml" />
@@ -300,6 +300,8 @@
     <Content Include="Views\SpareParts\Details.cshtml" />
     <Content Include="Views\SpareParts\Edit.cshtml" />
     <Content Include="Views\SpareParts\Index.cshtml" />
+    <Content Include="Views\Jobs\_SparePartCreate.cshtml" />
+    <Content Include="Views\Jobs\Job.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

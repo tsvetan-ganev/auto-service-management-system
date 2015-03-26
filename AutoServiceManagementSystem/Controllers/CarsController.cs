@@ -66,8 +66,6 @@ namespace AutoServiceManagementSystem.Controllers
 		}
 
         // POST: Customers/{customerId}/Cars/Create
-		// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public ActionResult Create([Bind(Include = "CarId,Manufacturer,Model,PlateCode,VIN,EngineCode,Year,FuelType,User,Customer")] Car car,
@@ -87,7 +85,7 @@ namespace AutoServiceManagementSystem.Controllers
 				car.Customer = customer;
 				carRepo.InsertCar(car);
 				carRepo.Save();
-				return RedirectToAction("DisplayAllCarsByCustomer", customerId);
+				return RedirectToAction("CarsByCustomer", customerId);
 			}
 
 			return View(car);
@@ -96,7 +94,7 @@ namespace AutoServiceManagementSystem.Controllers
 
         // GET: Customers/{id}/Cars
         [Route("Customers/{id}/Cars")]
-        public ActionResult DisplayAllCarsByCustomer(int id)
+        public ActionResult CarsByCustomer(int id)
         {
             var currentUser = manager.FindById(User.Identity.GetUserId());
 			var customer = customerRepo.GetCustomerById(id);
@@ -150,7 +148,7 @@ namespace AutoServiceManagementSystem.Controllers
 			{
 				carRepo.UpdateCar(car);
 				carRepo.Save();
-				return RedirectToAction("DisplayAllCarsByCustomer", customerId);
+				return RedirectToAction("CarsByCustomer", customerId);
 			}
 			return View(car);
 		}
@@ -184,7 +182,7 @@ namespace AutoServiceManagementSystem.Controllers
 		{
 			carRepo.DeleteCar(carId);
 			carRepo.Save();
-			return RedirectToAction("DisplayAllCarsByCustomer", customerId);
+			return RedirectToAction("CarsByCustomer", customerId);
 		}
 
 		protected override void Dispose(bool disposing)

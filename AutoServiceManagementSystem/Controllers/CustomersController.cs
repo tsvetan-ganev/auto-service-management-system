@@ -13,6 +13,7 @@ using Microsoft.AspNet.Identity;
 
 namespace AutoServiceManagementSystem.Controllers
 {
+    [Authorize()]
     public class CustomersController : Controller
     {
         private ICustomerRepository customersRepo;
@@ -30,7 +31,6 @@ namespace AutoServiceManagementSystem.Controllers
 		}
 
         // GET: Customers
-		[Authorize()]
         public ActionResult Index()
         {
 			var currentUser = manager.FindById(User.Identity.GetUserId());
@@ -40,7 +40,6 @@ namespace AutoServiceManagementSystem.Controllers
         }
 
         // GET: Customers/Details/5
-		[Authorize()]
         public ActionResult Details(int? id)
         {
 			var currentUser = manager.FindById(User.Identity.GetUserId());
@@ -61,15 +60,12 @@ namespace AutoServiceManagementSystem.Controllers
         }
 
         // GET: Customers/Create
-		[Authorize()]
         public ActionResult Create()
         {
             return View();
         }
 
         // POST: Customers/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[Authorize()]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -109,8 +105,6 @@ namespace AutoServiceManagementSystem.Controllers
         }
 
         // POST: Customers/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[Authorize()]        
 		[HttpPost]
         [ValidateAntiForgeryToken]
@@ -127,7 +121,7 @@ namespace AutoServiceManagementSystem.Controllers
 
         // GET: Customers/Delete/5
 		[Authorize()]
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int id)
         {
 			var currentUser = manager.FindById(User.Identity.GetUserId());
             if (id == null)

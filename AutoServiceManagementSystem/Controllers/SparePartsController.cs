@@ -46,17 +46,19 @@ namespace AutoServiceManagementSystem.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "SparePartId,Name,Code,Quantity,Price")] SparePart sparePart)
+        //[ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "SparePartId,Name,Code,Quantity,Price")] SparePart sparePart,
+            int customerId, int carId, int jobId)
         {
             if (ModelState.IsValid)
             {
                 db.SpareParts.Add(sparePart);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("NewJob");
             }
-
-            return View(sparePart);
+            // /Customers/1/Cars/1/Jobs/NewJob/
+            return RedirectToAction("NewJob", "Jobs", 
+                new { customerId = customerId, carId = carId, jobId = jobId});
         }
 
         // GET: SpareParts/Edit/5

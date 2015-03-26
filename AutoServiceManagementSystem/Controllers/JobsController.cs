@@ -32,18 +32,7 @@ namespace AutoServiceManagementSystem.Controllers
             this.manager = new ApplicationUserManager(store);
         }
 
-        // GET: Jobs
-        //[Route("Jobs")]
-        //[Route("Jobs/All")]
-		//public ActionResult Index()
-		//{
-		//	var currentUser = manager.FindById(User.Identity.GetUserId());
-		//	var jobsList = jobRepo.GetJobs()
-		//		.Where(j => j.Car.User == currentUser)
-		//		.OrderByDescending(j => j.DateStarted);
-		//	return View(jobsList);
-		//}
-
+        // GET: Customers/{customerId}/Cars/{carId}/Jobs
 		public ActionResult Index(int customerId, int carId)
 		{
 			var currentUser = manager.FindById(User.Identity.GetUserId());
@@ -159,12 +148,14 @@ namespace AutoServiceManagementSystem.Controllers
         // POST: Customers/{id}/Cars/{carId}/Jobs/Edit/{jobId}
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "JobId,Mileage,Description,DateStarted,DateFinished,Finished,Paid,Car,User,Customer")] Job job,
+        public ActionResult Edit([Bind(Include = "JobId,Mileage,Description,DateFinished,Finished,Paid,Car,User,Customer")] Job job,
             int customerId, int carId, int jobId)
         {
             var currentUser = manager.FindById(User.Identity.GetUserId());
             var customer = customerRepo.GetCustomerById(customerId);
             var car = carRepo.GetCarByCustomerId(customerId, carId);
+
+            bool finished = job.Finished;
 
             if (ModelState.IsValid)
             {
@@ -197,6 +188,16 @@ namespace AutoServiceManagementSystem.Controllers
 			}
 
             return View(job);
+        }
+
+        public ActionResult NewJob(int customerId, int carId, int jobId)
+        {
+            //TODO: da izbvleka joba po tova id i da go podam na View-to
+            Job job = jobRepo.GetJobById(customerId, carId, jobId);
+            ViewBag.customerId = customerId;
+            ViewBag.carID = carId;
+            ViewBag.jobId = jobId;
+            return View("Job", job);
         }
 
         // POST: Customers/{id}/Cars/{carId}/Jobs/Delete/{jobId}

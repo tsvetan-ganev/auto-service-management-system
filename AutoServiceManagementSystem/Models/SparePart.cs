@@ -15,7 +15,6 @@ namespace AutoServiceManagementSystem.Models
 		[DisallowSpecialCharacters(allowDigits: true)]
         public string Code { get; set; }
 
-
         public Supplier Supplier { get; set; }
 
 		[Range(1, 32)]

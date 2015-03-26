@@ -26,10 +26,16 @@ namespace AutoServiceManagementSystem
                 defaults: new { controller = "Jobs", action = "Index", jobId = UrlParameter.Optional }
             );
 
+            //routes.MapRoute(
+            //    name: "SpareParts",
+            //    url: "Customers/{customerId}/Cars/{carId}/Jobs/{action}/{jobId}/",
+            //    defaults: new { controller = "Jobs", action = "Index", jobId = UrlParameter.Optional }
+            //);
+
             routes.MapRoute(
                 name: "Cars",
                 url: "Customers/{customerId}/Cars/{action}/{carId}",
-                defaults: new { controller = "Cars", action = "DisplayAllCarsByCustomer", carId = UrlParameter.Optional }
+                defaults: new { controller = "Cars", action = "CarsByCustomer", carId = UrlParameter.Optional }
             );
 
             routes.MapRoute(
