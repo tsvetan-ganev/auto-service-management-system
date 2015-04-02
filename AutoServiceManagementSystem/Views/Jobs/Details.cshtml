@@ -7,8 +7,7 @@
 <h2>Details</h2>
     <hr />
 <div class="row">
-    <h4>Job</h4>
-    <hr />
+    <h3>Job</h3>
     <div class="container">
         <div class="row">
             <div class="col-md-6">
@@ -79,5 +78,5 @@
 <p>
     @Html.ActionLink("Edit", "Edit", "Jobs",
                 new { customerId = ViewBag.CustomerId, carId = ViewBag.CarId, jobId = Model.JobId }, new { @class = "btn btn-primary" })
-    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
+    @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-default" })
 </p>

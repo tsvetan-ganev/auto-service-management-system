@@ -45,12 +45,14 @@
                     @Html.DisplayFor(modelItem => item.WebsiteUrl)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.SupplierId },
+                    <div class="btn-group btn-group-sm">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.SupplierId },
                         new { @class = "btn btn-primary" })
-                    @Html.ActionLink("Details", "Details", new { id = item.SupplierId },
-                        new { @class = "btn btn-default" })
-                    @Html.ActionLink("Delete", "Delete", new { id = item.SupplierId },
+                        @Html.ActionLink("Details", "Details", new { id = item.SupplierId },
+                        new { @class = "btn btn-info" })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.SupplierId },
                         new { @class = "btn btn-danger" })
+                    </div>
                 </td>
             </tr>
         }

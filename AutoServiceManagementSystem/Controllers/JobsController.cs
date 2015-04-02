@@ -117,6 +117,16 @@ namespace AutoServiceManagementSystem.Controllers
                         Suppliers = new UserSuppliersViewModel(){
                         UserSuppliers = suppliers
                     }
+                },
+				new EditSparePartViewModel(){
+                        Suppliers = new UserSuppliersViewModel(){
+                        UserSuppliers = suppliers
+                    }
+                },
+                new EditSparePartViewModel(){
+                        Suppliers = new UserSuppliersViewModel(){
+                        UserSuppliers = suppliers
+                    }
                 }
             };
 
@@ -212,6 +222,7 @@ namespace AutoServiceManagementSystem.Controllers
         }
 
         // POST: Customers/{id}/Cars/{carId}/Jobs/Edit/{jobId}
+		// TODO: Fix
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(EditJobViewModel editJobViewModel, int customerId, int carId, int jobId)
@@ -253,16 +264,6 @@ namespace AutoServiceManagementSystem.Controllers
             }
 
             return View(job);
-        }
-
-        public ActionResult NewJob(int customerId, int carId, int jobId)
-        {
-            //TODO: da izbvleka joba po tova id i da go podam na View-to
-            Job job = jobRepo.GetJobById(customerId, carId, jobId);
-            ViewBag.customerId = customerId;
-            ViewBag.carID = carId;
-            ViewBag.jobId = jobId;
-            return View("Job", job);
         }
 
         // POST: Customers/{id}/Cars/{carId}/Jobs/Delete/{jobId}

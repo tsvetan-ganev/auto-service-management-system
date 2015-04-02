@@ -23,24 +23,26 @@ textarea {
     max-width: 280px;
 }
 
-
 /* BEGIN User Styles */
 
 .car-info-panel{
-    background-color: #e7faff;
+    text-align: center;
+    background-color: #d6dddd;
     margin-top: 20px;
-    margin-left: 50px;
+    margin-left: 70px;
 }
 
 @media screen and (max-width: 990px )
 {
     .car-info-panel{
-        margin: 20px 0;
+        margin: 10px 0;
         text-align: center;
         font-size: large;
     }
+
+    #navigation-top{
+        opacity: 0.87;
+    }
 }
 
-#make{
-    text-align: center;
-}
+

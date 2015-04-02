@@ -303,6 +303,7 @@
     <Content Include="Views\Shared\EditorTemplates\SparePart.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\UserSuppliersViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EditSparePartViewModel.cshtml" />
+    <Content Include="Styles\Site.less" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
