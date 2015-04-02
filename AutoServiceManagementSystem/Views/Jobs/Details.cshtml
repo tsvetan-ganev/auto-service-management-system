@@ -5,55 +5,79 @@
 }
 
 <h2>Details</h2>
-
-<div>
+    <hr />
+<div class="row">
     <h4>Job</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Mileage)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Mileage)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateStarted)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateStarted)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateFinished)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateFinished)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Finished)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Finished)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Paid)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Paid)
-        </dd>
-
-    </dl>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                @Html.LabelFor(j => j.Mileage)
+            </div>
+            <div class="col-md-6">
+                @Html.DisplayFor(j => j.Mileage)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                @Html.LabelFor(j => j.Description)
+            </div>
+            <div class="col-md-6">
+                @Html.DisplayFor(j => j.Description)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                @Html.LabelFor(j => j.DateStarted)
+            </div>
+            <div class="col-md-6">
+                @Html.DisplayFor(j => j.DateStarted)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                @Html.LabelFor(j => j.DateFinished)
+            </div>
+            <div class="col-md-6">
+                @Html.DisplayFor(j => j.DateFinished)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                @Html.LabelFor(j => j.Finished)
+            </div>
+            <div class="col-md-6">
+                @Html.DisplayFor(j => j.Finished)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                @Html.LabelFor(j => j.Paid)
+            </div>
+            <div class="col-md-6">
+                @Html.DisplayFor(j => j.Paid)
+            </div>
+        </div>
+    </div>
+    <hr />
+    <h4>Spare Parts</h4>
+    <table class="table table-striped col-md-12">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>OEM Code</th>
+                <th>Supplier</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @Html.DisplayFor(j => j.SpareParts)
+        </tbody>
+    </table>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", "Jobs",
-                new { customerId = ViewBag.CustomerId, carId = ViewBag.CarId, jobId = Model.JobId }, new { @class = "btn btn-default" }) |
-    @Html.ActionLink("Back to List", "Index")
+                new { customerId = ViewBag.CustomerId, carId = ViewBag.CarId, jobId = Model.JobId }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
 </p>

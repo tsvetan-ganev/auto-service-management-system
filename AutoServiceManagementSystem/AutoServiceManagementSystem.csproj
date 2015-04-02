@@ -160,7 +160,6 @@
   <ItemGroup>
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\JobsController.cs" />
-    <Compile Include="Controllers\SparePartsController.cs" />
     <Compile Include="Controllers\SuppliersController.cs" />
     <Compile Include="DAL\IJobRepository.cs" />
     <Compile Include="DAL\Initializers\InitializeIdentity.cs" />
@@ -203,6 +202,10 @@
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Job.cs" />
     <Compile Include="ViewModels\Account\RegisterViewModel.cs" />
+    <Compile Include="ViewModels\Jobs\CreateJobViewModel.cs" />
+    <Compile Include="ViewModels\Jobs\EditJobViewModel.cs" />
+    <Compile Include="ViewModels\Jobs\EditSparePartViewModel.cs" />
+    <Compile Include="ViewModels\Jobs\UserSuppliersViewModel.cs" />
     <Compile Include="ViewModels\Manage\AccountDetailsViewModel.cs" />
     <Compile Include="ViewModels\Manage\ManageViewModels.cs" />
     <Compile Include="Models\Supplier.cs" />
@@ -295,13 +298,11 @@
     <Content Include="Views\Jobs\Details.cshtml" />
     <Content Include="Views\Jobs\Edit.cshtml" />
     <Content Include="Views\Jobs\Index.cshtml" />
-    <Content Include="Views\SpareParts\Create.cshtml" />
-    <Content Include="Views\SpareParts\Delete.cshtml" />
-    <Content Include="Views\SpareParts\Details.cshtml" />
-    <Content Include="Views\SpareParts\Edit.cshtml" />
-    <Content Include="Views\SpareParts\Index.cshtml" />
     <Content Include="Views\Jobs\_SparePartCreate.cshtml" />
-    <Content Include="Views\Jobs\Job.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SparePart.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\SparePart.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\UserSuppliersViewModel.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EditSparePartViewModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

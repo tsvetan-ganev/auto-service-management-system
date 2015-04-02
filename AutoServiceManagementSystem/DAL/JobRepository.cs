@@ -30,6 +30,7 @@ namespace AutoServiceManagementSystem.DAL
 				.Where(j =>
 					j.Customer.CustomerId == customerId &&
 					j.Car.CarId == carId)
+                .Include(j => j.SpareParts)
 				.ToList();
 		}
 
@@ -37,6 +38,7 @@ namespace AutoServiceManagementSystem.DAL
         {
             return context.Jobs
                 .Where(j => j.Car.CarId == carId)
+                .Include(j => j.SpareParts)
                 .ToList();
         }
 
@@ -45,15 +47,15 @@ namespace AutoServiceManagementSystem.DAL
             return context.Jobs.Find(id);
         }
 
-
-
         public Job GetJobById(int customerId, int carId, int jobId)
         {
+            // eagerly loads the spare parts + their suppliers
             return context.Jobs
                 .Include(j => j.Car)
                 .Where(j => j.Car.Customer.CustomerId == customerId)
                 .Where(j => j.Car.CarId == carId)
                 .Where(j => j.JobId == jobId)
+                .Include(j => j.SpareParts.Select(sp => sp.Supplier))
                 .SingleOrDefault();
         }
 

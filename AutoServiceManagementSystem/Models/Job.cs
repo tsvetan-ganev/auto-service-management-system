@@ -33,6 +33,7 @@ namespace AutoServiceManagementSystem.Models
         public DateTime? DateFinished { get; set; }
 
         public Boolean Finished { get; set; }
+
         public Boolean Paid { get; set; }
 
         public List<SparePart> SpareParts { get; set; }

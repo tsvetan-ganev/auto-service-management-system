@@ -67,5 +67,13 @@ namespace AutoServiceManagementSystem.DAL
 			Dispose(true);
 			GC.SuppressFinalize(this);
 		}
-	}
+
+
+        public IEnumerable<Supplier> GetSuppliersByUserId(string userId)
+        {
+            return context.Suppliers
+                .Where(s => s.User.Id == userId)
+                .ToList();
+        }
+    }
 }

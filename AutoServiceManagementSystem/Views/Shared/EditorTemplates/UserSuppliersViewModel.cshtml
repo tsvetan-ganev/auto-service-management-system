@@ -1,0 +1,5 @@
+﻿
+@model AutoServiceManagementSystem.ViewModels.Jobs.UserSuppliersViewModel
+
+@Html.LabelFor(m => m.SelectedSupplierId)
+@Html.DropDownListFor(m => m.SelectedSupplierId, Model.UserSuppliers)

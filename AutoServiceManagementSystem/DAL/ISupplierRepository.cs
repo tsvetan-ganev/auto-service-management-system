@@ -10,6 +10,7 @@ namespace AutoServiceManagementSystem.DAL
 	public interface ISupplierRepository : IDisposable
 	{
 		IEnumerable<Supplier> GetSuppliers();
+        IEnumerable<Supplier> GetSuppliersByUserId(string userId);
 		Supplier GetSupplierById(int? supplierId);
 		void InsertSupplier(Supplier supplier);
 		void DeleteSupplier(int supplierId);

@@ -5,26 +5,23 @@ using System.Web;
 using AutoServiceManagementSystem.Validation;
 using System.ComponentModel.DataAnnotations;
 
-namespace AutoServiceManagementSystem.Models
+namespace AutoServiceManagementSystem.ViewModels.Jobs
 {
-    public class SparePart
+    public class EditSparePartViewModel
     {
-        public int SparePartId { get; set; }
+        //public int SparePartId { get; set; }
 
         public string Name { get; set; }
 
-		[DisallowSpecialCharacters(allowDigits: true)]
+        [DisallowSpecialCharacters(allowDigits: true)]
         public string Code { get; set; }
 
-        public Supplier Supplier { get; set; }
-
-		[Range(1, 32)]
+        [Range(1, 32)]
         public int Quantity { get; set; }
 
-		[DataType(DataType.Currency)]
-        //TODO: Displaying the number with two digits after the .
+        [DataType(DataType.Currency)]
         public decimal Price { get; set; }
 
-        public Job Job { get; set; }
+        public UserSuppliersViewModel Suppliers { get; set; }
     }
 }

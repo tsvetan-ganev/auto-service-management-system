@@ -124,10 +124,7 @@ namespace AutoServiceManagementSystem.Controllers
         public ActionResult Delete(int id)
         {
 			var currentUser = manager.FindById(User.Identity.GetUserId());
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+
             Customer customer = customersRepo.GetCustomerById(id);
             if (customer == null)
             {

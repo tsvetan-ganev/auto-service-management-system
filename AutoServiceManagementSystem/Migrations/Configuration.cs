@@ -137,7 +137,7 @@ namespace AutoServiceManagementSystem.Migrations
                         }
                         catch (Exception ex)
                         {
-
+                            Console.WriteLine(ex.Message);
                         }
                     }
                 }

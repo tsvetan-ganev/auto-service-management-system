@@ -1,4 +1,4 @@
-﻿@model Job
+﻿@model AutoServiceManagementSystem.ViewModels.Jobs.EditJobViewModel
 
 @{
     ViewBag.Title = "Edit";
@@ -15,7 +15,6 @@
         <h4>Job</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.JobId)
 
         <div class="form-group">
             @Html.LabelFor(model => model.Mileage, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -52,8 +51,11 @@
                 </div>
             </div>
         </div>
-        @Html.Partial("_SparePartCreate", new SparePart())
-        @Html.Partial("_SparePartCreate", new SparePart())
+        
+        <div class="form-group">
+            @Html.EditorFor(j => j.SpareParts)
+        </div>
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />

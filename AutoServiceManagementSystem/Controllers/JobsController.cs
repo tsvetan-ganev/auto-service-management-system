@@ -10,14 +10,17 @@ using AutoServiceManagementSystem.Models;
 using AutoServiceManagementSystem.DAL;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity;
+using AutoServiceManagementSystem.ViewModels.Jobs;
 
 namespace AutoServiceManagementSystem.Controllers
 {
+    [Authorize]
     public class JobsController : Controller
     {
         private IJobRepository jobRepo;
         private ICustomerRepository customerRepo;
         private ICarRepository carRepo;
+        private ISupplierRepository supplierRepo;
         private ApplicationUserManager manager;
 
         public JobsController()
@@ -26,40 +29,55 @@ namespace AutoServiceManagementSystem.Controllers
             this.jobRepo = new JobRepository(context);
             this.customerRepo = new CustomerRepository(context);
             this.carRepo = new CarRepository(context);
+            this.supplierRepo = new SupplierRepository(context);
 
             var store = new UserStore<ApplicationUser>(context);
             store.AutoSaveChanges = false;
             this.manager = new ApplicationUserManager(store);
         }
 
+        #region Private Methods
+        private IEnumerable<SelectListItem> GetUserSuppliers()
+        {
+            var suppliers = supplierRepo.GetSuppliersByUserId(User.Identity.GetUserId())
+                .Select(s => new SelectListItem
+                {
+                    Value = s.SupplierId.ToString(),
+                    Text = s.Name
+                });
+
+            return new SelectList(suppliers, "Value", "Text");
+        }
+        #endregion
+
         // GET: Customers/{customerId}/Cars/{carId}/Jobs
-		public ActionResult Index(int customerId, int carId)
-		{
-			var currentUser = manager.FindById(User.Identity.GetUserId());
-			var customer = customerRepo.GetCustomerById(customerId);
-			var car = carRepo.GetCarById(carId);
+        public ActionResult Index(int customerId, int carId)
+        {
+            var currentUser = manager.FindById(User.Identity.GetUserId());
+            var customer = customerRepo.GetCustomerById(customerId);
+            var car = carRepo.GetCarById(carId);
 
-			if (customer == null || car == null)
-			{
-				return new HttpStatusCodeResult(HttpStatusCode.NotFound);
-			}
+            if (customer == null || car == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
 
-			if (customer.User != currentUser || car.Customer != customer)
-			{
-				return new HttpStatusCodeResult(HttpStatusCode.NotFound);
-			}
+            if (customer.User != currentUser || car.Customer != customer)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
 
-			var jobsList = jobRepo.GetJobs(customerId, carId)
-				.OrderByDescending(j => j.DateStarted);
+            var jobsList = jobRepo.GetJobs(customerId, carId)
+                .OrderByDescending(j => j.DateStarted);
 
-			ViewBag.CustomerId = customerId;
-			ViewBag.CarId = carId;
-			ViewBag.CustomerName = customer.FirstName + " " + customer.LastName;
-			ViewBag.CarManufacturer = car.Manufacturer;
-			ViewBag.CarPlateNumber = car.PlateCode;
+            ViewBag.CustomerId = customerId;
+            ViewBag.CarId = carId;
+            ViewBag.CustomerName = customer.FirstName + " " + customer.LastName;
+            ViewBag.CarManufacturer = car.Manufacturer;
+            ViewBag.CarPlateNumber = car.PlateCode;
 
-			return View(jobsList);
-		}
+            return View(jobsList);
+        }
 
         // GET: Customers/{customerId}/Cars/{carId}/Jobs/Details/{jobId}
         public ActionResult Details(int customerId, int carId, int jobId)
@@ -77,24 +95,38 @@ namespace AutoServiceManagementSystem.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
 
-			ViewBag.CustomerId = customerId;
-			ViewBag.CarId = carId;
-			ViewBag.JobId = jobId;
-
+            ViewBag.CustomerId = customerId;
+            ViewBag.CarId = carId;
+            ViewBag.JobId = jobId;
+            
             return View(job);
         }
 
         // GET: Customers/{customerId}/Cars/{carId}/Jobs/Create
         public ActionResult Create(int customerId, int carId)
         {
-            return View();
+            var createJobViewModel = new CreateJobViewModel();
+            var suppliers = GetUserSuppliers();
+            createJobViewModel.SpareParts = new List<EditSparePartViewModel>(){
+                new EditSparePartViewModel(){
+                        Suppliers = new UserSuppliersViewModel(){
+                        UserSuppliers = suppliers
+                    }
+                },
+                new EditSparePartViewModel(){
+                        Suppliers = new UserSuppliersViewModel(){
+                        UserSuppliers = suppliers
+                    }
+                }
+            };
+
+            return View(createJobViewModel);
         }
 
         // POST: Customers/{customerId}/Cars/{carId}/Jobs/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-		public ActionResult Create([Bind(Include = "JobId,Mileage,Description,DateStarted,DateFinished,Finished,Paid,Car,User,Customer")] Job job,
-            int customerId, int carId)
+        public ActionResult Create(CreateJobViewModel createJobViewModel, int customerId, int carId)
         {
             var currentUser = manager.FindById(User.Identity.GetUserId());
             var customer = customerRepo.GetCustomerById(customerId);
@@ -102,20 +134,36 @@ namespace AutoServiceManagementSystem.Controllers
 
             if (customer.User != currentUser || car.Customer != customer)
             {
-				return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
 
             if (ModelState.IsValid)
             {
+                var job = new Job();
+                var spareParts = createJobViewModel.SpareParts.Select(sp => 
+                    new SparePart(){
+                        Name = sp.Name,
+                        Code = sp.Code,
+                        Price = sp.Price,
+                        Quantity = sp.Quantity,
+                        Supplier = supplierRepo.GetSupplierById(sp.Suppliers.SelectedSupplierId),
+                        Job = job
+                    }).ToList();
                 job.Car = car;
                 job.Customer = customer;
                 job.User = currentUser;
+                job.Mileage = createJobViewModel.Mileage;
+                job.Description = createJobViewModel.Description;
+                job.DateStarted = DateTime.Now;
+                job.Finished = false;
+                job.Paid = false;
+                job.SpareParts = spareParts;
                 jobRepo.InsertJob(job);
                 jobRepo.Save();
                 return RedirectToAction("Index");
             }
 
-            return View(job);
+            return View(createJobViewModel);
         }
 
         // GET: Customers/{id}/Cars/{carId}/Jobs/Edit/{jobId}
@@ -131,7 +179,7 @@ namespace AutoServiceManagementSystem.Controllers
                 return HttpNotFound();
             }
 
-            if (car.User != currentUser || job.User != currentUser 
+            if (car.User != currentUser || job.User != currentUser
                 || customer.User != currentUser)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
@@ -142,50 +190,67 @@ namespace AutoServiceManagementSystem.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
 
-            return View(job);
+            var editJobViewModel = new EditJobViewModel()
+            {
+                Description = job.Description,
+                Mileage = job.Mileage,
+                Paid = job.Paid,
+                Finished = job.Finished,
+                SpareParts = job.SpareParts.Select(sp => new EditSparePartViewModel()
+                {
+                    Name = sp.Name,
+                    Code = sp.Code,
+                    Price = sp.Price,
+                    Quantity = sp.Quantity,
+                    Suppliers = new UserSuppliersViewModel() {
+                        UserSuppliers = GetUserSuppliers()
+                    }
+                }).ToList()
+            };
+
+            return View(editJobViewModel);
         }
 
         // POST: Customers/{id}/Cars/{carId}/Jobs/Edit/{jobId}
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "JobId,Mileage,Description,DateFinished,Finished,Paid,Car,User,Customer")] Job job,
-            int customerId, int carId, int jobId)
+        public ActionResult Edit(EditJobViewModel editJobViewModel, int customerId, int carId, int jobId)
         {
             var currentUser = manager.FindById(User.Identity.GetUserId());
             var customer = customerRepo.GetCustomerById(customerId);
             var car = carRepo.GetCarByCustomerId(customerId, carId);
 
-            bool finished = job.Finished;
-
             if (ModelState.IsValid)
             {
-                job.Car = car;
-                job.Customer = customer;
-                job.User = currentUser;
+                var job = new Job();
+                job.Mileage = editJobViewModel.Mileage;
+                job.Description = editJobViewModel.Description;
+                job.Finished = editJobViewModel.Finished;
+                job.Paid = editJobViewModel.Paid;
                 jobRepo.UpdateJob(job);
                 jobRepo.Save();
                 return RedirectToAction("Index");
             }
-            return View(job);
+            return View(editJobViewModel);
         }
 
         // GET: Customers/{id}/Cars/{carId}/Jobs/Delete/{jobId}
         public ActionResult Delete(int customerId, int carId, int jobId)
         {
             var currentUser = manager.FindById(User.Identity.GetUserId());
-			var customer = customerRepo.GetCustomerById(customerId);
-			var car = carRepo.GetCarByCustomerId(customerId, carId);
+            var customer = customerRepo.GetCustomerById(customerId);
+            var car = carRepo.GetCarByCustomerId(customerId, carId);
             Job job = jobRepo.GetJobById(customerId, carId, jobId);
-            
+
             if (job == null)
             {
                 return HttpNotFound();
             }
 
-			if (car.Customer != customer || job.Car != car)
-			{
-				return new HttpStatusCodeResult(HttpStatusCode.NotFound);
-			}
+            if (car.Customer != customer || job.Car != car)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
 
             return View(job);
         }
