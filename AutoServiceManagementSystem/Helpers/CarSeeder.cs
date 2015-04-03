@@ -1,18 +1,18 @@
-﻿using AutoServiceManagementSystem.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Web;
+using AutoServiceManagementSystem.Models;
 
 namespace AutoServiceManagementSystem.Helpers
 {
     public static class CarSeeder
-    {
-        private static Random rand = new Random();
+	{
+		#region Private Fields
+		private static Random rand = new Random();
 
         // Imaginary car model names used for testing.
-        private static string[] modelNames = 
+        private static readonly string[] modelNames = 
         {
             "Lightning", "Blaze", "Elegance", "Flash", "Sports", "Winner", "Leader", "Magnum",
             "Jupiter", "Le Incredibile", "RTX 50", "Devil", "Daemon", "Femili", "Excellence",
@@ -21,7 +21,7 @@ namespace AutoServiceManagementSystem.Helpers
 
         // Bulgarian region codes used in Plate Numbers. 
         // They represent the area where the vehicle was registered.
-        private static string[] regionCodes = 
+        private static readonly string[] regionCodes = 
         {
             "Е", "А", "В", "ВТ", "ВН", "ВР", "ЕВ", "ТХ", "К", "КН", "ОВ", "М", "РА", "РК",
             "ЕН", "РВ", "РР", "Р", "СС", "СН", "СМ", "СО", "С", "СА", "СВ", "Т", "Х", "Х", "У"
@@ -32,7 +32,7 @@ namespace AutoServiceManagementSystem.Helpers
         // Note: Some manufacturers have factories in more than one country and
         // some WMIs have changed through the years. In a more realistic scenario
         // each manufacturer must have a list of WMIs.
-        private static Dictionary<string, string> worldManufacturerIds = new Dictionary<string, string>() 
+        private static readonly Dictionary<string, string> worldManufacturerIds = new Dictionary<string, string>() 
         {
             {"Acura", "19U"}, {"Audi", "WAU"}, {"Alfa Romeo", "ZAR"}, {"Aston Martin", "SCF"}, {"Bentley", "SCB"},
             {"BMW", "WBA"},{"Bugatti", "ZA9"}, {"Cadillac", "1G6"}, {"Chevrolet", "1G1"}, {"Chrysler", "1A8"},
@@ -49,7 +49,7 @@ namespace AutoServiceManagementSystem.Helpers
         };
 
         // In a VIN code the 10th digit represents the year of manufacturing.
-        private static Dictionary<char, int> charToYear = new Dictionary<char, int>()
+        private static readonly Dictionary<char, int> charToYear = new Dictionary<char, int>()
         {
             {'L', 1990}, {'M', 1991}, {'N', 1992}, {'P', 1993}, {'R', 1994}, {'S', 1995}, {'T', 1996},
             {'V', 1997}, {'W', 1998}, {'X', 1999}, {'Y', 2000}, {'A', 2010}, {'1', 2001}, {'2', 2002},
@@ -57,8 +57,9 @@ namespace AutoServiceManagementSystem.Helpers
             {'B', 2011}, {'C', 2012}, {'D', 2013}, {'E', 2014}, {'F', 2015}, {'G', 2016}, {'H', 2017},
             {'J', 2018}, {'K', 2018}
         };
+		#endregion
 
-        /// <summary>
+		/// <summary>
         /// Selects a random manufacturer from a list
         /// of automotive manufacturers.
         /// </summary>
@@ -177,6 +178,24 @@ namespace AutoServiceManagementSystem.Helpers
             return vin.ToString();
         }
 
+		/// <summary>
+		/// Generates a fuel type out of an enum.
+		/// </summary>
+		public static Car.Fuel GenerateFuelType()
+		{
+			switch (rand.Next(0, 3))
+			{
+				case 0:
+					return Car.Fuel.Diesel;
+				case 1:
+					return Car.Fuel.Gas;
+				case 2:
+					return Car.Fuel.Petrol;
+				default:
+					return Car.Fuel.Petrol;
+			}
+		}
+
         /// <summary>
         /// Generates a model year by a given VIN code.
         /// </summary>
@@ -192,6 +211,12 @@ namespace AutoServiceManagementSystem.Helpers
             return charToYear[vin[9]];
         }
 
+		/// <summary>
+		/// Generates a new car with all of its properties randomised.
+		/// </summary>
+		/// <param name="user">The current user.</param>
+		/// <param name="owner">The current car owner (customer).</param>
+		/// <returns>A new car with all fields populated with data.</returns>
         public static Car NextCar(ApplicationUser user = null, Customer owner = null)
         {
             var car = new Car();
@@ -201,6 +226,7 @@ namespace AutoServiceManagementSystem.Helpers
             car.PlateCode = GeneratePlateNumber();
             car.Year = GetYear(car.VIN);
             car.EngineCode = GenerateEngineCode();
+			car.FuelType = GenerateFuelType();
 			car.Jobs = new List<Job>();
             car.User = user;
             car.Customer = owner;

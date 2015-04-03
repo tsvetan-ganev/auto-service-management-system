@@ -10,7 +10,9 @@ namespace AutoServiceManagementSystem.Migrations
 	using System.Collections.Generic;
 	using System.Data.Entity;
 	using System.Data.Entity.Migrations;
+	using System.Data.Entity.Validation;
 	using System.Linq;
+	using System.Text;
 
     internal sealed class Configuration : DbMigrationsConfiguration<MyDbContext>
     {
@@ -56,13 +58,16 @@ namespace AutoServiceManagementSystem.Migrations
                 #region Seeding customers and their cars
 				var currentUser = manager.FindByEmail("test1@test.com");
 				var customersList = new List<Customer>();
+				var cars = new List<Car>();
 
-				for (int i = 0; i < 10; i++)
+				for (int i = 0; i < 20; i++)
 				{
 					var customer = CustomerSeeder.NextCustomer(currentUser);
 					for (int j = 0; j < 3; j++)
 					{
-						customer.Cars.Add(CarSeeder.NextCar(currentUser, customer));
+						var car = CarSeeder.NextCar(currentUser, customer);
+						cars.Add(car);
+						customer.Cars.Add(car);
 					}
 					customersList.Add(customer);
 				}
@@ -84,7 +89,7 @@ namespace AutoServiceManagementSystem.Migrations
                     },
                     new Supplier
                     {
-                        Name = "AutoPlus",
+                        Name = "Auto Plus",
                         DiscountPercentage = 33.0m,
                         City = "Rousse",
                         WebsiteUrl = "http://autoplus.bg",
@@ -92,7 +97,7 @@ namespace AutoServiceManagementSystem.Migrations
                     },
                     new Supplier
                     {
-                        Name = "AvtoKomers",
+                        Name = "Auto Commerce",
                         DiscountPercentage = 25.0m,
                         City = "Rousse",
                         WebsiteUrl = "http://acommers.bg",
@@ -100,7 +105,7 @@ namespace AutoServiceManagementSystem.Migrations
                     },
                     new Supplier
                     {
-                        Name = "MegaParts",
+                        Name = "Mega Parts",
                         DiscountPercentage = 10.0m,
                         City = "Sofia",
                         WebsiteUrl = "http://megaparts.bg",
@@ -113,15 +118,38 @@ namespace AutoServiceManagementSystem.Migrations
                         City = "Rousse",
                         WebsiteUrl = "http://intercars.bg",
                         User = currentUser
-                    }
+                    },
+					new Supplier
+					{
+						Name = "Auto Morgue",
+						DiscountPercentage = 0.0m,
+						City = "Rousse",
+						WebsiteUrl = "",
+						User = currentUser
+					}
                 };
                 suppliersToAdd.ForEach(s => context.Suppliers.Add(s));
                 context.SaveChanges();
                 #endregion
-            };
+
+				#region Jobs seeding
+				foreach (var car in cars)
+				{
+					var jobs = new List<Job>();
+					for (int i = 0; i < 3; i++)
+					{
+						jobs.Add(JobSeeder.NextJob(user, car, car.Customer));
+					}
+					jobs.ForEach(j => context.Jobs.Add(j));
+					jobs.ForEach(j => j.SpareParts.ForEach(
+						sp => context.SpareParts.Add(sp)));
+				}
+				SaveChanges(context);
+				#endregion
+			};
         }
 
-        public static void ClearDatabase<T>() where T : DbContext, new()
+        private static void ClearDatabase<T>() where T : DbContext, new()
         {
             using (var context = new T())
             {
@@ -145,6 +173,37 @@ namespace AutoServiceManagementSystem.Migrations
                 context.SaveChanges();
             }
         }
+
+		/// <summary>
+		/// Wrapper for SaveChanges adding the Validation Messages to the generated exception
+		/// </summary>
+		/// <param name="context">The context.</param>
+		private void SaveChanges(DbContext context)
+		{
+			try
+			{
+				context.SaveChanges();
+			}
+			catch (DbEntityValidationException ex)
+			{
+				StringBuilder sb = new StringBuilder();
+
+				foreach (var failure in ex.EntityValidationErrors)
+				{
+					sb.AppendFormat("{0} failed validation\n", failure.Entry.Entity.GetType());
+					foreach (var error in failure.ValidationErrors)
+					{
+						sb.AppendFormat("- {0} : {1}", error.PropertyName, error.ErrorMessage);
+						sb.AppendLine();
+					}
+				}
+
+				throw new DbEntityValidationException(
+					"Entity Validation Failed - errors follow:\n" +
+					sb.ToString(), ex
+				); // Add the original exception as the innerException
+			}
+		}
     }
 }
 
