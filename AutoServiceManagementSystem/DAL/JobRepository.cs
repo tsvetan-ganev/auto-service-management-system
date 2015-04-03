@@ -42,7 +42,7 @@ namespace AutoServiceManagementSystem.DAL
                 .ToList();
         }
 
-        public Job GetJobById(int? id)
+        public Job GetJobById(int id)
         {
             return context.Jobs.Find(id);
         }
@@ -56,6 +56,7 @@ namespace AutoServiceManagementSystem.DAL
                 .Where(j => j.Car.CarId == carId)
                 .Where(j => j.JobId == jobId)
                 .Include(j => j.SpareParts.Select(sp => sp.Supplier))
+				.Include(j => j.SpareParts)
                 .SingleOrDefault();
         }
 

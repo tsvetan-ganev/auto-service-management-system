@@ -172,6 +172,7 @@
     <Compile Include="DAL\SupplierRepository.cs" />
     <Compile Include="Helpers\CarSeeder.cs" />
     <Compile Include="Helpers\CustomerSeeder.cs" />
+    <Compile Include="Helpers\JobSeeder.cs" />
     <Compile Include="Helpers\SparePartSeeder.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
@@ -300,7 +301,6 @@
     <Content Include="Views\Jobs\Index.cshtml" />
     <Content Include="Views\Jobs\_SparePartCreate.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\SparePart.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\SparePart.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\UserSuppliersViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EditSparePartViewModel.cshtml" />
     <Content Include="Styles\Site.less" />

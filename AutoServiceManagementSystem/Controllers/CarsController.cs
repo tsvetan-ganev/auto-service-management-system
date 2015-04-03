@@ -153,7 +153,6 @@ namespace AutoServiceManagementSystem.Controllers
 			return View(car);
 		}
 
-
 		// GET: Customers/{customerId}/Cars/Delete/{carId}
 		public ActionResult Delete(int customerId, int carId)
 		{

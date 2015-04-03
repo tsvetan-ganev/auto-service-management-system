@@ -233,11 +233,20 @@ namespace AutoServiceManagementSystem.Controllers
 
             if (ModelState.IsValid)
             {
-                var job = new Job();
-                job.Mileage = editJobViewModel.Mileage;
-                job.Description = editJobViewModel.Description;
-                job.Finished = editJobViewModel.Finished;
-                job.Paid = editJobViewModel.Paid;
+				var job = jobRepo.GetJobById(customerId, carId, jobId);
+				job.Mileage = editJobViewModel.Mileage;
+				job.Description = editJobViewModel.Description;
+				job.Paid = editJobViewModel.Paid;
+				job.Finished = editJobViewModel.Finished;
+				for (int i = 0; i < job.SpareParts.Count; i++)
+				{
+					job.SpareParts[i].Name = editJobViewModel.SpareParts[i].Name;
+					job.SpareParts[i].Code = editJobViewModel.SpareParts[i].Code;
+					job.SpareParts[i].Price = editJobViewModel.SpareParts[i].Price;
+					job.SpareParts[i].Quantity = editJobViewModel.SpareParts[i].Quantity;
+					job.SpareParts[i].Supplier = supplierRepo.GetSupplierById(
+						editJobViewModel.SpareParts[i].Suppliers.SelectedSupplierId);
+				}
                 jobRepo.UpdateJob(job);
                 jobRepo.Save();
                 return RedirectToAction("Index");

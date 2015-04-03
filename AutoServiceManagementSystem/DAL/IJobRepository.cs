@@ -9,7 +9,7 @@ namespace AutoServiceManagementSystem.DAL
     {
         IEnumerable<Job> GetJobs();
 		IEnumerable<Job> GetJobs(int customerId, int carId);
-        Job GetJobById(int? id);
+        Job GetJobById(int id);
         Job GetJobById(int customerId, int carId, int jobId);
         void InsertJob(Job job);
         void DeleteJob(int jobId);

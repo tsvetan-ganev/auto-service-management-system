@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="Helpers\CarSeederTests.cs" />
     <Compile Include="Helpers\CustomerSeederTests.cs" />
+    <Compile Include="Helpers\JobSeederTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
