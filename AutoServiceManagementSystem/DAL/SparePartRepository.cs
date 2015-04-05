@@ -36,6 +36,16 @@ namespace AutoServiceManagementSystem.DAL
                 .ToList();
         }
 
+		public SparePart GetSparePartById(int jobId, int sparePartId)
+        {
+            // eagerly loads the spare part
+            return context.SpareParts
+				.Include(sp => sp.Job)
+                .Where(sp => sp.Job.JobId == jobId 
+					&& sp.SparePartId == sparePartId)
+                .SingleOrDefault();
+        }
+
         public Models.SparePart GetSparePartById(int? id)
         {
             return context.SpareParts.Find(id);

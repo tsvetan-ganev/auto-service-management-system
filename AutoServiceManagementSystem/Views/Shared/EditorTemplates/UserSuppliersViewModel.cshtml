@@ -2,3 +2,4 @@
 @model AutoServiceManagementSystem.ViewModels.Jobs.UserSuppliersViewModel
 
 @Html.DropDownListFor(m => m.SelectedSupplierId, Model.UserSuppliers)
+@Html.ValidationMessageFor(m => m.SelectedSupplierId)

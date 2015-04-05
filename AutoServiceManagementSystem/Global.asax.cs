@@ -8,6 +8,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using AutoServiceManagementSystem.DAL;
 using AutoServiceManagementSystem.DAL.Initializers;
+using AutoServiceManagementSystem.Helpers.DataBinders;
 
 namespace AutoServiceManagementSystem
 {
@@ -24,6 +25,9 @@ namespace AutoServiceManagementSystem
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+			ModelBinders.Binders.Add(typeof(decimal), new DecimalModelBinder());
+			ModelBinders.Binders.Add(typeof(decimal?), new DecimalModelBinder());
         }
     }
 }

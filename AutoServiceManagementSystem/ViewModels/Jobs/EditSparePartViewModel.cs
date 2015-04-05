@@ -20,6 +20,7 @@ namespace AutoServiceManagementSystem.ViewModels.Jobs
         public int Quantity { get; set; }
 
         [DataType(DataType.Currency)]
+		[Range(0.1, 10000)]
         public decimal Price { get; set; }
 
         public UserSuppliersViewModel Suppliers { get; set; }

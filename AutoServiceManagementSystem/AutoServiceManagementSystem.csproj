@@ -172,6 +172,7 @@
     <Compile Include="DAL\SupplierRepository.cs" />
     <Compile Include="Helpers\CarSeeder.cs" />
     <Compile Include="Helpers\CustomerSeeder.cs" />
+    <Compile Include="Helpers\DataBinders\DecimalModelBinder.cs" />
     <Compile Include="Helpers\JobSeeder.cs" />
     <Compile Include="Helpers\SparePartSeeder.cs" />
     <Compile Include="Migrations\Configuration.cs" />
@@ -216,6 +217,7 @@
     <Compile Include="Validation\VinAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\App\jquery.validate.fixes.js" />
     <Content Include="Styles\bootstrap.css" />
     <Content Include="Styles\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -307,7 +309,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Scripts\App\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

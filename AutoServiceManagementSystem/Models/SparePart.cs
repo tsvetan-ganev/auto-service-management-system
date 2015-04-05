@@ -22,7 +22,7 @@ namespace AutoServiceManagementSystem.Models
         public int Quantity { get; set; }
 
 		[DataType(DataType.Currency)]
-        //TODO: Displaying the number with two digits after the .
+		[Range(0.1, 10000)]
         public decimal Price { get; set; }
 
         public Job Job { get; set; }

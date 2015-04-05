@@ -21,6 +21,7 @@ namespace AutoServiceManagementSystem.Controllers
         private ICustomerRepository customerRepo;
         private ICarRepository carRepo;
         private ISupplierRepository supplierRepo;
+		private ISparePartRepository sparePartRepo;
         private ApplicationUserManager manager;
 
         public JobsController()
@@ -30,6 +31,7 @@ namespace AutoServiceManagementSystem.Controllers
             this.customerRepo = new CustomerRepository(context);
             this.carRepo = new CarRepository(context);
             this.supplierRepo = new SupplierRepository(context);
+			this.sparePartRepo = new SparePartRepository(context);
 
             var store = new UserStore<ApplicationUser>(context);
             store.AutoSaveChanges = false;
@@ -106,28 +108,28 @@ namespace AutoServiceManagementSystem.Controllers
         public ActionResult Create(int customerId, int carId)
         {
             var createJobViewModel = new CreateJobViewModel();
-            var suppliers = GetUserSuppliers();
+            var suppliersSelectList = GetUserSuppliers();
+
+			// TODO: Dynamically resizable list of parts
             createJobViewModel.SpareParts = new List<EditSparePartViewModel>(){
                 new EditSparePartViewModel(){
                         Suppliers = new UserSuppliersViewModel(){
-                        UserSuppliers = suppliers
+                        UserSuppliers = suppliersSelectList,
+						SelectedSupplierId = int.Parse(suppliersSelectList.FirstOrDefault().Value)
                     }
                 },
                 new EditSparePartViewModel(){
                         Suppliers = new UserSuppliersViewModel(){
-                        UserSuppliers = suppliers
+                        UserSuppliers = suppliersSelectList,
+						SelectedSupplierId = int.Parse(suppliersSelectList.FirstOrDefault().Value)
                     }
                 },
 				new EditSparePartViewModel(){
                         Suppliers = new UserSuppliersViewModel(){
-                        UserSuppliers = suppliers
+                        UserSuppliers = suppliersSelectList,
+						SelectedSupplierId = int.Parse(suppliersSelectList.FirstOrDefault().Value)
                     }
                 },
-                new EditSparePartViewModel(){
-                        Suppliers = new UserSuppliersViewModel(){
-                        UserSuppliers = suppliers
-                    }
-                }
             };
 
             return View(createJobViewModel);
@@ -213,7 +215,8 @@ namespace AutoServiceManagementSystem.Controllers
                     Price = sp.Price,
                     Quantity = sp.Quantity,
                     Suppliers = new UserSuppliersViewModel() {
-                        UserSuppliers = GetUserSuppliers()
+                        UserSuppliers = GetUserSuppliers(),
+						SelectedSupplierId = sp.Supplier.SupplierId
                     }
                 }).ToList()
             };
@@ -280,8 +283,17 @@ namespace AutoServiceManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int customerId, int carId, int jobId)
         {
-            jobRepo.DeleteJob(jobId);
-            jobRepo.Save();
+			var job = jobRepo.GetJobById(customerId, carId, jobId);
+			job.SpareParts.ToList().ForEach(sp =>
+			{
+				var sparePart = sparePartRepo.GetSparePartById(jobId, sp.SparePartId);
+				sparePartRepo.DeleteSparePart(sparePart.SparePartId);
+			});
+			sparePartRepo.Save();
+
+			jobRepo.DeleteJob(jobId);
+			jobRepo.Save();
+
             return RedirectToAction("Index");
         }
 
