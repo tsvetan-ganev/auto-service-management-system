@@ -1,0 +1,15 @@
+﻿@model bool
+
+@if (Model)
+{
+    <span class="text-success">
+        <span class="glyphicon glyphicon-ok" aria-label="The job is already finished."></span>
+    </span>
+}
+else
+{
+    <span class="text-danger">
+        <span class="glyphicon glyphicon-remove" aria-label="The job hasn't been finished yet."></span>
+    </span>
+}
+

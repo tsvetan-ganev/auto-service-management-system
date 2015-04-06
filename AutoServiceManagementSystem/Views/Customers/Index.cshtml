@@ -36,10 +36,10 @@
                 </td>
                 <td>
                     <div class="btn-group btn-group-sm">
-                        @Html.ActionLink("Edit", "Edit", new { id = item.CustomerId }, new { @class = "btn btn-primary" })
-                        @Html.ActionLink("Details", "Details", new { id = item.CustomerId }, new { @class = "btn btn-info" })
                         @Html.ActionLink("View Cars", "CarsByCustomer",
                                      "Cars", new { id = item.CustomerId }, new { @class = "btn btn-success" })
+                        @Html.ActionLink("Details", "Details", new { id = item.CustomerId }, new { @class = "btn btn-info" })
+                        @Html.ActionLink("Edit", "Edit", new { id = item.CustomerId }, new { @class = "btn btn-primary" })
                         @Html.ActionLink("Delete", "Delete", new { id = item.CustomerId }, new { @class = "btn btn-danger" })
                     </div>
                 </td>

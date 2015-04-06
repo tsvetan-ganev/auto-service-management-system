@@ -9,72 +9,76 @@
     @h2
 </h2>
 
-<table class="table table-striped table-condensed">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Mileage)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateStarted)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateFinished)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Finished)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Paid)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Mileage)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateStarted)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateFinished)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Finished)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Paid)
-                </td>
-                <td>
-                    <div class="btn-group btn-group-sm">
-                        @Html.ActionLink("Edit", "Edit",
-                            new { customerId = ViewBag.CustomerId, carId = ViewBag.CarId, jobId = item.JobId },
+<section class="jobs-list container">
+    @foreach (var job in Model)
+    {
+        <hr/>
+        <div id="jobs-container" class="row">
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <b>@Html.DisplayNameFor(j => j.Mileage)</b>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    @Html.DisplayFor(j => job.Mileage)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <b>@Html.DisplayNameFor(j => j.Description)</b>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    @Html.DisplayFor(j => job.Description)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <b>@Html.DisplayNameFor(j => j.DateStarted)</b>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    @Html.DisplayFor(j => job.DateStarted)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <b>@Html.DisplayNameFor(j => j.DateFinished)</b> 
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    @Html.DisplayFor(j => job.DateFinished)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <b>@Html.DisplayNameFor(j => j.IsFinished)</b>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    @Html.DisplayFor(j => job.IsFinished)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <b>@Html.DisplayNameFor(j => j.IsPaid)</b>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    @Html.DisplayFor(j => job.IsPaid)
+                </div>
+            </div>
+            <div class="btn-group pull-right">
+                @Html.ActionLink("Edit", "Edit",
+                            new { customerId = ViewBag.CustomerId, carId = ViewBag.CarId, jobId = job.JobId },
                             htmlAttributes: new { @class = "btn btn-primary" })
-                        @Html.ActionLink("Details", "Details",
-                            new { customerId = ViewBag.CustomerId, carId = ViewBag.CarId, jobId = item.JobId },
+                @Html.ActionLink("Details", "Details",
+                            new { customerId = ViewBag.CustomerId, carId = ViewBag.CarId, jobId = job.JobId },
                             htmlAttributes: new { @class = "btn btn-info" })
-                        @Html.ActionLink("Delete", "Delete",
-                            new { customerId = ViewBag.CustomerId, carId = ViewBag.CarId, jobId = item.JobId },
+                @Html.ActionLink("Delete", "Delete",
+                            new { customerId = ViewBag.CustomerId, carId = ViewBag.CarId, jobId = job.JobId },
                             htmlAttributes: new { @class = "btn btn-danger" })
-                    </div>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+            </div>
+        </div>
+    }
+</section>
 
+<hr />
 <div class="row text-right">
     @Html.ActionLink("Add a new job", "Create", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Back", "CarsByCustomer", "Cars", new { id = ViewBag.CustomerId }, new { @class = "btn btn-default" })
 </div>
-

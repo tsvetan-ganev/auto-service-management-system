@@ -23,12 +23,9 @@ namespace AutoServiceManagementSystem.Models
 		public decimal DiscountPercentage { get; set; }
 
 		[DataType(DataType.Url)]
+        [UIHint("UrlNewWindow")]
 		[Display(Name="Website")]
         public string WebsiteUrl { get; set; }
-
-		[DataType(DataType.Url)]
-		[Display(Name = "Logo Url")]
-        public string LogoUrl { get; set; }
 
 		public ApplicationUser User { get; set; }
 	}

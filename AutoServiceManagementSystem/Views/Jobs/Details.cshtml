@@ -7,7 +7,6 @@
 <h2>Details</h2>
     <hr />
 <div class="row">
-    <h3>Job</h3>
     <div class="container">
         <div class="row">
             <div class="col-md-6">
@@ -43,18 +42,18 @@
         </div>
         <div class="row">
             <div class="col-md-6">
-                @Html.LabelFor(j => j.Finished)
+                @Html.LabelFor(j => j.IsFinished)
             </div>
             <div class="col-md-6">
-                @Html.DisplayFor(j => j.Finished)
+                @Html.DisplayFor(j => j.IsFinished)
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
-                @Html.LabelFor(j => j.Paid)
+                @Html.LabelFor(j => j.IsPaid)
             </div>
             <div class="col-md-6">
-                @Html.DisplayFor(j => j.Paid)
+                @Html.DisplayFor(j => j.IsPaid)
             </div>
         </div>
     </div>

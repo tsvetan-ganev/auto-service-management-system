@@ -51,8 +51,6 @@ namespace AutoServiceManagementSystem.DAL
         {
             // eagerly loads the spare parts + their suppliers
             return context.Jobs
-                .Include(j => j.Car)
-				.Include(j => j.User)
                 .Where(j => j.Car.Customer.CustomerId == customerId)
                 .Where(j => j.Car.CarId == carId)
                 .Where(j => j.JobId == jobId)

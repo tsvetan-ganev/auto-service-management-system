@@ -39,6 +39,10 @@ namespace AutoServiceManagementSystem.Controllers
         }
 
         #region Private Methods
+        /// <summary>
+        /// Used to generate the dropdown list used in the Create and Edit views.
+        /// </summary>
+        /// <returns>SelectList of Suppliers</returns>
         private IEnumerable<SelectListItem> GetUserSuppliers()
         {
             var suppliers = supplierRepo.GetSuppliersByUserId(User.Identity.GetUserId())
@@ -90,11 +94,6 @@ namespace AutoServiceManagementSystem.Controllers
             if (job == null)
             {
                 return HttpNotFound();
-            }
-
-            if (job.Car.User != currentUser || job.Car.CarId != carId)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
 
             ViewBag.CustomerId = customerId;
@@ -167,8 +166,8 @@ namespace AutoServiceManagementSystem.Controllers
                 job.Mileage = createJobViewModel.Mileage;
                 job.Description = createJobViewModel.Description;
                 job.DateStarted = DateTime.Now;
-                job.Finished = false;
-                job.Paid = false;
+                job.IsFinished = false;
+                job.IsPaid = false;
                 job.SpareParts = spareParts;
                 jobRepo.InsertJob(job);
                 jobRepo.Save();
@@ -206,8 +205,8 @@ namespace AutoServiceManagementSystem.Controllers
             {
                 Description = job.Description,
                 Mileage = job.Mileage,
-                Paid = job.Paid,
-                Finished = job.Finished,
+                Paid = job.IsPaid,
+                Finished = job.IsFinished,
                 SpareParts = job.SpareParts.Select(sp => new EditSparePartViewModel()
                 {
                     Name = sp.Name,
@@ -225,7 +224,6 @@ namespace AutoServiceManagementSystem.Controllers
         }
 
         // POST: Customers/{id}/Cars/{carId}/Jobs/Edit/{jobId}
-		// TODO: Fix
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(EditJobViewModel editJobViewModel, int customerId, int carId, int jobId)
@@ -239,8 +237,8 @@ namespace AutoServiceManagementSystem.Controllers
 				var job = jobRepo.GetJobById(customerId, carId, jobId);
 				job.Mileage = editJobViewModel.Mileage;
 				job.Description = editJobViewModel.Description;
-				job.Paid = editJobViewModel.Paid;
-				job.Finished = editJobViewModel.Finished;
+				job.IsPaid = editJobViewModel.Paid;
+				job.IsFinished = editJobViewModel.Finished;
 				for (int i = 0; i < job.SpareParts.Count; i++)
 				{
 					job.SpareParts[i].Name = editJobViewModel.SpareParts[i].Name;
@@ -260,19 +258,11 @@ namespace AutoServiceManagementSystem.Controllers
         // GET: Customers/{id}/Cars/{carId}/Jobs/Delete/{jobId}
         public ActionResult Delete(int customerId, int carId, int jobId)
         {
-            var currentUser = manager.FindById(User.Identity.GetUserId());
-            var customer = customerRepo.GetCustomerById(customerId);
-            var car = carRepo.GetCarByCustomerId(customerId, carId);
             Job job = jobRepo.GetJobById(customerId, carId, jobId);
 
             if (job == null)
             {
                 return HttpNotFound();
-            }
-
-            if (car.Customer != customer || job.Car != car)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
 
             return View(job);
@@ -283,7 +273,9 @@ namespace AutoServiceManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int customerId, int carId, int jobId)
         {
-			var job = jobRepo.GetJobById(customerId, carId, jobId);
+            var job = jobRepo.GetJobById(customerId, carId, jobId);
+
+            // delete the job's children first
 			job.SpareParts.ToList().ForEach(sp =>
 			{
 				var sparePart = sparePartRepo.GetSparePartById(jobId, sp.SparePartId);
@@ -291,6 +283,7 @@ namespace AutoServiceManagementSystem.Controllers
 			});
 			sparePartRepo.Save();
 
+            // delete the job itself
 			jobRepo.DeleteJob(jobId);
 			jobRepo.Save();
 

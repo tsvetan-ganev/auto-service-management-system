@@ -12,8 +12,8 @@ namespace AutoServiceManagementSystem.Models
         {
             SpareParts = new List<SparePart>();
 			DateStarted = DateTime.Now;
-			Finished = false;
-			Paid = false;
+			IsFinished = false;
+			IsPaid = false;
         }
 
         public int JobId { get; set; }
@@ -32,9 +32,13 @@ namespace AutoServiceManagementSystem.Models
 		[Display(Name = "Date Finished")]
         public DateTime? DateFinished { get; set; }
 
-        public Boolean Finished { get; set; }
+        [Display(Name="Finished")]
+        [UIHint("IsFinished")]
+        public Boolean IsFinished { get; set; }
 
-        public Boolean Paid { get; set; }
+        [Display(Name="Paid")]
+        [UIHint("IsPaid")]
+        public Boolean IsPaid { get; set; }
 
         public List<SparePart> SpareParts { get; set; }
 

@@ -1,0 +1,15 @@
+﻿@model bool
+
+@if (Model)
+{
+
+    <span class="text-success">
+        <span class="glyphicon glyphicon-ok" aria-label="The customer already paid."></span>
+    </span>
+}
+else
+{
+    <span class="text-danger">
+        <span class="glyphicon glyphicon-remove" aria-label="The customer hasn't paid yed."></span>
+    </span>
+}

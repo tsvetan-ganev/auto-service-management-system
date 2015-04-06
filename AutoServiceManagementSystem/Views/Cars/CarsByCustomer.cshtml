@@ -86,12 +86,10 @@
                         </li>
                     </ul>
                     <div>
-                        @Html.ActionLink("Edit", "Edit",
-                            new { customerId = ViewBag.CustomerId, carId = car.CarId }, new { @class = "btn btn-primary" })
-                        @Html.ActionLink("Details", "Details",
-                            new { customerId = ViewBag.CustomerId, carId = car.CarId }, new { @class = "btn btn-info" })
                         @Html.ActionLink("View Jobs", "Index", "Jobs",
                             new { customerId = ViewBag.CustomerId, carId = car.CarId }, new { @class = "btn btn-success" })
+                        @Html.ActionLink("Edit", "Edit",
+                            new { customerId = ViewBag.CustomerId, carId = car.CarId }, new { @class = "btn btn-primary" })
                         @Html.ActionLink("Delete", "Delete",
                             new { customerId = ViewBag.CustomerId, carId = car.CarId }, new { @class = "btn btn-danger" })
                     </div>
@@ -103,4 +101,6 @@
 <div class="row text-right">
     @Html.ActionLink("Add a new car", "Create",
         new { customerId = ViewBag.CustomerId }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Back", "Index", "Customers", null, 
+        new { @class = "btn btn-default" })
 </div>
