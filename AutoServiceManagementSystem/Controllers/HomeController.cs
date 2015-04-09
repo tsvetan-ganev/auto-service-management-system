@@ -13,13 +13,13 @@ namespace AutoServiceManagementSystem.Controllers
 {
 	public class HomeController : Controller
 	{
-        private ISupplierRepository supplierRepo;
+        private ISupplierRepository suppliersRepo;
         private ApplicationUserManager manager;
 
         public HomeController()
         {
             var context = new MyDbContext();
-            this.supplierRepo = new SupplierRepository(context);
+            this.suppliersRepo = new SupplierRepository(context);
             var store = new UserStore<ApplicationUser>(context);
             store.AutoSaveChanges = false;
             this.manager = new ApplicationUserManager(store);
@@ -40,7 +40,7 @@ namespace AutoServiceManagementSystem.Controllers
         private Supplier GetDailySupplier()
         {
             var currentUser = manager.FindById(User.Identity.GetUserId());
-            var supplier = supplierRepo.GetSuppliers()
+            var supplier = suppliersRepo.GetSuppliers()
                 .Where(s => s.User == currentUser)
                 .OrderBy(s => System.Guid.NewGuid())
                 .FirstOrDefault();

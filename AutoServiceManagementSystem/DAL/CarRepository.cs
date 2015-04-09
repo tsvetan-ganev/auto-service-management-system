@@ -38,6 +38,7 @@ namespace AutoServiceManagementSystem.DAL
         {
 			var car = context.Cars
 				.Include(c => c.Customer)
+                .Include(c => c.Jobs) // TODO: check if needed
 				.Where(c => c.Customer.CustomerId == customerId)
 				.Where(c => c.CarId == carId)
 				.First();

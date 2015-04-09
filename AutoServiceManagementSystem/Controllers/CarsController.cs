@@ -16,19 +16,19 @@ namespace AutoServiceManagementSystem.Controllers
     [Authorize()]
     public class CarsController : Controller
     {
-        private ICarRepository carRepo;
-        private ICustomerRepository customerRepo;
-        private IJobRepository jobRepo;
-        private ISparePartRepository sparePartRepo;
+        private ICarRepository carsRepo;
+        private ICustomerRepository customersRepo;
+        private IJobRepository jobsRepo;
+        private ISparePartRepository sparePartsRepo;
         private ApplicationUserManager manager;
 
         public CarsController()
         {
             var context = new MyDbContext();
-            this.carRepo = new CarRepository(context);
-            this.customerRepo = new CustomerRepository(context);
-            this.jobRepo = new JobRepository(context);
-            this.sparePartRepo = new SparePartRepository(context);
+            this.carsRepo = new CarRepository(context);
+            this.customersRepo = new CustomerRepository(context);
+            this.jobsRepo = new JobRepository(context);
+            this.sparePartsRepo = new SparePartRepository(context);
 
             var store = new UserStore<ApplicationUser>(context);
             store.AutoSaveChanges = false;
@@ -58,7 +58,7 @@ namespace AutoServiceManagementSystem.Controllers
         public ActionResult Create(Car car, int customerId)
         {
             var currentUser = manager.FindById(User.Identity.GetUserId());
-            var customer = customerRepo.GetCustomerById(customerId);
+            var customer = customersRepo.GetCustomerById(customerId);
 
             if (customer.User != currentUser)
             {
@@ -69,8 +69,8 @@ namespace AutoServiceManagementSystem.Controllers
             {
                 car.User = currentUser;
                 car.Customer = customer;
-                carRepo.InsertCar(car);
-                carRepo.Save();
+                carsRepo.InsertCar(car);
+                carsRepo.Save();
                 return RedirectToAction("CarsByCustomer", customerId);
             }
 
@@ -82,7 +82,7 @@ namespace AutoServiceManagementSystem.Controllers
         public ActionResult CarsByCustomer(int id)
         {
             var currentUser = manager.FindById(User.Identity.GetUserId());
-            var customer = customerRepo.GetCustomerById(id);
+            var customer = customersRepo.GetCustomerById(id);
 
             if (customer == null)
             {
@@ -99,7 +99,7 @@ namespace AutoServiceManagementSystem.Controllers
             ViewBag.CustomerId = id;
             ViewBag.Title = string.Format("{0} {1}'s cars.",
                 customer.FirstName, customer.LastName);
-            var cars = carRepo.GetCarsByCustomer(id);
+            var cars = carsRepo.GetCarsByCustomer(id);
             return View(cars);
         }
 
@@ -108,7 +108,7 @@ namespace AutoServiceManagementSystem.Controllers
         {
             var currentUser = manager.FindById(User.Identity.GetUserId());
 
-            Car car = carRepo.GetCarByCustomerId(customerId, carId);
+            Car car = carsRepo.GetCarByCustomerId(customerId, carId);
 
             if (car == null)
             {
@@ -131,8 +131,8 @@ namespace AutoServiceManagementSystem.Controllers
         {
             if (ModelState.IsValid)
             {
-                carRepo.UpdateCar(car);
-                carRepo.Save();
+                carsRepo.UpdateCar(car);
+                carsRepo.Save();
                 return RedirectToAction("CarsByCustomer", customerId);
             }
             return View(car);
@@ -143,7 +143,7 @@ namespace AutoServiceManagementSystem.Controllers
         {
             var currentUser = manager.FindById(User.Identity.GetUserId());
 
-            Car car = carRepo.GetCarByCustomerId(customerId, carId);
+            Car car = carsRepo.GetCarByCustomerId(customerId, carId);
 
             if (car == null)
             {
@@ -164,7 +164,7 @@ namespace AutoServiceManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int customerId, int carId)
         {
-            Car car = carRepo.GetCarByCustomerId(customerId, carId);
+            Car car = carsRepo.GetCarByCustomerId(customerId, carId);
 
             if (car == null)
             {
@@ -174,23 +174,23 @@ namespace AutoServiceManagementSystem.Controllers
             // delete car's jobs first
             car.Jobs.ToList().ForEach(j =>
             {
-                var job = jobRepo.GetJobById(customerId, carId, j.JobId);
+                var job = jobsRepo.GetJobById(customerId, carId, j.JobId);
                 // delete the job's children first
                 job.SpareParts.ToList().ForEach(sp =>
                 {
-                    var sparePart = sparePartRepo.GetSparePartById(job.JobId, sp.SparePartId);
-                    sparePartRepo.DeleteSparePart(sparePart.SparePartId);
+                    var sparePart = sparePartsRepo.GetSparePartById(job.JobId, sp.SparePartId);
+                    sparePartsRepo.DeleteSparePart(sparePart.SparePartId);
                 });
-                sparePartRepo.Save();
+                sparePartsRepo.Save();
 
                 //then delete the job itself
-                jobRepo.DeleteJob(job.JobId);
-                jobRepo.Save();
+                jobsRepo.DeleteJob(job.JobId);
+                jobsRepo.Save();
             });
 
             // then delete the car itself
-            carRepo.DeleteCar(carId);
-            carRepo.Save();
+            carsRepo.DeleteCar(carId);
+            carsRepo.Save();
 
             return RedirectToAction("CarsByCustomer", customerId);
         }
@@ -199,7 +199,7 @@ namespace AutoServiceManagementSystem.Controllers
         {
             if (disposing)
             {
-                carRepo.Dispose();
+                carsRepo.Dispose();
             }
             base.Dispose(disposing);
         }

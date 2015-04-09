@@ -17,21 +17,22 @@ namespace AutoServiceManagementSystem.Controllers
     [Authorize]
     public class JobsController : Controller
     {
-        private IJobRepository jobRepo;
-        private ICustomerRepository customerRepo;
-        private ICarRepository carRepo;
-        private ISupplierRepository supplierRepo;
-		private ISparePartRepository sparePartRepo;
+
+        private ICustomerRepository customersRepo;
+        private ICarRepository carsRepo;
+        private ISupplierRepository suppliersRepo;
+        private IJobRepository jobsRepo;
+		private ISparePartRepository sparePartsRepo;
         private ApplicationUserManager manager;
 
         public JobsController()
         {
             var context = new MyDbContext();
-            this.jobRepo = new JobRepository(context);
-            this.customerRepo = new CustomerRepository(context);
-            this.carRepo = new CarRepository(context);
-            this.supplierRepo = new SupplierRepository(context);
-			this.sparePartRepo = new SparePartRepository(context);
+            this.jobsRepo = new JobRepository(context);
+            this.customersRepo = new CustomerRepository(context);
+            this.carsRepo = new CarRepository(context);
+            this.suppliersRepo = new SupplierRepository(context);
+			this.sparePartsRepo = new SparePartRepository(context);
 
             var store = new UserStore<ApplicationUser>(context);
             store.AutoSaveChanges = false;
@@ -45,7 +46,7 @@ namespace AutoServiceManagementSystem.Controllers
         /// <returns>SelectList of Suppliers</returns>
         private IEnumerable<SelectListItem> GetUserSuppliers()
         {
-            var suppliers = supplierRepo.GetSuppliersByUserId(User.Identity.GetUserId())
+            var suppliers = suppliersRepo.GetSuppliersByUserId(User.Identity.GetUserId())
                 .Select(s => new SelectListItem
                 {
                     Value = s.SupplierId.ToString(),
@@ -60,8 +61,8 @@ namespace AutoServiceManagementSystem.Controllers
         public ActionResult Index(int customerId, int carId)
         {
             var currentUser = manager.FindById(User.Identity.GetUserId());
-            var customer = customerRepo.GetCustomerById(customerId);
-            var car = carRepo.GetCarById(carId);
+            var customer = customersRepo.GetCustomerById(customerId);
+            var car = carsRepo.GetCarById(carId);
 
             if (customer == null || car == null)
             {
@@ -73,7 +74,7 @@ namespace AutoServiceManagementSystem.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
 
-            var jobsList = jobRepo.GetJobs(customerId, carId)
+            var jobsList = jobsRepo.GetJobs(customerId, carId)
                 .OrderByDescending(j => j.DateStarted);
 
             ViewBag.CustomerId = customerId;
@@ -89,7 +90,7 @@ namespace AutoServiceManagementSystem.Controllers
         public ActionResult Details(int customerId, int carId, int jobId)
         {
             var currentUser = manager.FindById(User.Identity.GetUserId());
-            Job job = jobRepo.GetJobById(customerId, carId, jobId);
+            Job job = jobsRepo.GetJobById(customerId, carId, jobId);
 
             if (job == null)
             {
@@ -140,8 +141,8 @@ namespace AutoServiceManagementSystem.Controllers
         public ActionResult Create(CreateJobViewModel createJobViewModel, int customerId, int carId)
         {
             var currentUser = manager.FindById(User.Identity.GetUserId());
-            var customer = customerRepo.GetCustomerById(customerId);
-            var car = carRepo.GetCarById(carId);
+            var customer = customersRepo.GetCustomerById(customerId);
+            var car = carsRepo.GetCarById(carId);
 
             if (customer.User != currentUser || car.Customer != customer)
             {
@@ -157,7 +158,7 @@ namespace AutoServiceManagementSystem.Controllers
                         Code = sp.Code,
                         Price = sp.Price,
                         Quantity = sp.Quantity,
-                        Supplier = supplierRepo.GetSupplierById(sp.Suppliers.SelectedSupplierId),
+                        Supplier = suppliersRepo.GetSupplierById(sp.Suppliers.SelectedSupplierId),
                         Job = job
                     }).ToList();
                 job.Car = car;
@@ -169,8 +170,8 @@ namespace AutoServiceManagementSystem.Controllers
                 job.IsFinished = false;
                 job.IsPaid = false;
                 job.SpareParts = spareParts;
-                jobRepo.InsertJob(job);
-                jobRepo.Save();
+                jobsRepo.InsertJob(job);
+                jobsRepo.Save();
                 return RedirectToAction("Index");
             }
 
@@ -181,9 +182,9 @@ namespace AutoServiceManagementSystem.Controllers
         public ActionResult Edit(int customerId, int carId, int jobId)
         {
             var currentUser = manager.FindById(User.Identity.GetUserId());
-            var customer = customerRepo.GetCustomerById(customerId);
-            var car = carRepo.GetCarById(carId);
-            var job = jobRepo.GetJobById(customerId, carId, jobId);
+            var customer = customersRepo.GetCustomerById(customerId);
+            var car = carsRepo.GetCarById(carId);
+            var job = jobsRepo.GetJobById(customerId, carId, jobId);
 
             if (job == null)
             {
@@ -229,12 +230,12 @@ namespace AutoServiceManagementSystem.Controllers
         public ActionResult Edit(EditJobViewModel editJobViewModel, int customerId, int carId, int jobId)
         {
             var currentUser = manager.FindById(User.Identity.GetUserId());
-            var customer = customerRepo.GetCustomerById(customerId);
-            var car = carRepo.GetCarByCustomerId(customerId, carId);
+            var customer = customersRepo.GetCustomerById(customerId);
+            var car = carsRepo.GetCarByCustomerId(customerId, carId);
 
             if (ModelState.IsValid)
             {
-				var job = jobRepo.GetJobById(customerId, carId, jobId);
+				var job = jobsRepo.GetJobById(customerId, carId, jobId);
 				job.Mileage = editJobViewModel.Mileage;
 				job.Description = editJobViewModel.Description;
 				job.IsPaid = editJobViewModel.Paid;
@@ -245,11 +246,11 @@ namespace AutoServiceManagementSystem.Controllers
 					job.SpareParts[i].Code = editJobViewModel.SpareParts[i].Code;
 					job.SpareParts[i].Price = editJobViewModel.SpareParts[i].Price;
 					job.SpareParts[i].Quantity = editJobViewModel.SpareParts[i].Quantity;
-					job.SpareParts[i].Supplier = supplierRepo.GetSupplierById(
+					job.SpareParts[i].Supplier = suppliersRepo.GetSupplierById(
 						editJobViewModel.SpareParts[i].Suppliers.SelectedSupplierId);
 				}
-                jobRepo.UpdateJob(job);
-                jobRepo.Save();
+                jobsRepo.UpdateJob(job);
+                jobsRepo.Save();
                 return RedirectToAction("Index");
             }
             return View(editJobViewModel);
@@ -258,7 +259,7 @@ namespace AutoServiceManagementSystem.Controllers
         // GET: Customers/{id}/Cars/{carId}/Jobs/Delete/{jobId}
         public ActionResult Delete(int customerId, int carId, int jobId)
         {
-            Job job = jobRepo.GetJobById(customerId, carId, jobId);
+            Job job = jobsRepo.GetJobById(customerId, carId, jobId);
 
             if (job == null)
             {
@@ -273,19 +274,19 @@ namespace AutoServiceManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int customerId, int carId, int jobId)
         {
-            var job = jobRepo.GetJobById(customerId, carId, jobId);
+            var job = jobsRepo.GetJobById(customerId, carId, jobId);
 
             // delete the job's children first
 			job.SpareParts.ToList().ForEach(sp =>
 			{
-				var sparePart = sparePartRepo.GetSparePartById(jobId, sp.SparePartId);
-				sparePartRepo.DeleteSparePart(sparePart.SparePartId);
+				var sparePart = sparePartsRepo.GetSparePartById(jobId, sp.SparePartId);
+				sparePartsRepo.DeleteSparePart(sparePart.SparePartId);
 			});
-			sparePartRepo.Save();
+			sparePartsRepo.Save();
 
             // delete the job itself
-			jobRepo.DeleteJob(jobId);
-			jobRepo.Save();
+			jobsRepo.DeleteJob(jobId);
+			jobsRepo.Save();
 
             return RedirectToAction("Index");
         }
@@ -294,7 +295,7 @@ namespace AutoServiceManagementSystem.Controllers
         {
             if (disposing)
             {
-                carRepo.Dispose();
+                carsRepo.Dispose();
             }
             base.Dispose(disposing);
         }

@@ -18,44 +18,50 @@ namespace AutoServiceManagementSystem.Controllers
     {
         private ICustomerRepository customersRepo;
         private ICarRepository carsRepo;
-		private ApplicationUserManager manager;
+        private ISupplierRepository suppliersRepo;
+        private IJobRepository jobsRepo;
+        private ISparePartRepository sparePartsRepo;
+        private ApplicationUserManager manager;
 
-		public CustomersController()
-		{
-			var context = new MyDbContext();
-			this.customersRepo = new CustomerRepository(context);
+        public CustomersController()
+        {
+            var context = new MyDbContext();
+            this.customersRepo = new CustomerRepository(context);
             this.carsRepo = new CarRepository(context);
-			var store = new UserStore<ApplicationUser>(context);
-			store.AutoSaveChanges = false;
-			this.manager = new ApplicationUserManager(store);
-		}
+            this.jobsRepo = new JobRepository(context);
+            this.sparePartsRepo = new SparePartRepository(context);
+
+            var store = new UserStore<ApplicationUser>(context);
+            store.AutoSaveChanges = false;
+            this.manager = new ApplicationUserManager(store);
+        }
 
         // GET: Customers
         public ActionResult Index()
         {
-			var currentUser = manager.FindById(User.Identity.GetUserId());
-			var customersList = customersRepo.GetCustomers()
-				.Where(c => c.User == currentUser);
-			return View(customersList);
+            var currentUser = manager.FindById(User.Identity.GetUserId());
+            var customersList = customersRepo.GetCustomers()
+                .Where(c => c.User == currentUser);
+            return View(customersList);
         }
 
         // GET: Customers/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int customerId)
         {
-			var currentUser = manager.FindById(User.Identity.GetUserId());
-            if (id == null)
+            var currentUser = manager.FindById(User.Identity.GetUserId());
+            if (customerId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-			Customer customer = customersRepo.GetCustomerById(id);
+            Customer customer = customersRepo.GetCustomerById(customerId);
             if (customer == null)
             {
                 return HttpNotFound();
             }
-			if (customer.User != currentUser)
-			{
-				return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
-			}
+            if (customer.User != currentUser)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+            }
             return View(customer);
         }
 
@@ -66,16 +72,15 @@ namespace AutoServiceManagementSystem.Controllers
         }
 
         // POST: Customers/Create
-		[Authorize()]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "CustomerId,FirstName,LastName,PhoneNumber,User")] Customer customer)
         {
-			var currentUser = manager.FindById(User.Identity.GetUserId());
+            var currentUser = manager.FindById(User.Identity.GetUserId());
             if (ModelState.IsValid)
             {
-				customer.User = currentUser;
-				customersRepo.InsertCustomer(customer);
+                customer.User = currentUser;
+                customersRepo.InsertCustomer(customer);
                 customersRepo.Save();
                 return RedirectToAction("Index");
             }
@@ -84,29 +89,28 @@ namespace AutoServiceManagementSystem.Controllers
         }
 
         // GET: Customers/Edit/5
-		[Authorize()]
-        public ActionResult Edit(int? id)
+        [Authorize()]
+        public ActionResult Edit(int customerId)
         {
-			var currentUser = manager.FindById(User.Identity.GetUserId());
-			if (id == null)
+            var currentUser = manager.FindById(User.Identity.GetUserId());
+            if (customerId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Customer customer = customersRepo.GetCustomerById(id);
+            Customer customer = customersRepo.GetCustomerById(customerId);
             if (customer == null)
             {
                 return HttpNotFound();
             }
-			if (customer.User != currentUser)
-			{
-				return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
-			}
+            if (customer.User != currentUser)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+            }
             return View(customer);
         }
 
-        // POST: Customers/Edit/5
-		[Authorize()]        
-		[HttpPost]
+        // POST: Customers/Edit/5  
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "CustomerId,FirstName,LastName,PhoneNumber,User")] Customer customer)
         {
@@ -120,30 +124,58 @@ namespace AutoServiceManagementSystem.Controllers
         }
 
         // GET: Customers/Delete/5
-		[Authorize()]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int customerId)
         {
-			var currentUser = manager.FindById(User.Identity.GetUserId());
+            var currentUser = manager.FindById(User.Identity.GetUserId());
 
-            Customer customer = customersRepo.GetCustomerById(id);
+            Customer customer = customersRepo.GetCustomerById(customerId);
             if (customer == null)
             {
                 return HttpNotFound();
             }
-			if (customer.User != currentUser)
-			{
-				return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
-			}
+            if (customer.User != currentUser)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+            }
             return View(customer);
         }
 
         // POST: Customers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int customerId)
         {
-			customersRepo.DeleteCustomer(id);
+            var customer = customersRepo.GetCustomerById(customerId);
+            if (customer == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+
+            customer.Cars.ToList().ForEach(c =>
+            {
+                var car = carsRepo.GetCarByCustomerId(customerId, c.CarId);
+                car.Jobs.ToList().ForEach(j =>
+                {
+                    var job = jobsRepo.GetJobById(customerId, c.CarId, j.JobId);
+                    job.SpareParts.ToList().ForEach(sp =>
+                    {
+                        var sparePart = sparePartsRepo.GetSparePartById(job.JobId, sp.SparePartId);
+                        sparePartsRepo.DeleteSparePart(sparePart.SparePartId);
+                    });
+                    sparePartsRepo.Save();
+
+                    jobsRepo.DeleteJob(job.JobId);
+                });
+                jobsRepo.Save();
+
+                carsRepo.DeleteCar(c.CarId);
+            });
+
+            carsRepo.Save();
+
+            customersRepo.DeleteCustomer(customerId);
             customersRepo.Save();
+            
             return RedirectToAction("Index");
         }
 
@@ -151,7 +183,7 @@ namespace AutoServiceManagementSystem.Controllers
         {
             if (disposing)
             {
-				customersRepo.Dispose();
+                customersRepo.Dispose();
             }
             base.Dispose(disposing);
         }

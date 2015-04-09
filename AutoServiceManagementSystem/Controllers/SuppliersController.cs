@@ -15,13 +15,13 @@ namespace AutoServiceManagementSystem.Controllers
 {
     public class SuppliersController : Controller
     {
-		private ISupplierRepository supplierRepo;
+		private ISupplierRepository suppliersRepo;
 		private ApplicationUserManager manager;
 
 		public SuppliersController()
 		{
 			var context = new MyDbContext();
-			this.supplierRepo = new SupplierRepository(context);
+			this.suppliersRepo = new SupplierRepository(context);
 			var store = new UserStore<ApplicationUser>(context);
 			store.AutoSaveChanges = false;
 			this.manager = new ApplicationUserManager(store);
@@ -32,7 +32,7 @@ namespace AutoServiceManagementSystem.Controllers
         public ActionResult Index()
         {
 			var currentUser = manager.FindById(User.Identity.GetUserId());
-			var suppliersList = supplierRepo.GetSuppliers()
+			var suppliersList = suppliersRepo.GetSuppliers()
 				.Where(s => s.User == currentUser);
             return View(suppliersList);
         }
@@ -46,7 +46,7 @@ namespace AutoServiceManagementSystem.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Supplier supplier = supplierRepo.GetSupplierById(id);
+            Supplier supplier = suppliersRepo.GetSupplierById(id);
             if (supplier == null)
             {
                 return HttpNotFound();
@@ -77,8 +77,8 @@ namespace AutoServiceManagementSystem.Controllers
             if (ModelState.IsValid)
             {
 				supplier.User = currentUser;
-				supplierRepo.InsertSupplier(supplier);
-				supplierRepo.Save();
+				suppliersRepo.InsertSupplier(supplier);
+				suppliersRepo.Save();
                 return RedirectToAction("Index");
             }
 
@@ -93,7 +93,7 @@ namespace AutoServiceManagementSystem.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Supplier supplier = supplierRepo.GetSupplierById(id);
+            Supplier supplier = suppliersRepo.GetSupplierById(id);
             if (supplier == null)
             {
                 return HttpNotFound();
@@ -113,8 +113,8 @@ namespace AutoServiceManagementSystem.Controllers
             if (ModelState.IsValid)
             {
 				supplier.User = currentUser;
-				supplierRepo.UpdateSupplier(supplier);
-				supplierRepo.Save();
+				suppliersRepo.UpdateSupplier(supplier);
+				suppliersRepo.Save();
                 return RedirectToAction("Index");
             }
 
@@ -130,7 +130,7 @@ namespace AutoServiceManagementSystem.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Supplier supplier = supplierRepo.GetSupplierById(id);
+            Supplier supplier = suppliersRepo.GetSupplierById(id);
             if (supplier == null)
             {
                 return HttpNotFound();
@@ -147,8 +147,8 @@ namespace AutoServiceManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-			supplierRepo.DeleteSupplier(id);
-			supplierRepo.Save();
+			suppliersRepo.DeleteSupplier(id);
+			suppliersRepo.Save();
             return RedirectToAction("Index");
         }
 
@@ -156,7 +156,7 @@ namespace AutoServiceManagementSystem.Controllers
         {
             if (disposing)
             {
-				supplierRepo.Dispose();
+				suppliersRepo.Dispose();
             }
             base.Dispose(disposing);
         }
