@@ -14,6 +14,12 @@ namespace AutoServiceManagementSystem
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.MapMvcAttributeRoutes();
 
+            //routes.MapRoute(
+            //    name: "Suppliers",
+            //    url: "Suppliers/{action}/{id}",
+            //    defaults: new { controller = "Supplier", action = "Index", id = UrlParameter.Optional }
+            //);
+
             routes.MapRoute(
                 name: "Customers",
                 url: "Customers/{action}/{customerId}",
@@ -25,12 +31,6 @@ namespace AutoServiceManagementSystem
                 url: "Customers/{customerId}/Cars/{carId}/Jobs/{action}/{jobId}",
                 defaults: new { controller = "Jobs", action = "Index", jobId = UrlParameter.Optional }
             );
-
-            //routes.MapRoute(
-            //    name: "SpareParts",
-            //    url: "Customers/{customerId}/Cars/{carId}/Jobs/{action}/{jobId}/",
-            //    defaults: new { controller = "Jobs", action = "Index", jobId = UrlParameter.Optional }
-            //);
 
             routes.MapRoute(
                 name: "Cars",

@@ -30,6 +30,9 @@ namespace AutoServiceManagementSystem
 			bundles.Add(new StyleBundle("~/styles").Include(
                       "~/Styles/bootstrap.css",
                       "~/Styles/site.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/app/job/add").Include(
+                    "~/Scripts/App/Job/AddJob.js"));
 		}
 	}
 }

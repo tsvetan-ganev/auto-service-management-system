@@ -11,7 +11,7 @@ namespace AutoServiceManagementSystem.DAL
 	{
 		IEnumerable<Supplier> GetSuppliers();
         IEnumerable<Supplier> GetSuppliersByUserId(string userId);
-		Supplier GetSupplierById(int? supplierId);
+		Supplier GetSupplierById(int supplierId);
 		void InsertSupplier(Supplier supplier);
 		void DeleteSupplier(int supplierId);
 		void UpdateSupplier(Supplier supplier);

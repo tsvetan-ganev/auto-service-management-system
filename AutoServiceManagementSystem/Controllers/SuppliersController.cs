@@ -10,135 +10,136 @@ using AutoServiceManagementSystem.Models;
 using AutoServiceManagementSystem.DAL;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity;
+using AutoServiceManagementSystem.ViewModels.Suppliers;
 
 namespace AutoServiceManagementSystem.Controllers
 {
+    [Authorize]
     public class SuppliersController : Controller
     {
-		private ISupplierRepository suppliersRepo;
-		private ApplicationUserManager manager;
+        private ISupplierRepository suppliersRepo;
+        private ApplicationUserManager manager;
 
-		public SuppliersController()
-		{
-			var context = new MyDbContext();
-			this.suppliersRepo = new SupplierRepository(context);
-			var store = new UserStore<ApplicationUser>(context);
-			store.AutoSaveChanges = false;
-			this.manager = new ApplicationUserManager(store);
-		}
+        public SuppliersController()
+        {
+            var context = new MyDbContext();
+            this.suppliersRepo = new SupplierRepository(context);
+            var store = new UserStore<ApplicationUser>(context);
+            store.AutoSaveChanges = false;
+            this.manager = new ApplicationUserManager(store);
+        }
 
         // GET: Suppliers
-		[Authorize()]
+        [Route("Suppliers")]
         public ActionResult Index()
         {
-			var currentUser = manager.FindById(User.Identity.GetUserId());
-			var suppliersList = suppliersRepo.GetSuppliers()
-				.Where(s => s.User == currentUser);
+            var currentUser = manager.FindById(User.Identity.GetUserId());
+            var suppliersList = suppliersRepo.GetSuppliers()
+                .Where(s => s.User == currentUser);
             return View(suppliersList);
         }
 
         // GET: Suppliers/Details/5
-		[Authorize()]
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id)
         {
-			var currentUser = manager.FindById(User.Identity.GetUserId());
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            var currentUser = manager.FindById(User.Identity.GetUserId());
             Supplier supplier = suppliersRepo.GetSupplierById(id);
-            if (supplier == null)
+
+            if (supplier == null || supplier.User != currentUser || supplier.IsDeleted)
             {
-                return HttpNotFound();
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
-			if (supplier.User != currentUser)
-			{
-				return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
-			}
+
             return View(supplier);
         }
 
         // GET: Suppliers/Create
-		[Authorize()]
         public ActionResult Create()
         {
             return View();
         }
 
         // POST: Suppliers/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-		[Authorize()]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "SupplierId,Name,City,DiscountPercentage,WebsiteUrl,LogoUrl,User")] Supplier supplier)
+        public ActionResult Create(CreateSupplierViewModel viewModel)
         {
-			var currentUser = manager.FindById(User.Identity.GetUserId());
             if (ModelState.IsValid)
             {
-				supplier.User = currentUser;
-				suppliersRepo.InsertSupplier(supplier);
-				suppliersRepo.Save();
+                var currentUser = manager.FindById(User.Identity.GetUserId());
+                var supplier = new Supplier()
+                {
+                    Name = viewModel.Name,
+                    City = viewModel.City,
+                    DiscountPercentage = viewModel.DiscountPercentage,
+                    WebsiteUrl = viewModel.WebsiteUrl,
+                    IsDeleted = false,
+                    User = currentUser
+                };
+                suppliersRepo.InsertSupplier(supplier);
+                suppliersRepo.Save();
                 return RedirectToAction("Index");
             }
 
-            return View(supplier);
+            return View(viewModel);
         }
 
         // GET: Suppliers/Edit/5
-		[Authorize()]
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             Supplier supplier = suppliersRepo.GetSupplierById(id);
-            if (supplier == null)
+
+            if (supplier == null || supplier.IsDeleted)
             {
                 return HttpNotFound();
             }
-            return View(supplier);
+
+            var viewModel = new EditSupplierViewModel()
+            {
+                SupplierId = supplier.SupplierId,
+                Name = supplier.Name,
+                City = supplier.City,
+                DiscountPercentage = supplier.DiscountPercentage,
+                WebsiteUrl = supplier.WebsiteUrl
+            };
+
+            return View(viewModel);
         }
 
         // POST: Suppliers/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-		[Authorize()]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "SupplierId,Name,City,DiscountPercentage,WebsiteUrl,LogoUrl,User")] Supplier supplier)
+        public ActionResult Edit(EditSupplierViewModel viewModel)
         {
-			var currentUser = manager.FindById(User.Identity.GetUserId());
             if (ModelState.IsValid)
             {
-				supplier.User = currentUser;
-				suppliersRepo.UpdateSupplier(supplier);
-				suppliersRepo.Save();
+                var supplier = new Supplier()
+                {
+                    SupplierId = viewModel.SupplierId,
+                    Name = viewModel.Name,
+                    City = viewModel.City,
+                    DiscountPercentage = viewModel.DiscountPercentage,
+                    WebsiteUrl = viewModel.WebsiteUrl
+                };
+                suppliersRepo.UpdateSupplier(supplier);
+                suppliersRepo.Save();
                 return RedirectToAction("Index");
             }
 
-            return View(supplier);
+            return View(viewModel);
         }
 
         // GET: Suppliers/Delete/5
-		[Authorize()]
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int id)
         {
-			var currentUser = manager.FindById(User.Identity.GetUserId());
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            var currentUser = manager.FindById(User.Identity.GetUserId());
+
             Supplier supplier = suppliersRepo.GetSupplierById(id);
-            if (supplier == null)
+            if (supplier == null || supplier.User != currentUser || supplier.IsDeleted)
             {
-                return HttpNotFound();
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
-			if (supplier.User != currentUser)
-			{
-				return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
-			}
+
             return View(supplier);
         }
 
@@ -147,8 +148,10 @@ namespace AutoServiceManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-			suppliersRepo.DeleteSupplier(id);
-			suppliersRepo.Save();
+            var supplier = suppliersRepo.GetSupplierById(id);
+            supplier.IsDeleted = true;
+            suppliersRepo.UpdateSupplier(supplier);
+            suppliersRepo.Save();
             return RedirectToAction("Index");
         }
 
@@ -156,7 +159,7 @@ namespace AutoServiceManagementSystem.Controllers
         {
             if (disposing)
             {
-				suppliersRepo.Dispose();
+                suppliersRepo.Dispose();
             }
             base.Dispose(disposing);
         }

@@ -194,7 +194,7 @@ namespace AutoServiceManagementSystem.Controllers
             if (car.User != currentUser || job.User != currentUser
                 || customer.User != currentUser)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
 
             if (car.Customer != customer || job.Car != car)
@@ -240,6 +240,12 @@ namespace AutoServiceManagementSystem.Controllers
 				job.Description = editJobViewModel.Description;
 				job.IsPaid = editJobViewModel.Paid;
 				job.IsFinished = editJobViewModel.Finished;
+
+                foreach (var sp in job.SpareParts)
+                {
+                    // TODO: assign with foreach
+                }
+
 				for (int i = 0; i < job.SpareParts.Count; i++)
 				{
 					job.SpareParts[i].Name = editJobViewModel.SpareParts[i].Name;
@@ -289,6 +295,22 @@ namespace AutoServiceManagementSystem.Controllers
 			jobsRepo.Save();
 
             return RedirectToAction("Index");
+        }
+
+        [Route("Jobs/AddSparePart")]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam="*")]
+        public ActionResult AddSparePart()
+        {
+            var suppliersSelectList = GetUserSuppliers();
+            var sparePart = new EditSparePartViewModel()
+            {
+                Suppliers = new UserSuppliersViewModel()
+                {
+                    UserSuppliers = suppliersSelectList,
+                    SelectedSupplierId = int.Parse(suppliersSelectList.FirstOrDefault().Value)
+                }
+            };
+            return View(new List<EditSparePartViewModel>() { sparePart });
         }
 
         protected override void Dispose(bool disposing)

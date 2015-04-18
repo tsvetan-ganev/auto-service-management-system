@@ -27,6 +27,8 @@ namespace AutoServiceManagementSystem.Models
 		[Display(Name="Website")]
         public string WebsiteUrl { get; set; }
 
+        public bool IsDeleted { get; set; }
+
 		public ApplicationUser User { get; set; }
 	}
 }

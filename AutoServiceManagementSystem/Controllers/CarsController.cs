@@ -10,17 +10,20 @@ using AutoServiceManagementSystem.Models;
 using AutoServiceManagementSystem.DAL;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity;
+using AutoServiceManagementSystem.ViewModels.Cars;
 
 namespace AutoServiceManagementSystem.Controllers
 {
     [Authorize()]
     public class CarsController : Controller
     {
+        #region Private variables
         private ICarRepository carsRepo;
         private ICustomerRepository customersRepo;
         private IJobRepository jobsRepo;
         private ISparePartRepository sparePartsRepo;
         private ApplicationUserManager manager;
+        #endregion
 
         public CarsController()
         {
@@ -36,9 +39,9 @@ namespace AutoServiceManagementSystem.Controllers
         }
 
         // GET: Cars
-        [Route("Cars")]
-        [Route("Cars/Index")]
-        [Route("Cars/All")]
+        //[Route("Cars")]
+        //[Route("Cars/Index")]
+        //[Route("Cars/All")]
         public ActionResult Index()
         {
             throw new NotImplementedException();
@@ -52,21 +55,28 @@ namespace AutoServiceManagementSystem.Controllers
         }
 
         // POST: Customers/{customerId}/Cars/Create
-        // TODO: CreateCarViewModel
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Car car, int customerId)
+        public ActionResult Create(CreateCarViewModel viewModel, int customerId)
         {
             var currentUser = manager.FindById(User.Identity.GetUserId());
             var customer = customersRepo.GetCustomerById(customerId);
 
-            if (customer.User != currentUser)
+            if (customer == null || customer.User != currentUser)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
 
             if (ModelState.IsValid)
             {
+                var car = new Car();
+                car.Manufacturer = viewModel.Manufacturer;
+                car.Model = viewModel.Model;
+                car.VIN = viewModel.VIN;
+                car.EngineCode = viewModel.EngineCode;
+                car.PlateCode = viewModel.PlateCode;
+                car.Year = viewModel.Year;
+                car.FuelType = viewModel.FuelType;
                 car.User = currentUser;
                 car.Customer = customer;
                 carsRepo.InsertCar(car);
@@ -74,7 +84,7 @@ namespace AutoServiceManagementSystem.Controllers
                 return RedirectToAction("CarsByCustomer", customerId);
             }
 
-            return View(car);
+            return View(viewModel);
         }
 
         // GET: Customers/{id}/Cars
@@ -110,32 +120,50 @@ namespace AutoServiceManagementSystem.Controllers
 
             Car car = carsRepo.GetCarByCustomerId(customerId, carId);
 
-            if (car == null)
+            if (car == null || car.User != currentUser)
             {
-                return HttpNotFound();
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
 
-            if (car.User != currentUser)
+            var viewModel = new EditCarViewModel()
             {
-                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
-            }
+                Manufacturer = car.Manufacturer,
+                Model = car.Model,
+                VIN = car.VIN,
+                PlateCode = car.PlateCode,
+                Year = car.Year,
+                EngineCode = car.EngineCode,
+                FuelType = car.FuelType
+            };
+            ViewBag.customerId = customerId;
 
-            return View(car);
+            return View(viewModel);
         }
 
         // POST: Customer/{customerId}/Car/Edit/{carId}
         // TODO: Add EditCarViewModel
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Car car, int customerId, int carId)
+        public ActionResult Edit(EditCarViewModel viewModel, int customerId, int carId)
         {
             if (ModelState.IsValid)
             {
+                var car = new Car()
+                {
+                    CarId = carId,
+                    Manufacturer = viewModel.Manufacturer,
+                    Model = viewModel.Model,
+                    VIN = viewModel.VIN,
+                    EngineCode = viewModel.EngineCode,
+                    PlateCode = viewModel.PlateCode,
+                    Year = viewModel.Year,
+                    FuelType = viewModel.FuelType
+                };
                 carsRepo.UpdateCar(car);
                 carsRepo.Save();
                 return RedirectToAction("CarsByCustomer", customerId);
             }
-            return View(car);
+            return View(viewModel);
         }
 
         // GET: Customers/{customerId}/Cars/Delete/{carId}

@@ -10,18 +10,21 @@ using AutoServiceManagementSystem.Models;
 using AutoServiceManagementSystem.DAL;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity;
+using AutoServiceManagementSystem.ViewModels.Customers;
 
 namespace AutoServiceManagementSystem.Controllers
 {
     [Authorize()]
     public class CustomersController : Controller
     {
+        #region Private Variables
         private ICustomerRepository customersRepo;
         private ICarRepository carsRepo;
         private ISupplierRepository suppliersRepo;
         private IJobRepository jobsRepo;
         private ISparePartRepository sparePartsRepo;
         private ApplicationUserManager manager;
+        #endregion
 
         public CustomersController()
         {
@@ -49,10 +52,7 @@ namespace AutoServiceManagementSystem.Controllers
         public ActionResult Details(int customerId)
         {
             var currentUser = manager.FindById(User.Identity.GetUserId());
-            if (customerId == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+
             Customer customer = customersRepo.GetCustomerById(customerId);
             if (customer == null)
             {
@@ -74,53 +74,67 @@ namespace AutoServiceManagementSystem.Controllers
         // POST: Customers/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CustomerId,FirstName,LastName,PhoneNumber,User")] Customer customer)
+        public ActionResult Create(CreateCustomerViewModel viewModel)
         {
-            var currentUser = manager.FindById(User.Identity.GetUserId());
             if (ModelState.IsValid)
             {
-                customer.User = currentUser;
+                var currentUser = manager.FindById(User.Identity.GetUserId());
+                var customer = new Customer()
+                {
+                    FirstName = viewModel.FirstName,
+                    LastName = viewModel.LastName,
+                    PhoneNumber = viewModel.PhoneNumber,
+                    User = currentUser
+                };
                 customersRepo.InsertCustomer(customer);
                 customersRepo.Save();
                 return RedirectToAction("Index");
             }
 
-            return View(customer);
+            return View(viewModel);
         }
 
         // GET: Customers/Edit/5
-        [Authorize()]
         public ActionResult Edit(int customerId)
         {
             var currentUser = manager.FindById(User.Identity.GetUserId());
-            if (customerId == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             Customer customer = customersRepo.GetCustomerById(customerId);
-            if (customer == null)
+
+            if (customer == null || customer.User != currentUser)
             {
-                return HttpNotFound();
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
-            if (customer.User != currentUser)
+
+            var viewModel = new EditCustomerViewModel()
             {
-                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
-            }
-            return View(customer);
+                CustomerId = customer.CustomerId,
+                FirstName = customer.FirstName,
+                LastName = customer.LastName,
+                PhoneNumber = customer.PhoneNumber
+            };
+
+            return View(viewModel);
         }
 
         // POST: Customers/Edit/5  
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CustomerId,FirstName,LastName,PhoneNumber,User")] Customer customer)
+        public ActionResult Edit(EditCustomerViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
+                var customer = new Customer()
+                {
+                    CustomerId = viewModel.CustomerId,
+                    FirstName = viewModel.FirstName,
+                    LastName = viewModel.LastName,
+                    PhoneNumber = viewModel.PhoneNumber
+                };
                 customersRepo.UpdateCustomer(customer);
                 customersRepo.Save();
                 return RedirectToAction("Index");
             }
-            return View(customer);
+            return View(viewModel);
         }
 
         // GET: Customers/Delete/5

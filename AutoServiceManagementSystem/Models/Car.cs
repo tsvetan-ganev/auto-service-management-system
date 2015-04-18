@@ -40,7 +40,6 @@ namespace AutoServiceManagementSystem.Models
             ErrorMessage = "Plate codes consist of between 8 and 12 symbols.")]
         public string PlateCode { get; set; }
 
-        [Required(AllowEmptyStrings = true)]
         // TODO: improve on live error display
         [Vin]
         public string VIN
@@ -60,7 +59,7 @@ namespace AutoServiceManagementSystem.Models
         public int? Year { get; set; }
 
         [Display(Name = "Fuel Type")]
-        public Fuel? FuelType { get; set; }
+        public Fuel FuelType { get; set; }
 
         [Display(Name = "Owner")]
         public Customer Customer { get; set; }

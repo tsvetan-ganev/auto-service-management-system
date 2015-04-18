@@ -173,6 +173,7 @@
     <Compile Include="Helpers\CarSeeder.cs" />
     <Compile Include="Helpers\CustomerSeeder.cs" />
     <Compile Include="Helpers\DataBinders\DecimalModelBinder.cs" />
+    <Compile Include="Helpers\HTML\EditorForMany.cs" />
     <Compile Include="Helpers\JobSeeder.cs" />
     <Compile Include="Helpers\SparePartSeeder.cs" />
     <Compile Include="Migrations\Configuration.cs" />
@@ -204,6 +205,10 @@
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Job.cs" />
     <Compile Include="ViewModels\Account\RegisterViewModel.cs" />
+    <Compile Include="ViewModels\Cars\EditCarViewModel.cs" />
+    <Compile Include="ViewModels\Cars\CreateCarViewModel.cs" />
+    <Compile Include="ViewModels\Customers\EditCustomerViewModel.cs" />
+    <Compile Include="ViewModels\Customers\CreateCustomerViewModel.cs" />
     <Compile Include="ViewModels\Jobs\CreateJobViewModel.cs" />
     <Compile Include="ViewModels\Jobs\EditJobViewModel.cs" />
     <Compile Include="ViewModels\Jobs\EditSparePartViewModel.cs" />
@@ -215,8 +220,11 @@
     <Compile Include="Startup.cs" />
     <Compile Include="Validation\PhoneNumberAttribute.cs" />
     <Compile Include="Validation\VinAttribute.cs" />
+    <Compile Include="ViewModels\Suppliers\EditSupplierViewModel.cs" />
+    <Compile Include="ViewModels\Suppliers\CreateSupplierViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\App\Job\AddJob.js" />
     <Content Include="Scripts\App\jquery.validate.fixes.js" />
     <Content Include="Styles\bootstrap.css" />
     <Content Include="Styles\bootstrap.min.css" />
@@ -308,6 +316,7 @@
     <Content Include="Views\Shared\DisplayTemplates\IsPaid.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\IsFinished.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\UrlNewWindow.cshtml" />
+    <Content Include="Views\Jobs\AddSparePart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
