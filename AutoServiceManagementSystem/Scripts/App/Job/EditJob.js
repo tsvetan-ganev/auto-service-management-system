@@ -2,16 +2,6 @@
 /// <reference path="../../Vendor/jquery-1.10.2.intellisense.js" 
 
 $(document).ready(function () {
-    
-    function validateDynamicFormInput(element) {
-        var currForm = element.closest("form");
-        currForm.removeData("validator");
-        currForm.removeData("unobtrusiveValidation");
-        $.validator.unobtrusive.parse(currForm);
-        currForm.validate(); // This line is important and added for client side validation to trigger, without this it didn't fire client side errors.
-        console.log('validated!')
-    }
-
     // dynamically subscribes all remove buttons
     $(document).on('click', '.remove-item', function (event) {
         event.preventDefault()
@@ -29,9 +19,14 @@ $(document).ready(function () {
         })
     })
 
-
-
-    
-
-    
+    function validateDynamicFormInput(element) {
+        var currForm = element.closest("form");
+        currForm.removeData("validator");
+        currForm.removeData("unobtrusiveValidation");
+        $.validator.unobtrusive.parse(currForm);
+        // This line is important and added for client side validation to trigger,
+        // without this it didn't fire client side errors.
+        currForm.validate();
+        console.log('validated!')
+    }
 });

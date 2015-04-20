@@ -67,14 +67,5 @@ namespace AutoServiceManagementSystem.Models
         public ApplicationUser User { get; set; }
 
         public virtual ICollection<Job> Jobs { get; set; }
-
-        // enums
-        public enum Fuel
-        {
-            Petrol,
-            Diesel,
-            Gas
-        }
-
     }
 }

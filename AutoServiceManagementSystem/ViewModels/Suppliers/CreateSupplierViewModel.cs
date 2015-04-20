@@ -20,8 +20,17 @@ namespace AutoServiceManagementSystem.ViewModels.Suppliers
         [Display(Name = "Discount")]
         public decimal DiscountPercentage { get; set; }
 
+        [Display(Name = "Skype")]
+        [StringLength(maximumLength: 32 ,MinimumLength = 6)]
+        public string SkypeName { get; set; }
+
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Email Address")]
+        public string EmailAddress { get; set; }
+
         [DataType(DataType.Url)]
         [Display(Name = "Website")]
+        [MaxLength(48)]
         public string WebsiteUrl { get; set; }
     }
 }

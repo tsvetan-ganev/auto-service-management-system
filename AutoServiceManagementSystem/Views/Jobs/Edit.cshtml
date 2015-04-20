@@ -7,11 +7,11 @@
 <h2>Edit</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "job-form" }))
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal">
+    <div id="form-wrapper" class="form-horizontal">
         <h4>Job</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -51,14 +51,15 @@
             </div>
         </div>
         
-        <div class="form-group">
-            @Html.EditorFor(j => j.SpareParts)
+        <div id="spare-parts-list" class="form-group">
+            @Html.EditorForMany(j => j.SpareParts)
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-success" />
                 @Html.ActionLink("Discard", "Index", null, htmlAttributes: new { @class = "btn btn-danger" })
+                <a href="#" id="add-spare-part" class="btn btn-info">Add a new part</a>
             </div>
         </div>
     </div>
@@ -67,5 +68,5 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval",
-        "~/bundles/app/job/add");
+        "~/bundles/app/job/edit");
 }

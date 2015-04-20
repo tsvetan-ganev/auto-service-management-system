@@ -9,8 +9,6 @@ namespace AutoServiceManagementSystem.ViewModels.Jobs
 {
     public class EditSparePartViewModel
     {
-        //public int SparePartId { get; set; }
-
         public string Name { get; set; }
 
         [DisallowSpecialCharacters(allowDigits: true)]

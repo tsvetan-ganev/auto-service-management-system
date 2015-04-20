@@ -22,9 +22,17 @@ namespace AutoServiceManagementSystem.Models
 		[Display(Name="Discount")]
 		public decimal DiscountPercentage { get; set; }
 
+        [Display(Name = "Skype")]
+        public string SkypeName { get; set; }
+
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Email Address")]
+        public string EmailAddress { get; set; }
+
 		[DataType(DataType.Url)]
         [UIHint("UrlNewWindow")]
 		[Display(Name="Website")]
+        [MaxLength(48)]
         public string WebsiteUrl { get; set; }
 
         public bool IsDeleted { get; set; }

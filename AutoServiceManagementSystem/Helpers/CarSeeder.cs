@@ -181,18 +181,18 @@ namespace AutoServiceManagementSystem.Helpers
 		/// <summary>
 		/// Generates a fuel type out of an enum.
 		/// </summary>
-		public static Car.Fuel GenerateFuelType()
+		public static Fuel GenerateFuelType()
 		{
 			switch (rand.Next(0, 3))
 			{
 				case 0:
-					return Car.Fuel.Diesel;
+					return Fuel.Diesel;
 				case 1:
-					return Car.Fuel.Gas;
+					return Fuel.Gas;
 				case 2:
-					return Car.Fuel.Petrol;
+					return Fuel.Petrol;
 				default:
-					return Car.Fuel.Petrol;
+					return Fuel.Petrol;
 			}
 		}
 

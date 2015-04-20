@@ -72,6 +72,8 @@ namespace AutoServiceManagementSystem.Controllers
                     Name = viewModel.Name,
                     City = viewModel.City,
                     DiscountPercentage = viewModel.DiscountPercentage,
+                    SkypeName = viewModel.SkypeName,
+                    EmailAddress = viewModel.EmailAddress,
                     WebsiteUrl = viewModel.WebsiteUrl,
                     IsDeleted = false,
                     User = currentUser
@@ -100,6 +102,8 @@ namespace AutoServiceManagementSystem.Controllers
                 Name = supplier.Name,
                 City = supplier.City,
                 DiscountPercentage = supplier.DiscountPercentage,
+                SkypeName = supplier.SkypeName,
+                EmailAddress = supplier.EmailAddress,
                 WebsiteUrl = supplier.WebsiteUrl
             };
 
@@ -119,6 +123,8 @@ namespace AutoServiceManagementSystem.Controllers
                     Name = viewModel.Name,
                     City = viewModel.City,
                     DiscountPercentage = viewModel.DiscountPercentage,
+                    SkypeName = viewModel.SkypeName,
+                    EmailAddress = viewModel.EmailAddress,
                     WebsiteUrl = viewModel.WebsiteUrl
                 };
                 suppliersRepo.UpdateSupplier(supplier);

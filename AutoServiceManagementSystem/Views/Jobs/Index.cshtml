@@ -2,63 +2,75 @@
 
 @{
     ViewBag.Title = "Jobs";
-    var h2 = String.Format("{0}'s {1} ({2})", ViewBag.CustomerName, ViewBag.CarManufacturer, ViewBag.CarPlateNumber);
+    var h2 = String.Format("{0}'s {1}", ViewBag.CustomerName, ViewBag.CarManufacturer);
+    var h3 = Html.Encode(String.Format("{0}", ViewBag.CarPlateNumber));
 }
 
 <h2>
     @h2
 </h2>
-
+<h3>
+    @h3
+</h3>
+<hr />
 <section class="jobs-list container">
+ 
+    @if (Model.Count() == 0)
+    {
+        <h4>Currently there are no jobs for this car.</h4>
+    }
     @foreach (var job in Model)
     {
-        <hr/>
-        <div id="jobs-container" class="row">
-            <div class="row">
-                <div class="col-md-6 col-sm-6">
+        <div id="jobs-container" class="col-md-6 metro-container">
+            <div class="row job-mileage">
+                <div class="col-md-3 col-xs-6">
                     <b>@Html.DisplayNameFor(j => j.Mileage)</b>
                 </div>
-                <div class="col-md-6 col-sm-6">
-                    @Html.DisplayFor(j => job.Mileage)
+                <div class="col-md-9 col-xs-6">
+                    @Html.Encode(job.Mileage.ToString("### ### ### km"))
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6 col-sm-6">
+            <div class="row job-description">
+                <div class="col-md-3 col-sm-6">
                     <b>@Html.DisplayNameFor(j => j.Description)</b>
                 </div>
-                <div class="col-md-6 col-sm-6">
+                <div class="col-md-9 col-sm-6">
                     @Html.DisplayFor(j => job.Description)
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6 col-sm-6">
+            <div class="row job-date-started">
+                <div class="col-md-3 col-xs-6">
                     <b>@Html.DisplayNameFor(j => j.DateStarted)</b>
                 </div>
-                <div class="col-md-6 col-sm-6">
+                <div class="col-md-9 col-xs-6">
                     @Html.DisplayFor(j => job.DateStarted)
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6 col-sm-6">
-                    <b>@Html.DisplayNameFor(j => j.DateFinished)</b> 
+            <div class="row job-date-finished">
+                <div class="col-md-3 col-xs-6">
+                    <b>@Html.DisplayNameFor(j => j.DateFinished)</b>
                 </div>
-                <div class="col-md-6 col-sm-6">
+                <div class="col-md-9 col-xs-6">
+                    @if (job.DateFinished == null)
+                    {
+                        <b>-</b>
+                    }
                     @Html.DisplayFor(j => job.DateFinished)
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6 col-sm-6">
+            <div class="row job-is-finished">
+                <div class="col-md-3 col-xs-6">
                     <b>@Html.DisplayNameFor(j => j.IsFinished)</b>
                 </div>
-                <div class="col-md-6 col-sm-6">
+                <div class="col-md-9 col-xs-6">
                     @Html.DisplayFor(j => job.IsFinished)
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6 col-sm-6">
+            <div class="row job-is-paid">
+                <div class="col-md-3 col-xs-6">
                     <b>@Html.DisplayNameFor(j => j.IsPaid)</b>
                 </div>
-                <div class="col-md-6 col-sm-6">
+                <div class="col-md-9 col-xs-6">
                     @Html.DisplayFor(j => job.IsPaid)
                 </div>
             </div>

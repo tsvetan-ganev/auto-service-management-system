@@ -94,23 +94,29 @@ namespace AutoServiceManagementSystem.Controllers
             var currentUser = manager.FindById(User.Identity.GetUserId());
             var customer = customersRepo.GetCustomerById(id);
 
-            if (customer == null)
+            if (customer == null || customer.User != currentUser)
             {
-                // no such customer
+                // no such customer or this user tries to access other user's customer data
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
 
-            if (customer.User != currentUser)
+            List<DisplayCarViewModel> viewModel = carsRepo.GetCarsByCustomer(id)
+                .Select(c => new DisplayCarViewModel()
             {
-                // this user tries to access other user's customer data
-                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
-            }
+                CarId = c.CarId,
+                Manufacturer = c.Manufacturer,
+                Model = c.Model,
+                VIN = c.VIN,
+                PlateCode = c.PlateCode,
+                EngineCode = c.EngineCode,
+                Year = c.Year,
+                FuelType = c.FuelType
+            }).ToList();
 
             ViewBag.CustomerId = id;
             ViewBag.Title = string.Format("{0} {1}'s cars.",
                 customer.FirstName, customer.LastName);
-            var cars = carsRepo.GetCarsByCustomer(id);
-            return View(cars);
+            return View(viewModel);
         }
 
         // GET: Customer/{customerId}/Car/{carId}/Edit

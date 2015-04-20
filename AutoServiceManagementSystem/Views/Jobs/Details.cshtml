@@ -13,7 +13,7 @@
                 @Html.LabelFor(j => j.Mileage)
             </div>
             <div class="col-md-6">
-                @Html.DisplayFor(j => j.Mileage)
+                @Html.Encode(Model.Mileage.ToString("### ### ### km"))
             </div>
         </div>
         <div class="row">
@@ -37,6 +37,10 @@
                 @Html.LabelFor(j => j.DateFinished)
             </div>
             <div class="col-md-6">
+                @if (Model.DateFinished == null)
+                {
+                    <b>-</b>
+                }
                 @Html.DisplayFor(j => j.DateFinished)
             </div>
         </div>
@@ -59,7 +63,7 @@
     </div>
     <hr />
     <h4>Spare Parts</h4>
-    <table class="table table-striped col-md-12">
+    <table class="table table-striped table-hover col-md-12">
         <thead>
             <tr>
                 <th>Name</th>

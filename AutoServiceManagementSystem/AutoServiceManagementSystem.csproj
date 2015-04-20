@@ -178,6 +178,7 @@
     <Compile Include="Helpers\SparePartSeeder.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
+    <Compile Include="Models\FuelType.cs" />
     <Compile Include="Models\SparePart.cs" />
     <Compile Include="Models\UserDetails.cs" />
     <Compile Include="Validation\DisallowSpecialCharactersAttribute.cs" />
@@ -205,6 +206,7 @@
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Job.cs" />
     <Compile Include="ViewModels\Account\RegisterViewModel.cs" />
+    <Compile Include="ViewModels\Cars\DisplayCarViewModel.cs" />
     <Compile Include="ViewModels\Cars\EditCarViewModel.cs" />
     <Compile Include="ViewModels\Cars\CreateCarViewModel.cs" />
     <Compile Include="ViewModels\Customers\EditCustomerViewModel.cs" />
@@ -225,6 +227,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\App\Job\AddJob.js" />
+    <Content Include="Scripts\App\Job\EditJob.js" />
     <Content Include="Scripts\App\jquery.validate.fixes.js" />
     <Content Include="Styles\bootstrap.css" />
     <Content Include="Styles\bootstrap.min.css" />
@@ -308,7 +311,6 @@
     <Content Include="Views\Jobs\Details.cshtml" />
     <Content Include="Views\Jobs\Edit.cshtml" />
     <Content Include="Views\Jobs\Index.cshtml" />
-    <Content Include="Views\Jobs\_SparePartCreate.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\SparePart.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\UserSuppliersViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EditSparePartViewModel.cshtml" />
@@ -317,6 +319,7 @@
     <Content Include="Views\Shared\DisplayTemplates\IsFinished.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\UrlNewWindow.cshtml" />
     <Content Include="Views\Jobs\AddSparePart.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\DisplayCarViewModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

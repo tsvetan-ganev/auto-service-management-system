@@ -1,4 +1,5 @@
-﻿using AutoServiceManagementSystem.Validation;
+﻿using AutoServiceManagementSystem.Models;
+using AutoServiceManagementSystem.Validation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,9 +18,9 @@ namespace AutoServiceManagementSystem.ViewModels.Cars
         [MaxLength(20)]
         public string Model { get; set; }
 
-        [Display(Name = "Plate Code")]
+        [Display(Name = "Plate Number")]
         [StringLength(maximumLength: 12, MinimumLength = 8,
-            ErrorMessage = "Plate codes consist of between 8 and 12 symbols.")]
+            ErrorMessage = "Plate numbers consist of between 8 and 12 symbols.")]
         public string PlateCode { get; set; }
 
         // TODO: improve on live error display
@@ -35,6 +36,6 @@ namespace AutoServiceManagementSystem.ViewModels.Cars
         public int? Year { get; set; }
 
         [Display(Name = "Fuel Type")]
-        public AutoServiceManagementSystem.Models.Car.Fuel FuelType { get; set; }
+        public Fuel FuelType { get; set; }
     }
 }

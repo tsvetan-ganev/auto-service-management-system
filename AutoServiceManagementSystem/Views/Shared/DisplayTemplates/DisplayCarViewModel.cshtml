@@ -1,0 +1,91 @@
+﻿@model AutoServiceManagementSystem.ViewModels.Cars.DisplayCarViewModel
+
+<div class="car-info-panel thumbnail col-md-5">
+    <div class="caption">
+        <h2 id="make">
+            <strong>@Html.DisplayFor(model => model.Manufacturer)</strong>
+        </h2>
+        <ul class="list-group">
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-md-4">
+                        @Html.DisplayNameFor(model => model.Model):
+                    </div>
+                    <div class="col-md-8">
+                        <strong>
+                            @Html.DisplayFor(model => model.Model)
+                        </strong>
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-md-4">
+                        @Html.DisplayNameFor(model => model.Year):
+                    </div>
+                    <div class="col-md-8">
+                        <strong>
+                            @Html.DisplayFor(model => model.Year)
+                        </strong>
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-md-4">
+                        @Html.DisplayNameFor(model => model.VIN):
+                    </div>
+                    <div class="col-md-8">
+                        <strong>
+                            @Html.DisplayFor(model => model.VIN)
+                        </strong>
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-md-4">
+                        @Html.DisplayNameFor(model => model.EngineCode):
+                    </div>
+                    <div class="col-md-8">
+                        <strong>
+                            @Html.DisplayFor(model => model.EngineCode)
+                        </strong>
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-md-4">
+                        @Html.DisplayNameFor(model => model.FuelType):
+                    </div>
+                    <div class="col-md-8">
+                        <strong>
+                            @Html.DisplayFor(model => model.FuelType)
+                        </strong>
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-md-4">
+                        @Html.DisplayNameFor(model => model.PlateCode):
+                    </div>
+                    <div class="col-md-8">
+                        <strong>
+                            @Html.DisplayFor(model => model.PlateCode)
+                        </strong>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div>
+            @Html.ActionLink("View Jobs", "Index", "Jobs",
+                            new { customerId = ViewBag.CustomerId, carId = Model.CarId }, new { @class = "btn btn-success" })
+            @Html.ActionLink("Edit", "Edit",
+                            new { customerId = ViewBag.CustomerId, carId = Model.CarId }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Delete", "Delete",
+                            new { customerId = ViewBag.CustomerId, carId = Model.CarId }, new { @class = "btn btn-danger" })
+        </div>
+    </div>
+</div>

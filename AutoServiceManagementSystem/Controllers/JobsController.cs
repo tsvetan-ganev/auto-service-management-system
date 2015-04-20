@@ -227,7 +227,7 @@ namespace AutoServiceManagementSystem.Controllers
         // POST: Customers/{id}/Cars/{carId}/Jobs/Edit/{jobId}
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(EditJobViewModel editJobViewModel, int customerId, int carId, int jobId)
+        public ActionResult Edit(EditJobViewModel viewModel, int customerId, int carId, int jobId)
         {
             var currentUser = manager.FindById(User.Identity.GetUserId());
             var customer = customersRepo.GetCustomerById(customerId);
@@ -236,30 +236,30 @@ namespace AutoServiceManagementSystem.Controllers
             if (ModelState.IsValid)
             {
 				var job = jobsRepo.GetJobById(customerId, carId, jobId);
-				job.Mileage = editJobViewModel.Mileage;
-				job.Description = editJobViewModel.Description;
-				job.IsPaid = editJobViewModel.Paid;
-				job.IsFinished = editJobViewModel.Finished;
+				job.Mileage = viewModel.Mileage;
+				job.Description = viewModel.Description;
+				job.IsPaid = viewModel.Paid;
+				job.IsFinished = viewModel.Finished;
 
-                foreach (var sp in job.SpareParts)
+                int elementsDifference = viewModel.SpareParts.Count - job.SpareParts.Count;
+                for (int i = 0; i < elementsDifference; i++)
                 {
-                    // TODO: assign with foreach
+                    job.SpareParts.Add(new SparePart());
                 }
-
-				for (int i = 0; i < job.SpareParts.Count; i++)
+				for (int i = 0; i < viewModel.SpareParts.Count; i++)
 				{
-					job.SpareParts[i].Name = editJobViewModel.SpareParts[i].Name;
-					job.SpareParts[i].Code = editJobViewModel.SpareParts[i].Code;
-					job.SpareParts[i].Price = editJobViewModel.SpareParts[i].Price;
-					job.SpareParts[i].Quantity = editJobViewModel.SpareParts[i].Quantity;
+					job.SpareParts[i].Name = viewModel.SpareParts[i].Name;
+					job.SpareParts[i].Code = viewModel.SpareParts[i].Code;
+					job.SpareParts[i].Price = viewModel.SpareParts[i].Price;
+					job.SpareParts[i].Quantity = viewModel.SpareParts[i].Quantity;
 					job.SpareParts[i].Supplier = suppliersRepo.GetSupplierById(
-						editJobViewModel.SpareParts[i].Suppliers.SelectedSupplierId);
+						viewModel.SpareParts[i].Suppliers.SelectedSupplierId);
 				}
                 jobsRepo.UpdateJob(job);
                 jobsRepo.Save();
                 return RedirectToAction("Index");
             }
-            return View(editJobViewModel);
+            return View(viewModel);
         }
 
         // GET: Customers/{id}/Cars/{carId}/Jobs/Delete/{jobId}
