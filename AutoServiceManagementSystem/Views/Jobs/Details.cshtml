@@ -34,29 +34,25 @@
         </div>
         <div class="row">
             <div class="col-md-6">
-                @Html.LabelFor(j => j.DateFinished)
+                @Html.LabelFor(j => j.LastModified)
             </div>
             <div class="col-md-6">
-                @if (Model.DateFinished == null)
-                {
-                    <b>-</b>
-                }
-                @Html.DisplayFor(j => j.DateFinished)
+                @Html.DisplayFor(j => j.LastModified)
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-xs-3 col-sm-6">
                 @Html.LabelFor(j => j.IsFinished)
             </div>
-            <div class="col-md-6">
+            <div class="col-xs-9 col-sm-6">
                 @Html.DisplayFor(j => j.IsFinished)
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-xs-3 col-sm-6">
                 @Html.LabelFor(j => j.IsPaid)
             </div>
-            <div class="col-md-6">
+            <div class="col-xs-9 col-sm-6">
                 @Html.DisplayFor(j => j.IsPaid)
             </div>
         </div>

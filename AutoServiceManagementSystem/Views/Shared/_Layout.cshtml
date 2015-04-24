@@ -7,6 +7,7 @@
     <title>@ViewBag.Title - Auto Service Management System</title>
     @Styles.Render("~/styles")
     @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("ScriptsHead", required: false)
 </head>
 <body>
     <nav class="navbar navbar-default navbar-fixed-top" id="navigation-top">
@@ -39,6 +40,8 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundless/app")
     @RenderSection("scripts", required: false)
+
 </body>
 </html>

@@ -9,14 +9,22 @@ namespace AutoServiceManagementSystem.ViewModels.Jobs
 {
     public class EditSparePartViewModel
     {
+		public EditSparePartViewModel()
+		{
+			Quantity = 1;
+		}
+
+		[Required]
         public string Name { get; set; }
 
         [DisallowSpecialCharacters(allowDigits: true)]
         public string Code { get; set; }
 
+		[Required]
         [Range(1, 32)]
         public int Quantity { get; set; }
 
+		[Required]
         [DataType(DataType.Currency)]
 		[Range(0.1, 10000)]
         public decimal Price { get; set; }

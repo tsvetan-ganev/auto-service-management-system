@@ -29,8 +29,8 @@ namespace AutoServiceManagementSystem.Models
         public DateTime? DateStarted { get; set; }
 
 		[DataType(DataType.Date)]
-		[Display(Name = "Date Finished")]
-        public DateTime? DateFinished { get; set; }
+		[Display(Name = "Last Modified")]
+        public DateTime? LastModified { get; set; }
 
         [Display(Name="Finished")]
         [UIHint("IsFinished")]

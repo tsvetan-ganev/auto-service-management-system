@@ -167,6 +167,7 @@ namespace AutoServiceManagementSystem.Controllers
                 job.Mileage = createJobViewModel.Mileage;
                 job.Description = createJobViewModel.Description;
                 job.DateStarted = DateTime.Now;
+				job.LastModified = DateTime.Now;
                 job.IsFinished = false;
                 job.IsPaid = false;
                 job.SpareParts = spareParts;
@@ -238,6 +239,7 @@ namespace AutoServiceManagementSystem.Controllers
 				var job = jobsRepo.GetJobById(customerId, carId, jobId);
 				job.Mileage = viewModel.Mileage;
 				job.Description = viewModel.Description;
+				job.LastModified = DateTime.Now;
 				job.IsPaid = viewModel.Paid;
 				job.IsFinished = viewModel.Finished;
 

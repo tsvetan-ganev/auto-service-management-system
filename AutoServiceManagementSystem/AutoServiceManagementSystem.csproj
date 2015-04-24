@@ -226,13 +226,16 @@
     <Compile Include="ViewModels\Suppliers\CreateSupplierViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\App\app.js" />
     <Content Include="Scripts\App\Job\AddJob.js" />
     <Content Include="Scripts\App\Job\EditJob.js" />
     <Content Include="Scripts\App\jquery.validate.fixes.js" />
-    <Content Include="Styles\bootstrap.css" />
-    <Content Include="Styles\bootstrap.min.css" />
+    <Content Include="Scripts\App\Supplier\Index.js" />
+    <Content Include="Scripts\Vendor\skype-uri.js" />
+    <Content Include="Styles\Bootstrap\bootstrap.css" />
+    <Content Include="Styles\Bootstrap\bootstrap.min.css" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Styles\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Styles\Site.css" />
     <Content Include="Scripts\Vendor\bootstrap.js" />
@@ -320,14 +323,15 @@
     <Content Include="Views\Shared\DisplayTemplates\UrlNewWindow.cshtml" />
     <Content Include="Views\Jobs\AddSparePart.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\DisplayCarViewModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SkypeName.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Styles\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Styles\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Styles\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>

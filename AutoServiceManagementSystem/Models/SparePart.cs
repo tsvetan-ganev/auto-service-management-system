@@ -11,6 +11,7 @@ namespace AutoServiceManagementSystem.Models
     {
         public int SparePartId { get; set; }
 
+		[Required]
         public string Name { get; set; }
 
 		[DisallowSpecialCharacters(allowDigits: true)]
@@ -18,9 +19,11 @@ namespace AutoServiceManagementSystem.Models
 
         public Supplier Supplier { get; set; }
 
+		[Required]
 		[Range(1, 32)]
         public int Quantity { get; set; }
 
+		[Required]
 		[DataType(DataType.Currency)]
 		[Range(0.1, 10000)]
         public decimal Price { get; set; }

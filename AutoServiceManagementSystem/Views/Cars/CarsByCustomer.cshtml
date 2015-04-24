@@ -11,6 +11,7 @@
         @Html.DisplayFor(cars => cars)
     </div>
 </section>
+
 <div class="row text-right">
     @Html.ActionLink("Add a new car", "Create",
         new { customerId = ViewBag.CustomerId }, new { @class = "btn btn-primary" })

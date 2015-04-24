@@ -6,69 +6,106 @@
 
 <h2>@ViewBag.Title</h2>
 
-<div id="suppliers-list">
-    <table class="col-md-12 table-striped table-hover">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.City)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DiscountPercentage)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.SkypeName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.EmailAddress)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.WebsiteUrl)
-                </th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.City)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DiscountPercentage)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SkypeName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EmailAddress)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.WebsiteUrl)
-                    </td>
-                    <td class="action-buttons">
-                        <div class="btn-group btn-group-sm">
-                            @Html.ActionLink("Edit", "Edit", new { id = item.SupplierId },
-                        new { @class = "btn btn-primary" })
-                            @Html.ActionLink("Details", "Details", new { id = item.SupplierId },
-                        new { @class = "btn btn-info" })
-                            @Html.ActionLink("Delete", "Delete", new { id = item.SupplierId },
-                        new { @class = "btn btn-danger" })
-                        </div>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
+<section id="suppliers-list">
 
-<div class="row text-right">
+    @foreach (var item in Model)
+    {
+        <div class="info-panel thumbnail col-md-5">
+            <div class="caption">
+                <h2 id="supplier-name">
+                    <strong>@Html.DisplayFor(m => item.Name)</strong>
+                </h2>
+                <ul class="list-group">
+                    <li class="list-group-item supplier-city">
+                        <div class="row">
+                            <div class="col-md-4">
+                                @Html.DisplayNameFor(x => x.City)
+                            </div>
+                            <div class="col-md-8">
+                                <b>
+                                    @Html.DisplayFor(m => item.City)
+                                </b>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item supplier-email">
+                        <div class="row">
+                            <div class="col-md-4">
+                                @Html.DisplayNameFor(x => x.EmailAddress)
+                            </div>
+                            <div class="col-md-8">
+                                @if (String.IsNullOrEmpty(item.EmailAddress))
+                                {
+                                    <span class="text-muted">Not specified.</span>
+                                }
+                                else
+                                {
+                                    <b>@Html.DisplayFor(m => item.EmailAddress)</b>
+                                }
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item supplier-website">
+                        <div class="row">
+                            <div class="col-md-4">
+                                @Html.DisplayNameFor(x => x.WebsiteUrl)
+                            </div>
+                            <div class="col-md-8">
+                                @if (String.IsNullOrEmpty(item.WebsiteUrl))
+                                {
+                                    <span class="text-muted">Not specified.</span>
+                                }
+                                else
+                                {
+                                    <b>@Html.DisplayFor(m => item.WebsiteUrl)</b>
+                                }
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item supplier-discount">
+                        <div class="row">
+                            <div class="col-md-4">
+                                @Html.DisplayNameFor(x => x.DiscountPercentage)
+                            </div>
+                            <div class="col-md-8">
+                                <b>
+                                    @Html.DisplayFor(m => item.DiscountPercentage)
+                                </b>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item supplier-skype">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @Html.DisplayFor(m => item.SkypeName, "SkypeName")
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="row">
+                    <div class="btn-group  ">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.SupplierId },
+                        new { @class = "btn btn-primary" })
+                        @Html.ActionLink("Details", "Details", new { id = item.SupplierId },
+                        new { @class = "btn btn-info" })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.SupplierId },
+                        new { @class = "btn btn-danger" })
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    }
+</section>
+
+<div id="btn-add-supplier" class="row text-right">
     @Html.ActionLink("Add a new supplier", "Create", null, new { @class = "btn btn-primary" })
 </div>
+
+@section ScriptsHead {
+    @Scripts.Render("~/bundles/skype")
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/app/supplier/index")
+}

@@ -1,0 +1,32 @@
+﻿@model String
+@{
+    var guid = Guid.NewGuid();
+    var skypeId = @Model + '_' + guid.ToString();
+}
+
+<div id="SkypeButton_Call_@skypeId" class="col-md-12 skype-functions-container">
+    @if (!String.IsNullOrEmpty(Model))
+    {
+        <script type="text/javascript" defer>
+            Skype.ui( {
+                "name": "call",
+                "element": "SkypeButton_Call_@skypeId",
+                "participants": ["@Model"],
+                "imageSize": 32
+            } );
+
+            Skype.ui( {
+                "name": "chat",
+                "element": "SkypeButton_Call_@skypeId",
+                "participants": ["@Model"],
+                "imageSize": 32
+            } );
+        </script>
+    }
+    else
+    {
+        
+        <div class="row"><h4 id="msg-no-skype-added">No skype account added for this supplier.</h4></div>
+    }
+</div>
+
