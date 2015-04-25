@@ -27,7 +27,7 @@ namespace AutoServiceManagementSystem.Controllers
         
 		public ActionResult Index()
 		{
-			return View();
+			return View("Landing");
 		}
 
         /* AJAX TEST BEGIN */

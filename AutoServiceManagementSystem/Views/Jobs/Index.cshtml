@@ -70,8 +70,8 @@
                     @Html.DisplayFor(j => job.IsPaid)
                 </div>
             </div>
-            <div class="row buttons">
-                <div class="btn-group pull-right">
+            <div class="row ">
+                <div class="btn-group action-buttons">
                     @Html.ActionLink("Edit", "Edit",
                             new { customerId = ViewBag.CustomerId, carId = ViewBag.CarId, jobId = job.JobId },
                             htmlAttributes: new { @class = "btn btn-primary" })

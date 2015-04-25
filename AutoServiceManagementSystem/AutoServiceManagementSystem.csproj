@@ -237,6 +237,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Styles\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Styles\Images\hero.jpg" />
     <Content Include="Styles\Site.css" />
     <Content Include="Scripts\Vendor\bootstrap.js" />
     <Content Include="Scripts\Vendor\bootstrap.min.js" />
@@ -254,6 +255,9 @@
     <Content Include="Scripts\Vendor\respond.js" />
     <Content Include="Scripts\Vendor\respond.min.js" />
     <Content Include="Scripts\Vendor\_references.js" />
+    <Content Include="Styles\Site.min.css">
+      <DependentUpon>Site.css</DependentUpon>
+    </Content>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -324,6 +328,11 @@
     <Content Include="Views\Jobs\AddSparePart.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\DisplayCarViewModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\SkypeName.cshtml" />
+    <Content Include="Styles\Site.css.map">
+      <DependentUpon>Site.css</DependentUpon>
+    </Content>
+    <Content Include="Views\Home\Landing.cshtml" />
+    <Content Include="Views\Shared\_LandingLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,119 +1,169 @@
-﻿body {
-    padding-top: 70px;
-    padding-bottom: 20px;
+﻿/* Variables */
+/* UI Colors */
+/* Mixins */
+.clearfix {
+  display: block;
+  zoom: 1;
 }
-
-/* Set padding to keep content from hitting the edges */
+.clearfix:after {
+  content: " ";
+  display: block;
+  font-size: 0;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+.absolute-center-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 3;
+  color: #fff;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.75);
+  -webkit-transform: translate3d(-50%, -50%, 0);
+  -moz-transform: translate3d(-50%, -50%, 0);
+  -ms-transform: translate3d(-50%, -50%, 0);
+  -o-transform: translate3d(-50%, -50%, 0);
+  transform: translate3d(-50%, -50%, 0);
+}
+/* Tags Fixes */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* End Tags Fixes */
+body {
+  margin: 0 0;
+  padding: 0 0;
+}
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+  padding: 5em;
 }
-
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-    white-space: normal;
+@media screen and (max-width: 720px) {
+  .body-content {
+    padding-left: 1.25em;
+    padding-right: 1.25em;
+  }
 }
-
-/* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
 textarea {
-    max-width: 280px;
+  max-width: 280px;
 }
-
-
-/* 
-   Responsive tables 
-   taken from: http://bootsnipp.com/snippets/featured/no-more-tables-respsonsive-table
-*/
-@media only screen and (max-width: 800px) {
-
-    /* Force table to not be like tables anymore */
-    #responsive-table table,
-    #responsive-table thead,
-    #responsive-table tbody,
-    #responsive-table th,
-    #responsive-table td,
-    #responsive-table tr {
-        display: block;
-    }
-
-    /* Hide table headers (but not display: none;, for accessibility) */
-    #responsive-table thead tr {
-        position: absolute;
-        top: -9999px;
-        left: -9999px;
-    }
-
-    #responsive-table tr {
-        border: 1px solid #ccc;
-    }
-
-    #responsive-table td {
-        /* Behave  like a "row" */
-        border: none;
-        border-bottom: 1px solid #eee;
-        position: relative;
-        padding-left: 50%;
-        white-space: normal;
-        text-align: left;
-    }
-
-        #responsive-table td:before {
-            /* Now like a table header */
-            position: absolute;
-            /* Top/left values mimic padding */
-            top: 6px;
-            left: 6px;
-            width: 45%;
-            padding-right: 10px;
-            white-space: nowrap;
-            text-align: left;
-            font-weight: bold;
-        }
-
-    html > body #responsive-table td:before {
-        content: attr(data-title);
-    }
-}
-
-@media only screen and (max-width: 480px)
-{
-
-}
-/* END Responsive tables */
-
-/* BEGIN User Styles */
 .metro-container {
-    background-color: rgba(0, 0, 0, 0.05);
-    padding: 2.5em;
-    width: 100%;
-    margin: 1.0em 0.1em;
+  background-color: #f5f5f5;
+  padding: 2.5em;
+  width: 100%;
+  margin: 1em 0.2em;
 }
-
 .info-panel {
-    text-align: center;
-    background-color: rgba(0, 0, 0, 0.05);
-    margin-top: 20px;
-    margin-left: 70px;
+  text-align: center;
+  background-color: #f5f5f5;
+  margin: 2em;
 }
-
+@media screen and (max-width: 720px) {
+  .info-panel {
+    margin: 2em 0;
+  }
+}
 #btn-add-supplier {
-    clear: left;
+  clear: left;
 }
-
-@media screen and (max-width: 990px )
-{
-    .info-panel {
-        margin: 2em 0;
-        text-align: center;
-        font-size: large;
-    }
-
-    #navigation-top {
-        opacity: 0.87;
-    }
+@media screen and (max-width: 720px) {
+  #navigation-top {
+    opacity: 0.85;
+  }
+  #navigation-top .navbar-brand {
+    display: none;
+  }
+  #navigation-top li {
+    text-align: center;
+    font-size: 1.33em;
+  }
 }
-
+@media screen and (max-width: 720) {
+  #content-wrapper {
+    padding: 0 0;
+  }
+}
+/* Landing Page Layout Styles */
+#landing-wrapper .row {
+  margin-right: 0;
+  margin-left: 0;
+}
+#landing-wrapper .image-overlay {
+  margin-top: -3em;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  background-color: #080d15;
+  opacity: .7;
+}
+#landing-wrapper .leading-image {
+  margin-top: -3em;
+  background: no-repeat url(Images/hero.jpg) center scroll;
+  min-height: 100vh;
+}
+#landing-wrapper .leading-image .hero {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 3;
+  color: #fff;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.75);
+  -webkit-transform: translate3d(-50%, -50%, 0);
+  -moz-transform: translate3d(-50%, -50%, 0);
+  -ms-transform: translate3d(-50%, -50%, 0);
+  -o-transform: translate3d(-50%, -50%, 0);
+  transform: translate3d(-50%, -50%, 0);
+}
+#landing-wrapper .leading-image .hero h1 {
+  font-size: 4em;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+}
+@media screen and (max-width: 720px) {
+  #landing-wrapper .leading-image .hero h1 {
+    font-size: 3em;
+  }
+}
+#landing-wrapper .leading-image .hero h2 {
+  font-size: 2em;
+  font-weight: bold;
+}
+@media screen and (max-width: 720px) {
+  #landing-wrapper .leading-image .hero h2 {
+    font-size: 1em;
+  }
+}
+@media scren and (max-width: 720px) {
+  #landing-wrapper .leading-image .hero hgroup {
+    display: block;
+    background-color: black;
+    opacity: 0.5;
+  }
+}
+#landing-wrapper .features {
+  padding: 2em;
+}
+/* End Landing Page Layout Styles */
+footer {
+  display: block;
+  zoom: 1;
+}
+footer:after {
+  content: " ";
+  display: block;
+  font-size: 0;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+/*# sourceMappingURL=Site.css.map */

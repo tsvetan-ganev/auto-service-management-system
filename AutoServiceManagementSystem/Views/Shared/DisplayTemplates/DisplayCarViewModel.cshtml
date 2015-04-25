@@ -12,9 +12,16 @@
                         @Html.DisplayNameFor(model => model.Model):
                     </div>
                     <div class="col-md-8">
-                        <strong>
-                            @Html.DisplayFor(model => model.Model)
-                        </strong>
+                        @if (String.IsNullOrEmpty(Model.Model))
+                        {
+                            <span class="text-muted">Not specified.</span>
+                        }
+                        else
+                        {
+                            <strong>
+                                @Html.DisplayFor(model => model.Model)
+                            </strong>
+                        }
                     </div>
                 </div>
             </li>
@@ -24,9 +31,16 @@
                         @Html.DisplayNameFor(model => model.Year):
                     </div>
                     <div class="col-md-8">
-                        <strong>
-                            @Html.DisplayFor(model => model.Year)
-                        </strong>
+                        @if (Model.Year == null)
+                        {
+                            <span class="text-muted">Not specified.</span>
+                        }
+                        else
+                        {
+                            <strong>
+                                @Html.DisplayFor(model => model.Year)
+                            </strong>
+                        }
                     </div>
                 </div>
             </li>
@@ -48,9 +62,16 @@
                         @Html.DisplayNameFor(model => model.EngineCode):
                     </div>
                     <div class="col-md-8">
-                        <strong>
-                            @Html.DisplayFor(model => model.EngineCode)
-                        </strong>
+                        @if (String.IsNullOrEmpty(Model.EngineCode))
+                        {
+                            <span class="text-muted">Not specified.</span>
+                        }
+                        else
+                        {
+                            <strong>
+                                @Html.DisplayFor(model => model.EngineCode)
+                            </strong>
+                        }
                     </div>
                 </div>
             </li>
@@ -72,9 +93,16 @@
                         @Html.DisplayNameFor(model => model.PlateCode):
                     </div>
                     <div class="col-md-8">
-                        <strong>
-                            @Html.DisplayFor(model => model.PlateCode)
-                        </strong>
+                        @if (String.IsNullOrEmpty(Model.PlateCode))
+                        {
+                            <span class="text-muted">Not specified.</span>
+                        }
+                        else
+                        {
+                            <strong>
+                                @Html.DisplayFor(model => model.PlateCode)
+                            </strong>
+                        }
                     </div>
                 </div>
             </li>

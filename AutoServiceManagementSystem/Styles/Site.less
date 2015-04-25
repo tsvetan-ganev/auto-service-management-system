@@ -1,2 +1,180 @@
-﻿body {
+﻿/* Variables */
+@body-padding-offset: 5em;
+@info-panel-padding: 2em;
+@leading-image-margin-top: -3em;
+
+/* UI Colors */
+@gray: #e6e6e6;
+@light-gray: #f5f5f5;
+
+/* Mixins */
+.clearfix {
+    display: block;
+    zoom: 1;
+
+    &:after {
+        content: " ";
+        display: block;
+        font-size: 0;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+    }
+}
+
+.absolute-center-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 3;
+    color: #fff;
+    text-align: center;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 0 rgba(0,0,0,.75);
+    -webkit-transform: translate3d(-50%,-50%,0);
+    -moz-transform: translate3d(-50%,-50%,0);
+    -ms-transform: translate3d(-50%,-50%,0);
+    -o-transform: translate3d(-50%,-50%,0);
+    transform: translate3d(-50%,-50%,0);
+}
+
+/* Tags Fixes */
+
+// Chrome input spinner for numbers - remove
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* End Tags Fixes */
+
+body {
+    margin: 0 0;
+    padding: 0 0;
+}
+
+.body-content {
+    padding: @body-padding-offset;
+
+    @media screen and (max-width: 720px) {
+        padding-left: @body-padding-offset/4;
+        padding-right: @body-padding-offset/4;
+    }
+}
+
+
+input, select, textarea {
+    max-width: 280px;
+}
+
+.metro-container {
+    background-color: @light-gray;
+    padding: 2.5em;
+    width: 100%;
+    margin: 1em 0.2em;
+}
+
+.info-panel {
+    text-align: center;
+    background-color: @light-gray;
+    margin: @info-panel-padding;
+
+    @media screen and (max-width: 720px) {
+        margin: @info-panel-padding 0;
+    }
+}
+
+
+#btn-add-supplier {
+    clear: left;
+}
+
+#navigation-top {
+    @media screen and (max-width: 720px) {
+        opacity: 0.85;
+
+        .navbar-brand {
+            display: none;
+        }
+
+        li {
+            text-align: center;
+            font-size: 1.33em;
+        }
+    }
+}
+
+#content-wrapper {
+    @media screen and (max-width: 720) {
+        padding: 0 0;
+    }
+}
+
+/* Landing Page Layout Styles */
+#landing-wrapper {
+    .row {
+        margin-right: 0;
+        margin-left: 0;
+    }
+
+    .image-overlay {
+        margin-top: @leading-image-margin-top;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        background-color: #080d15;
+        opacity: .7;
+    }
+
+    .leading-image {
+        margin-top: @leading-image-margin-top;
+        background: no-repeat url(Images/hero.jpg) center scroll;
+        min-height: 100vh;
+
+        .hero {
+            .absolute-center-text;
+
+            h1 {
+                font-size: 4em;
+                font-weight: bold;
+                margin: 0;
+                padding: 0;
+
+                @media screen and (max-width: 720px) {
+                    font-size: 3em;
+                }
+            }
+
+            h2 {
+                font-size: 2em;
+                font-weight: bold;
+
+                @media screen and (max-width: 720px) {
+                    font-size: 1em;
+                }
+            }
+
+            @media scren and (max-width: 720px) {
+                hgroup {
+                    display: block;
+                    background-color: black;
+                    opacity: 0.5;
+                }
+            }
+        }
+    }
+
+    .features {
+        padding: 2em;
+    }
+    .full-width {
+
+    }
+}
+
+/* End Landing Page Layout Styles */
+footer {
+    .clearfix;
 }
