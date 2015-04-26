@@ -213,6 +213,7 @@
     <Compile Include="ViewModels\Customers\CreateCustomerViewModel.cs" />
     <Compile Include="ViewModels\Jobs\CreateJobViewModel.cs" />
     <Compile Include="ViewModels\Jobs\EditJobViewModel.cs" />
+    <Compile Include="ViewModels\Jobs\CreateSparePartViewModel.cs" />
     <Compile Include="ViewModels\Jobs\EditSparePartViewModel.cs" />
     <Compile Include="ViewModels\Jobs\UserSuppliersViewModel.cs" />
     <Compile Include="ViewModels\Manage\AccountDetailsViewModel.cs" />
@@ -304,12 +305,11 @@
     <Content Include="Views\Customers\Delete.cshtml" />
     <Content Include="Views\Customers\Details.cshtml" />
     <Content Include="Views\Customers\Edit.cshtml" />
-    <Content Include="Views\Customers\Index.cshtml" />
     <Content Include="Views\Suppliers\Create.cshtml" />
     <Content Include="Views\Suppliers\Delete.cshtml" />
     <Content Include="Views\Suppliers\Details.cshtml" />
     <Content Include="Views\Suppliers\Edit.cshtml" />
-    <Content Include="Views\Suppliers\Index.cshtml" />
+    <Content Include="Views\Suppliers\Suppliers.cshtml" />
     <Content Include="Views\Home\_DailySupplier.cshtml" />
     <Content Include="Views\Manage\_EditUserDetails.cshtml" />
     <Content Include="Views\Cars\CarsByCustomer.cshtml" />
@@ -333,6 +333,8 @@
     </Content>
     <Content Include="Views\Home\Landing.cshtml" />
     <Content Include="Views\Shared\_LandingLayout.cshtml" />
+    <Content Include="Views\Customers\Customers.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\CreateSparePartViewModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -8,6 +8,11 @@ namespace AutoServiceManagementSystem.ViewModels.Jobs
 {
     public class EditJobViewModel
     {
+        public EditJobViewModel()
+        {
+            SpareParts = new List<EditSparePartViewModel>();
+        }
+
         [Range(1, 999999)]
         public int Mileage { get; set; }
 

@@ -111,20 +111,20 @@ namespace AutoServiceManagementSystem.Controllers
             var suppliersSelectList = GetUserSuppliers();
 
 			// TODO: Dynamically resizable list of parts
-            createJobViewModel.SpareParts = new List<EditSparePartViewModel>(){
-                new EditSparePartViewModel(){
+            createJobViewModel.SpareParts = new List<CreateSparePartViewModel>(){
+                new CreateSparePartViewModel(){
                         Suppliers = new UserSuppliersViewModel(){
                         UserSuppliers = suppliersSelectList,
 						SelectedSupplierId = int.Parse(suppliersSelectList.FirstOrDefault().Value)
                     }
                 },
-                new EditSparePartViewModel(){
+                new CreateSparePartViewModel(){
                         Suppliers = new UserSuppliersViewModel(){
                         UserSuppliers = suppliersSelectList,
 						SelectedSupplierId = int.Parse(suppliersSelectList.FirstOrDefault().Value)
                     }
                 },
-				new EditSparePartViewModel(){
+				new CreateSparePartViewModel(){
                         Suppliers = new UserSuppliersViewModel(){
                         UserSuppliers = suppliersSelectList,
 						SelectedSupplierId = int.Parse(suppliersSelectList.FirstOrDefault().Value)
@@ -211,6 +211,7 @@ namespace AutoServiceManagementSystem.Controllers
                 Finished = job.IsFinished,
                 SpareParts = job.SpareParts.Select(sp => new EditSparePartViewModel()
                 {
+                    SparePartId = sp.SparePartId,
                     Name = sp.Name,
                     Code = sp.Code,
                     Price = sp.Price,
@@ -243,20 +244,48 @@ namespace AutoServiceManagementSystem.Controllers
 				job.IsPaid = viewModel.Paid;
 				job.IsFinished = viewModel.Finished;
 
+                /// If the view model spare parts list is empty, we must initialize it, 
+                /// because the Model Binder assumes it is null by default.
+                viewModel.SpareParts = viewModel.SpareParts ?? new List<EditSparePartViewModel>();
+
+                /// Finding all the removed parts during the edit (if any)
+                List<int> toBeDeletedIds = new List<int>();
+                foreach (var sparePart in job.SpareParts)
+                {
+                    var existingSparePart = viewModel.SpareParts
+                        .Where(sp => sp.SparePartId == sparePart.SparePartId)
+                        .SingleOrDefault();
+                    if (existingSparePart == null)
+                    {
+                        toBeDeletedIds.Add(sparePart.SparePartId);
+                    }
+                }
+
+                /// Deleting all the removed parts (if any) from the DB and the entity
+                toBeDeletedIds.ForEach(id => sparePartsRepo.DeleteSparePart(id));
+                sparePartsRepo.Save();
+                job.SpareParts.RemoveAll(x => toBeDeletedIds.Contains(x.SparePartId));
+
+                job.SpareParts.OrderBy(x => x.SparePartId).ToList();
+                viewModel.SpareParts.OrderBy(x => x.SparePartId).ToList();
+
                 int elementsDifference = viewModel.SpareParts.Count - job.SpareParts.Count;
+
                 for (int i = 0; i < elementsDifference; i++)
                 {
                     job.SpareParts.Add(new SparePart());
                 }
-				for (int i = 0; i < viewModel.SpareParts.Count; i++)
-				{
-					job.SpareParts[i].Name = viewModel.SpareParts[i].Name;
-					job.SpareParts[i].Code = viewModel.SpareParts[i].Code;
-					job.SpareParts[i].Price = viewModel.SpareParts[i].Price;
-					job.SpareParts[i].Quantity = viewModel.SpareParts[i].Quantity;
-					job.SpareParts[i].Supplier = suppliersRepo.GetSupplierById(
-						viewModel.SpareParts[i].Suppliers.SelectedSupplierId);
-				}
+
+                for (int i = 0; i < viewModel.SpareParts.Count; i++)
+                {
+                    job.SpareParts[i].Name = viewModel.SpareParts[i].Name;
+                    job.SpareParts[i].Code = viewModel.SpareParts[i].Code;
+                    job.SpareParts[i].Price = viewModel.SpareParts[i].Price;
+                    job.SpareParts[i].Quantity = viewModel.SpareParts[i].Quantity;
+                    job.SpareParts[i].Supplier = suppliersRepo.GetSupplierById(
+                        viewModel.SpareParts[i].Suppliers.SelectedSupplierId);
+                }
+
                 jobsRepo.UpdateJob(job);
                 jobsRepo.Save();
                 return RedirectToAction("Index");
@@ -306,6 +335,7 @@ namespace AutoServiceManagementSystem.Controllers
             var suppliersSelectList = GetUserSuppliers();
             var sparePart = new EditSparePartViewModel()
             {
+                SparePartId = -1, // dynamically added
                 Suppliers = new UserSuppliersViewModel()
                 {
                     UserSuppliers = suppliersSelectList,

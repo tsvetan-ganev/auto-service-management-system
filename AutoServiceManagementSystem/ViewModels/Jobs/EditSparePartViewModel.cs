@@ -11,8 +11,11 @@ namespace AutoServiceManagementSystem.ViewModels.Jobs
     {
 		public EditSparePartViewModel()
 		{
+            Suppliers = new UserSuppliersViewModel();
 			Quantity = 1;
 		}
+
+        public int SparePartId { get; set; }
 
 		[Required]
         public string Name { get; set; }
@@ -26,7 +29,7 @@ namespace AutoServiceManagementSystem.ViewModels.Jobs
 
 		[Required]
         [DataType(DataType.Currency)]
-		[Range(0.1, 10000)]
+		[Range(0, 10000)]
         public decimal Price { get; set; }
 
         public UserSuppliersViewModel Suppliers { get; set; }

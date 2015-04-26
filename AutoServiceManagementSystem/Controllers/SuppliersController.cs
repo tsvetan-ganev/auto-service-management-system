@@ -36,7 +36,7 @@ namespace AutoServiceManagementSystem.Controllers
             var currentUser = manager.FindById(User.Identity.GetUserId());
             var suppliersList = suppliersRepo.GetSuppliers()
                 .Where(s => s.User == currentUser);
-            return View(suppliersList);
+            return View("Suppliers", suppliersList);
         }
 
         // GET: Suppliers/Details/5

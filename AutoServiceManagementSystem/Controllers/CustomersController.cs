@@ -45,7 +45,7 @@ namespace AutoServiceManagementSystem.Controllers
             var currentUser = manager.FindById(User.Identity.GetUserId());
             var customersList = customersRepo.GetCustomers()
                 .Where(c => c.User == currentUser);
-            return View(customersList);
+            return View("Customers", customersList);
         }
 
         // GET: Customers/Details/5

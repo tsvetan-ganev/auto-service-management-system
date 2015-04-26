@@ -1,28 +1,24 @@
 ﻿/// <reference path="../Vendor/jquery-1.10.2.js" />
-$.validator.methods.range = function ( value, element, param )
-{
-  var globalizedValue = value.replace( ",", "." )
-  return this.optional( element ) || ( globalizedValue >= param[0] && globalizedValue <= param[1] )
+$.validator.methods.range = function (value, element, param) {
+    var globalizedValue = value.replace(",", ".")
+    return this.optional(element) || (globalizedValue >= param[0] && globalizedValue <= param[1])
 }
 
-$.validator.methods.number = function ( value, element )
-{
-  return this.optional( element ) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test( value )
+$.validator.methods.number = function (value, element) {
+    return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value)
 }
 
-$.validator.methods.subscribeUIToValidation = function subscribeUIToValidation()
-{
-  $( 'input[type="text"], input[type="number"]' ).on( 'keyup keypress blur click change', function toggleErrorClass()
-  {
+$.validator.methods.subscribeUIToValidation = function subscribeUIToValidation() {
+    $('input[type="text"], input[type="number"]').on('keyup blur click', function toggleErrorClass() {
 
-    var errors = $( '.input-validation-error' ).offsetParent()
-                .removeClass( 'has-success' )
-                .addClass( 'has-error' )
+        var errors = $('.input-validation-error').offsetParent()
+                    .removeClass('has-success')
+                    .addClass('has-error')
 
-    var valid = $( '.valid' ).offsetParent()
-                .removeClass( 'has-error' )
-                .addClass( 'has-success' )
-  } )
+        var valid = $('.valid').offsetParent()
+                    .removeClass('has-error')
+                    .addClass('has-success')
+    })
 }
 
 $.validator.methods.subscribeUIToValidation();

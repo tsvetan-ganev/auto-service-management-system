@@ -10,7 +10,7 @@ namespace AutoServiceManagementSystem.ViewModels.Jobs
     {
         public CreateJobViewModel()
         {
-            SpareParts = new List<EditSparePartViewModel>();
+            SpareParts = new List<CreateSparePartViewModel>();
         }
 
         public int JobId { get; set; }
@@ -21,6 +21,6 @@ namespace AutoServiceManagementSystem.ViewModels.Jobs
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
-        public List<EditSparePartViewModel> SpareParts { get; set; }
+        public List<CreateSparePartViewModel> SpareParts { get; set; }
     }
 }

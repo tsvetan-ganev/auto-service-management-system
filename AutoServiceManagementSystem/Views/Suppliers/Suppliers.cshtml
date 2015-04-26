@@ -7,14 +7,13 @@
 <h2>@ViewBag.Title</h2>
 
 <section id="suppliers-list">
-
     @foreach (var item in Model)
     {
         <div class="info-panel thumbnail col-md-5">
             <div class="caption">
-                <h2 id="supplier-name">
+                <h3 id="supplier-name">
                     <strong>@Html.DisplayFor(m => item.Name)</strong>
-                </h2>
+                </h3>
                 <ul class="list-group">
                     <li class="list-group-item supplier-city">
                         <div class="row">
@@ -74,7 +73,7 @@
                             </div>
                         </div>
                     </li>
-                    <li class="list-group-item supplier-skype">
+                    <li class="list-group-item">
                         <div class="row">
                             <div class="col-md-12">
                                 @Html.DisplayFor(m => item.SkypeName, "SkypeName")
