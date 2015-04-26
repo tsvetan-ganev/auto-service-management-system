@@ -34,6 +34,9 @@ input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+input[type=number] {
+    -moz-appearance:textfield;
+}
 /* End Tags Fixes */
 body {
   margin: 0 0;

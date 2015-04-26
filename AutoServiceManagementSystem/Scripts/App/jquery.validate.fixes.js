@@ -10,8 +10,6 @@ $.validator.methods.number = function ( value, element )
   return this.optional( element ) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test( value )
 }
 
-console.log( $( 'input' ).length )
-
 $.validator.methods.subscribeUIToValidation = function subscribeUIToValidation()
 {
   $( 'input[type="text"], input[type="number"]' ).on( 'keyup keypress blur click change', function toggleErrorClass()
@@ -24,8 +22,6 @@ $.validator.methods.subscribeUIToValidation = function subscribeUIToValidation()
     var valid = $( '.valid' ).offsetParent()
                 .removeClass( 'has-error' )
                 .addClass( 'has-success' )
-
-    console.log('validation event occured')
   } )
 }
 
