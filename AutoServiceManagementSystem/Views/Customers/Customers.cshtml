@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Customer>
+
+@{
+    ViewBag.Title = "Customers";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<section id="customers-list" class="container-fluid">
+    @foreach (var customer in Model)
+    {
+        <div class="customer-container col-md-5 col-sm-5 col-lg-3 text-center">
+            <div id="customer-icon" class="col-md-12"><span class="glyphicon glyphicon-user"></span></div>
+            <div class="row customer-first-name">
+                <div class="col-sm-12 lead">
+                    @Html.DisplayFor(c => customer.FirstName)
+                </div>
+            </div>
+            <div class="row customer-last-name">
+                <div class="col-md-12 lead">
+                    @Html.DisplayFor(c => customer.LastName)
+                </div>
+            </div>
+            <div class="row customer-phone-number">
+                <div class="col-md-12 lead">
+                    @Html.DisplayFor(c => customer.PhoneNumber)
+                </div>
+            </div>
+            <div class="row btn-group-actions text-center">
+                <div class="btn-group">
+                    @Html.ActionLink("Cars", "CarsByCustomer",
+                                     "Cars", new { id = customer.CustomerId }, new { @class = "btn btn-success" })
+                    @*@Html.ActionLink("Details", "Details", new { id = customer.CustomerId }, new { @class = "btn btn-info" })*@
+                    @Html.ActionLink("Edit", "Edit", new { id = customer.CustomerId }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Delete", "Delete", new { id = customer.CustomerId }, new { @class = "btn btn-danger" })
+                </div>
+            </div>
+        </div>
+    }
+</section>
+
+<div class="row sort-buttons">
+    @Html.ActionLink("First Name Ascending", null, new { sortOrder = "name_asc"})
+    @Html.ActionLink("First Name Descending", null, new { sortOrder = "name_desc"})
+</div>

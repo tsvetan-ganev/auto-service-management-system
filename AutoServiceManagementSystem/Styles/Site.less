@@ -75,25 +75,27 @@ body {
 
 .metro-container {
     background-color: @gray;
-    padding: 2.5em;
-    width: 100%;
-    margin: 1em 0.2em;
+    padding: 1em;
+    margin: 1em 1em;
 }
 
 .info-panel {
     text-align: center;
-    background-color:  @light-primary-blue;
+    background-color: @light-primary-blue;
     margin: @info-panel-padding;
 
     h2, h3 {
         color: white;
     }
+
     @media screen and (max-width: 720px) {
         margin: @info-panel-padding 0;
     }
 }
 
-
+.btn-group-actions {
+        margin-top: 2em;
+}
 
 #job-form {
     min-width: @max-input-field-width * 1.5;
@@ -110,8 +112,8 @@ body {
     }
 
     .skype-functions-container {
-    max-height: 2.5em;
-}
+        max-height: 2.5em;
+    }
 }
 
 .customer-container {
@@ -134,7 +136,7 @@ body {
         min-height: 1em;
     }
 
-    @media only screen and (max-width: 480px){
+    @media only screen and (max-width: 480px) {
         margin-left: 0;
         margin-right: 0;
     }
@@ -199,6 +201,7 @@ body {
             h2 {
                 font-size: @leading-image-h2-size;
                 font-weight: bold;
+
                 @media screen and (max-width: 720px) {
                     font-size: 1em;
                 }

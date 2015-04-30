@@ -55,9 +55,8 @@ body {
 }
 .metro-container {
   background-color: #e6e6e6;
-  padding: 2.5em;
-  width: 100%;
-  margin: 1em 0.2em;
+  padding: 1em;
+  margin: 1em 1em;
 }
 .info-panel {
   text-align: center;
@@ -72,6 +71,9 @@ body {
   .info-panel {
     margin: 2em 0;
   }
+}
+.btn-group-actions {
+  margin-top: 2em;
 }
 #job-form {
   min-width: 30em;

@@ -11,6 +11,7 @@ using AutoServiceManagementSystem.DAL;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity;
 using AutoServiceManagementSystem.ViewModels.Customers;
+using PagedList;
 
 namespace AutoServiceManagementSystem.Controllers
 {
@@ -40,12 +41,27 @@ namespace AutoServiceManagementSystem.Controllers
         }
 
         // GET: Customers
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder)
         {
             var currentUser = manager.FindById(User.Identity.GetUserId());
-            var customersList = customersRepo.GetCustomers()
+            var customers = customersRepo.GetCustomers()
                 .Where(c => c.User == currentUser);
-            return View("Customers", customersList);
+
+			ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "name_asc" : "";
+
+			switch (sortOrder)
+			{
+				case "name_desc":
+					customers = customers.OrderByDescending(c => c.FirstName);
+					break;
+				case "name_asc":
+					customers = customers.OrderBy(c => c.FirstName);
+					break;
+				default:
+					break;
+			}
+
+            return View("Customers", customers.ToList());
         }
 
         // GET: Customers/Details/5

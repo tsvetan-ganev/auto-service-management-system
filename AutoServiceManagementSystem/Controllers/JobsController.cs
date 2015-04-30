@@ -152,6 +152,7 @@ namespace AutoServiceManagementSystem.Controllers
             if (ModelState.IsValid)
             {
                 var job = new Job();
+                createJobViewModel.SpareParts = createJobViewModel.SpareParts ?? new List<CreateSparePartViewModel>();
                 var spareParts = createJobViewModel.SpareParts.Select(sp => 
                     new SparePart(){
                         Name = sp.Name,
@@ -269,13 +270,16 @@ namespace AutoServiceManagementSystem.Controllers
                 job.SpareParts.OrderBy(x => x.SparePartId).ToList();
                 viewModel.SpareParts.OrderBy(x => x.SparePartId).ToList();
 
-                int elementsDifference = viewModel.SpareParts.Count - job.SpareParts.Count;
 
+				// if the viewmodel contains more spare parts than the current job
+				// add new empty entries to the spare parts list
+				int elementsDifference = viewModel.SpareParts.Count - job.SpareParts.Count;
                 for (int i = 0; i < elementsDifference; i++)
                 {
                     job.SpareParts.Add(new SparePart());
                 }
 
+				// copy viewmodel data into the job entity
                 for (int i = 0; i < viewModel.SpareParts.Count; i++)
                 {
                     job.SpareParts[i].Name = viewModel.SpareParts[i].Name;
