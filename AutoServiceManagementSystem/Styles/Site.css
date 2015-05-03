@@ -28,6 +28,20 @@
   -o-transform: translate3d(-50%, -50%, 0);
   transform: translate3d(-50%, -50%, 0);
 }
+.info-panel {
+  text-align: center;
+  background-color: #25b7ff;
+  margin: 1em;
+}
+.info-panel h2,
+.info-panel h3 {
+  color: white;
+}
+@media screen and (max-width: 720px) {
+  .info-panel {
+    margin: 1em 0;
+  }
+}
 /* Tags Fixes */
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
@@ -58,25 +72,31 @@ body {
   padding: 1em;
   margin: 1em 1em;
 }
-.info-panel {
-  text-align: center;
-  background-color: #25b7ff;
-  margin: 2em;
-}
-.info-panel h2,
-.info-panel h3 {
-  color: white;
-}
-@media screen and (max-width: 720px) {
-  .info-panel {
-    margin: 2em 0;
-  }
-}
 .btn-group-actions {
   margin-top: 2em;
 }
 #job-form {
   min-width: 30em;
+}
+#suppliers-list .supplier-container {
+  text-align: center;
+  background-color: #25b7ff;
+  margin: 1em;
+  width: 26em;
+}
+#suppliers-list .supplier-container h2,
+#suppliers-list .supplier-container h3 {
+  color: white;
+}
+@media screen and (max-width: 720px) {
+  #suppliers-list .supplier-container {
+    margin: 1em 0;
+  }
+}
+@media screen and (min-width: 992px) and (max-width: 1200px) {
+  #suppliers-list .supplier-container {
+    min-width: 26em;
+  }
 }
 #suppliers-list #supplier-name {
   margin-bottom: 0.5em;
@@ -88,29 +108,40 @@ body {
 #suppliers-list .skype-functions-container {
   max-height: 2.5em;
 }
-.customer-container {
+#customers-list .customer-container {
   background-color: #00a1f1;
   color: white;
   padding: 1em;
-  margin: 2em;
+  margin: 1em 1em;
   min-height: 24em;
+  min-width: 14em;
+  max-width: 24em;
 }
-.customer-container .customer-actions {
+#customers-list .customer-container .customer-actions {
   margin-top: 1em;
 }
-.customer-container #customer-icon {
+#customers-list .customer-container #customer-icon {
   text-align: center;
   font-size: 4em;
 }
-.customer-container .lead {
+#customers-list .customer-container .lead {
   min-height: 1em;
 }
-@media only screen and (max-width: 480px) {
-  .customer-container {
+@media only screen and (max-width: 768px) {
+  #customers-list .customer-container {
     margin-left: 0;
     margin-right: 0;
+    max-width: 100%;
+    border-bottom: 1px solid white;
+    border-left: 1px solid white;
   }
 }
+@media only screen and (max-width: 545px) {
+  #customers-list .customer-container {
+    min-width: 100%;
+  }
+}
+/* Layout */
 @media screen and (max-width: 720px) {
   #navigation-top {
     opacity: 0.85;
@@ -128,6 +159,7 @@ body {
     padding: 0 0;
   }
 }
+/* End Layout */
 /* Landing Page Layout Styles */
 #landing-wrapper .row {
   margin-right: 0;

@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Customer>
+﻿@model PagedList.IPagedList<Customer>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Customers";
@@ -6,10 +7,20 @@
 
 <h2>@ViewBag.Title</h2>
 
+<div class="search-box">
+    @using (Html.BeginForm(null, "Customers", FormMethod.Get))
+    {
+        <div class="form-group">
+            @Html.TextBox("searchString", ViewBag.CurrentFilter as string, null, htmlAttributes: new { @class = "form-control col-md-9", @placeholder = "Search by name" })
+            <input type="submit" class="btn btn-default" value="Search" />
+        </div>
+    }
+</div>
+
 <section id="customers-list" class="container-fluid">
     @foreach (var customer in Model)
     {
-        <div class="customer-container col-md-5 col-sm-5 col-lg-3 text-center">
+        <div class="customer-container col-xs-1 col-md-5 col-sm-4 col-lg-3 text-center">
             <div id="customer-icon" class="col-md-12"><span class="glyphicon glyphicon-user"></span></div>
             <div class="row customer-first-name">
                 <div class="col-sm-12 lead">
@@ -28,9 +39,8 @@
             </div>
             <div class="row btn-group-actions text-center">
                 <div class="btn-group">
-                    @Html.ActionLink("Cars", "CarsByCustomer",
-                                     "Cars", new { id = customer.CustomerId }, new { @class = "btn btn-success" })
-                    @*@Html.ActionLink("Details", "Details", new { id = customer.CustomerId }, new { @class = "btn btn-info" })*@
+                    @Html.ActionLink("Cars", "CarsByCustomer", "Cars",
+                        new { id = customer.CustomerId }, new { @class = "btn btn-success" })
                     @Html.ActionLink("Edit", "Edit", new { id = customer.CustomerId }, new { @class = "btn btn-primary" })
                     @Html.ActionLink("Delete", "Delete", new { id = customer.CustomerId }, new { @class = "btn btn-danger" })
                 </div>
@@ -39,7 +49,27 @@
     }
 </section>
 
-<div class="row sort-buttons">
-    @Html.ActionLink("First Name Ascending", null, new { sortOrder = "name_asc"})
-    @Html.ActionLink("First Name Descending", null, new { sortOrder = "name_desc"})
+<hr />
+<div class="controls">
+    <div class="row sort-buttons pull-left">
+        @Html.ActionLink("First Name", null, new { sortOrder = "firstname_asc", currentFilter = ViewBag.CurrentFilter }) <span class="glyphicon glyphicon-sort-by-alphabet"></span> |
+        @Html.ActionLink("First Name", null, new { sortOrder = "firstname_desc", currentFilter = ViewBag.CurrentFilter }) <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span> |
+        @Html.ActionLink("Last Name", null, new { sortOrder = "lastname_asc", currentFilter = ViewBag.CurrentFilter }) <span class="glyphicon glyphicon-sort-by-alphabet"></span> |
+        @Html.ActionLink("Last Name", null, new { sortOrder = "lastname_desc", currentFilter = ViewBag.CurrentFilter }) <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span>
+    </div>
+    <div class="row pull-right">
+        @Html.ActionLink("New customer", "Create", null, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Back", "Index", "Home", null, new { @class = "btn btn-default" })
+    </div>
+</div>
+<div class="clearfix"></div>
+
+
+
+<div class="text-center">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }), new PagedListRenderOptions
+    {
+        DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+        DisplayLinkToLastPage = PagedListDisplayMode.Always
+    })
 </div>

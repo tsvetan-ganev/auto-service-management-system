@@ -1,10 +1,12 @@
 ﻿/* Variables */
 @body-padding-offset: 5em;
-@info-panel-padding: 2em;
+@info-panel-padding: 1em;
 @leading-image-margin-top: -3em;
 @leading-image-h1-size: 3.5em;
 @leading-image-h2-size: 1.66em;
 @max-input-field-width: 20em;
+
+@customer-container-min-height: 24em;
 
 /* UI Colors */
 @gray: #e6e6e6;
@@ -44,6 +46,20 @@
     transform: translate3d(-50%,-50%,0);
 }
 
+.info-panel {
+    text-align: center;
+    background-color: @light-primary-blue;
+    margin: @info-panel-padding;
+
+    h2, h3 {
+        color: white;
+    }
+
+    @media screen and (max-width: 720px) {
+        margin: @info-panel-padding 0;
+    }
+}
+
 /* Tags Fixes */
 
 // Chrome input spinner for numbers - remove
@@ -79,22 +95,8 @@ body {
     margin: 1em 1em;
 }
 
-.info-panel {
-    text-align: center;
-    background-color: @light-primary-blue;
-    margin: @info-panel-padding;
-
-    h2, h3 {
-        color: white;
-    }
-
-    @media screen and (max-width: 720px) {
-        margin: @info-panel-padding 0;
-    }
-}
-
 .btn-group-actions {
-        margin-top: 2em;
+    margin-top: 2em;
 }
 
 #job-form {
@@ -102,6 +104,19 @@ body {
 }
 
 #suppliers-list {
+
+    .supplier-container {
+        .info-panel;
+        width: 26em;
+
+        @media screen and (min-width: 992px) and (max-width: 1200px) {
+
+            min-width: 26em;
+        }
+
+      
+    }
+
     #supplier-name {
         margin-bottom: 0.5em;
         margin-top: 0.5em;
@@ -116,32 +131,48 @@ body {
     }
 }
 
-.customer-container {
-    background-color: @primary-blue;
-    color: white;
-    padding: 1em;
-    margin: 2em;
-    min-height: 24em;
+#customers-list {
+    .customer-container {
+        background-color: @primary-blue;
+        color: white;
+        padding: 1em;
+        margin: 1em 1em;
+        min-height: @customer-container-min-height;
+        min-width: 14em;
+        max-width: 24em;
 
-    .customer-actions {
-        margin-top: 1em;
-    }
+        .customer-actions {
+            margin-top: 1em;
+        }
 
-    #customer-icon {
-        text-align: center;
-        font-size: 4em;
-    }
+        #customer-icon {
+            text-align: center;
+            font-size: 4em;
+        }
 
-    .lead {
-        min-height: 1em;
-    }
+        .lead {
+            min-height: 1em;
+        }
 
-    @media only screen and (max-width: 480px) {
-        margin-left: 0;
-        margin-right: 0;
+        @media only screen and (max-width: 768px) {
+            margin-left: 0;
+            margin-right: 0;
+            max-width: 100%;
+            border-bottom: 1px solid white;
+            border-left: 1px solid white;
+        }
+
+        @media only screen and (max-width: 545px) {
+            min-width: 100%;
+        }
     }
 }
 
+#cars-list {
+    // todo:
+}
+
+/* Layout */
 #navigation-top {
     @media screen and (max-width: 720px) {
         opacity: 0.85;
@@ -162,6 +193,9 @@ body {
         padding: 0 0;
     }
 }
+/* End Layout */
+
+
 
 /* Landing Page Layout Styles */
 #landing-wrapper {

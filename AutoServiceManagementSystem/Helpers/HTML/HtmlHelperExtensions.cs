@@ -36,4 +36,26 @@ public static class HtmlHelperExtensions
 
         return new MvcHtmlString(sb.ToString());
     }
+
+	public static string ToShortUrl(this HtmlHelper htmlHelper, string url)
+	{
+		StringBuilder sb = new StringBuilder();
+
+		bool startsWith = url.StartsWith("https://");
+		if (startsWith)
+		{
+			sb.Append(url.Substring(8));
+			return sb.ToString();
+		}
+
+		startsWith = url.StartsWith("http://");
+		if (startsWith)
+		{
+			sb.Append(url.Substring(7));
+			return sb.ToString();
+		}
+		
+
+		return url;
+	}
 }

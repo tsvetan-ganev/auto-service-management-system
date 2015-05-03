@@ -41,27 +41,55 @@ namespace AutoServiceManagementSystem.Controllers
         }
 
         // GET: Customers
-        public ActionResult Index(string sortOrder)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
             var currentUser = manager.FindById(User.Identity.GetUserId());
             var customers = customersRepo.GetCustomers()
                 .Where(c => c.User == currentUser);
 
-			ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "name_asc" : "";
+			ViewBag.CurrentSort = sortOrder;
+			ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "firstname_asc" : "";
+
+			if (searchString != null)
+			{
+				page = 1;
+			}
+			else
+			{
+				searchString = currentFilter;
+			}
+
+			ViewBag.CurrentFilter = searchString;
+
+			if (!String.IsNullOrEmpty(searchString))
+			{
+				customers = customers
+					.Where(c => c.FirstName.ToLower().Contains(searchString.ToLower()) ||
+					c.LastName.ToLower().Contains(searchString.ToLower()));
+			}
 
 			switch (sortOrder)
 			{
-				case "name_desc":
+				case "firstname_desc":
 					customers = customers.OrderByDescending(c => c.FirstName);
 					break;
-				case "name_asc":
+				case "firstname_asc":
 					customers = customers.OrderBy(c => c.FirstName);
+					break;
+				case "lastname_desc":
+					customers = customers.OrderByDescending(c => c.LastName);
+					break;
+				case "lastname_asc":
+					customers = customers.OrderBy(c => c.LastName);
 					break;
 				default:
 					break;
 			}
 
-            return View("Customers", customers.ToList());
+			int pageNumber = (page ?? 1);
+			int pageSize = 8;
+
+            return View("Customers", customers.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Customers/Details/5

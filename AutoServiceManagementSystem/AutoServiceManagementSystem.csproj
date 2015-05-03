@@ -181,7 +181,7 @@
     <Compile Include="Helpers\CarSeeder.cs" />
     <Compile Include="Helpers\CustomerSeeder.cs" />
     <Compile Include="Helpers\DataBinders\DecimalModelBinder.cs" />
-    <Compile Include="Helpers\HTML\EditorForMany.cs" />
+    <Compile Include="Helpers\HTML\HtmlHelperExtensions.cs" />
     <Compile Include="Helpers\JobSeeder.cs" />
     <Compile Include="Helpers\SparePartSeeder.cs" />
     <Compile Include="Migrations\Configuration.cs" />
@@ -235,7 +235,7 @@
     <Compile Include="ViewModels\Suppliers\CreateSupplierViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\PagedList.css" />
+    <Content Include="Styles\PagedList.css" />
     <Content Include="Scripts\App\app.js" />
     <Content Include="Scripts\App\Job\AddJob.js" />
     <Content Include="Scripts\App\Job\EditJob.js" />
@@ -344,6 +344,7 @@
     <Content Include="Views\Shared\_LandingLayout.cshtml" />
     <Content Include="Views\Customers\Customers.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\CreateSparePartViewModel.cshtml" />
+    <Content Include="Views\Cars\Cars.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
