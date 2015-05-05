@@ -46,6 +46,7 @@ namespace AutoServiceManagementSystem
 			// Stylesheets
 			bundles.Add(new StyleBundle("~/styles").Include(
 					  "~/Styles/Bootstrap/bootstrap.min.css",
+					  "~/Styles/FontAwesome/font-awesome.min.css",
 					  "~/Styles/site.css"));
 		}
 	}

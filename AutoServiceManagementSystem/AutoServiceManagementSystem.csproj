@@ -220,6 +220,8 @@
     <Compile Include="ViewModels\Customers\EditCustomerViewModel.cs" />
     <Compile Include="ViewModels\Customers\CreateCustomerViewModel.cs" />
     <Compile Include="ViewModels\Jobs\CreateJobViewModel.cs" />
+    <Compile Include="ViewModels\Jobs\DisplayJobViewModel.cs" />
+    <Compile Include="ViewModels\Jobs\DisplaySparePartViewModel.cs" />
     <Compile Include="ViewModels\Jobs\EditJobViewModel.cs" />
     <Compile Include="ViewModels\Jobs\CreateSparePartViewModel.cs" />
     <Compile Include="ViewModels\Jobs\EditSparePartViewModel.cs" />
@@ -235,6 +237,9 @@
     <Compile Include="ViewModels\Suppliers\CreateSupplierViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Styles\FontAwesome\font-awesome.css" />
+    <Content Include="Styles\FontAwesome\font-awesome.min.css" />
+    <Content Include="Styles\fonts\fontawesome-webfont.svg" />
     <Content Include="Styles\PagedList.css" />
     <Content Include="Scripts\App\app.js" />
     <Content Include="Scripts\App\Job\AddJob.js" />
@@ -345,6 +350,12 @@
     <Content Include="Views\Customers\Customers.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\CreateSparePartViewModel.cshtml" />
     <Content Include="Views\Cars\Cars.cshtml" />
+    <Content Include="Styles\fonts\fontawesome-webfont.eot" />
+    <Content Include="Styles\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Styles\fonts\fontawesome-webfont.woff" />
+    <Content Include="Styles\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Styles\fonts\FontAwesome.otf" />
+    <Content Include="Views\Shared\DisplayTemplates\DisplaySparePartViewModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

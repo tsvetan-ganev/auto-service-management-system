@@ -123,7 +123,7 @@ namespace AutoServiceManagementSystem.Controllers
         public ActionResult Edit(int customerId, int carId)
         {
             var currentUser = manager.FindById(User.Identity.GetUserId());
-
+			var customer = customersRepo.GetCustomerById(customerId);
             Car car = carsRepo.GetCarByCustomerId(customerId, carId);
 
             if (car == null || car.User != currentUser)
@@ -142,6 +142,7 @@ namespace AutoServiceManagementSystem.Controllers
                 FuelType = car.FuelType
             };
             ViewBag.customerId = customerId;
+			ViewBag.CustomerName = customer.FirstName + " " + customer.LastName;
 
             return View(viewModel);
         }

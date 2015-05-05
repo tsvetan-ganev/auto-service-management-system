@@ -74,22 +74,43 @@ namespace AutoServiceManagementSystem.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
 
-            var jobsList = jobsRepo.GetJobs(customerId, carId)
-                .OrderByDescending(j => j.DateStarted);
-
             ViewBag.CustomerId = customerId;
             ViewBag.CarId = carId;
             ViewBag.CustomerName = customer.FirstName + " " + customer.LastName;
             ViewBag.CarManufacturer = car.Manufacturer;
             ViewBag.CarPlateNumber = car.PlateCode;
 
-            return View(jobsList);
+			var jobsList = jobsRepo.GetJobs(customerId, carId)
+				.OrderByDescending(j => j.DateStarted);
+
+			var viewModel = jobsList.Select(j => new DisplayJobViewModel
+			{
+				JobId = j.JobId,
+				Mileage = j.Mileage,
+				Description = j.Description,
+				DateStarted = j.DateStarted,
+				LastModified = j.LastModified,
+				IsFinished = j.IsFinished,
+				IsPaid = j.IsPaid,
+				SpareParts = j.SpareParts.Select(sp => new DisplaySparePartViewModel {
+					Name = sp.Name,
+					Code = sp.Code,
+					Discount = sp.Supplier.DiscountPercentage,
+					Price = sp.Price,
+					Quantity = sp.Quantity
+				}).ToList()
+			});
+
+            return View(viewModel);
         }
 
         // GET: Customers/{customerId}/Cars/{carId}/Jobs/Details/{jobId}
         public ActionResult Details(int customerId, int carId, int jobId)
         {
             var currentUser = manager.FindById(User.Identity.GetUserId());
+			var customer = customersRepo.GetCustomerById(customerId);
+			var car = carsRepo.GetCarById(carId);
+
             Job job = jobsRepo.GetJobById(customerId, carId, jobId);
 
             if (job == null)
@@ -100,8 +121,31 @@ namespace AutoServiceManagementSystem.Controllers
             ViewBag.CustomerId = customerId;
             ViewBag.CarId = carId;
             ViewBag.JobId = jobId;
+			ViewBag.CustomerName = customer.FirstName + " " + customer.LastName;
+			ViewBag.CarManufacturer = car.Manufacturer;
+			ViewBag.CarPlateNumber = car.PlateCode;
+
+			var viewModel = new DisplayJobViewModel()
+			{
+				JobId = job.JobId,
+				Mileage = job.Mileage,
+				Description = job.Description,
+				DateStarted = job.DateStarted,
+				LastModified = job.LastModified,
+				IsFinished = job.IsFinished,
+				IsPaid = job.IsPaid,
+				SpareParts = job.SpareParts.Select(sp => new DisplaySparePartViewModel
+				{
+					Name = sp.Name,
+					Code = sp.Code,
+					SupplierName = sp.Supplier.Name,
+					Discount = sp.Supplier.DiscountPercentage,
+					Price = sp.Price,
+					Quantity = sp.Quantity
+				}).ToList()
+			};
             
-            return View(job);
+            return View(viewModel);
         }
 
         // GET: Customers/{customerId}/Cars/{carId}/Jobs/Create
@@ -292,7 +336,7 @@ namespace AutoServiceManagementSystem.Controllers
 
                 jobsRepo.UpdateJob(job);
                 jobsRepo.Save();
-                return RedirectToAction("Index");
+				return RedirectToAction("Details", new { customerId = customerId, carId = carId, jobId = jobId });
             }
             return View(viewModel);
         }

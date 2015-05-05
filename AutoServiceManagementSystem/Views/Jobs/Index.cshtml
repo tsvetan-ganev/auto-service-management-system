@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Job>
+﻿@model IEnumerable<AutoServiceManagementSystem.ViewModels.Jobs.DisplayJobViewModel>
 
 @{
     ViewBag.Title = "Jobs";
@@ -7,7 +7,7 @@
 }
 
 <h2>
-    @h2
+    Jobs history for @h2
 </h2>
 <h3>
     @h3
@@ -15,7 +15,7 @@
 <hr />
 
 <section class="jobs-list container">
- 
+
     @if (Model.Count() == 0)
     {
         <h4>Currently there are no jobs for this car.</h4>
@@ -47,7 +47,7 @@
                     @Html.DisplayFor(j => job.DateStarted)
                 </div>
             </div>
-            <div class="row job-date-finished">
+            <div class="row job-last-modified">
                 <div class="col-md-6 col-xs-6">
                     <b>@Html.DisplayNameFor(j => j.LastModified)</b>
                 </div>
@@ -55,20 +55,42 @@
                     @Html.DisplayFor(j => job.LastModified)
                 </div>
             </div>
-            <div class="row job-is-finished">
-                <div class="col-md-6 col-xs-6">
-                    <b>@Html.DisplayNameFor(j => j.IsFinished)</b>
+            <div class="row job-is-paid-and-is-finished">
+                <div class="col-xs-6 col-md-5">
+                    <div class="row">
+                        <div class="col-md-6 col-xs-6">
+                            <b>@Html.DisplayNameFor(j => j.IsPaid)</b>
+                        </div>
+                        <div class="col-md-6 col-xs-6">
+                            @Html.DisplayFor(j => job.IsPaid)
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-6 col-xs-6">
-                    @Html.DisplayFor(j => job.IsFinished)
+                <div class="col-xs-6 col-md-7">
+                    <div class="row">
+                        <div class="col-md-6 col-xs-6">
+                            <b>@Html.DisplayNameFor(j => j.IsFinished)</b>
+                        </div>
+                        <div class="col-md-6 col-xs-6">
+                            @Html.DisplayFor(j => job.IsFinished)
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="row job-is-paid">
+            <div class="row total">
                 <div class="col-md-6 col-xs-6">
-                    <b>@Html.DisplayNameFor(j => j.IsPaid)</b>
+                    <b>Total</b>
                 </div>
                 <div class="col-md-6 col-xs-6">
-                    @Html.DisplayFor(j => job.IsPaid)
+                    @Html.DisplayFor(j => job.Total)
+                </div>
+            </div>
+            <div class="row total-after-discount">
+                <div class="col-md-6 col-xs-6">
+                    <b>Total after discount</b>
+                </div>
+                <div class="col-md-6 col-xs-6">
+                    @Html.DisplayFor(j => job.TotalAfterDiscounts)
                 </div>
             </div>
             <div class="row text-center">

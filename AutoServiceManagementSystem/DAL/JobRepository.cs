@@ -31,6 +31,7 @@ namespace AutoServiceManagementSystem.DAL
 					j.Customer.CustomerId == customerId &&
 					j.Car.CarId == carId)
                 .Include(j => j.SpareParts)
+				.Include(j => j.SpareParts.Select(sp => sp.Supplier))
 				.ToList();
 		}
 

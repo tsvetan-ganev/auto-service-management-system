@@ -81,8 +81,8 @@ namespace AutoServiceManagementSystem.Helpers
 			var sparePart = new SparePart();
 			sparePart.Name = GenerateSparePartName();
 			sparePart.Code = GenerateOemCode();
-			sparePart.Price = Decimal.Round(GeneratePrice(10, 1500), 2);
-			sparePart.Quantity = GenerateQuantity(1, 15);
+			sparePart.Price = Decimal.Round(GeneratePrice(10, 250), 2);
+			sparePart.Quantity = GenerateQuantity(1, 12);
 			sparePart.Supplier = supplier;
 			sparePart.Job = job;
 

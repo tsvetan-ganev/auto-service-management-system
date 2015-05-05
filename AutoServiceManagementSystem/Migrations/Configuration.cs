@@ -61,10 +61,10 @@ namespace AutoServiceManagementSystem.Migrations
                 var customersList = new List<Customer>();
                 var cars = new List<Car>();
 
-                for (int i = 0; i < 20; i++)
+                for (int i = 0; i < 250; i++)
                 {
                     var customer = CustomerSeeder.NextCustomer(currentUser);
-                    for (int j = 0; j < 3; j++)
+                    for (int j = 0; j < 5; j++)
                     {
                         var car = CarSeeder.NextCar(currentUser, customer);
                         cars.Add(car);

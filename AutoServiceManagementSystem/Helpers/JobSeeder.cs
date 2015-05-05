@@ -28,7 +28,7 @@ namespace AutoServiceManagementSystem.Helpers
 			job.Car = car;
 			job.Customer = customer;
 			job.DateStarted = GenerateDate();
-			job.LastModified = null;
+			job.LastModified = job.DateStarted;
 			job.Mileage = GenerateMileage();
 			job.IsPaid = false;
 			job.IsFinished = false;

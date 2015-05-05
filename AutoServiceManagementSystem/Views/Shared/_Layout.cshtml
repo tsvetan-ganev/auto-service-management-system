@@ -32,12 +32,10 @@
     </nav>
     <div id="content-wrapper" class="container-fluid body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>Tsvetan Ganev &copy; @DateTime.Now.Year</p>
-        </footer>
     </div>
-
+    <footer>
+        <p>Tsvetan Ganev &copy; @DateTime.Now.Year</p>
+    </footer>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundless/app")

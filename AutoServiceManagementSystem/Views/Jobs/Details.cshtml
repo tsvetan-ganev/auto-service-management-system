@@ -1,11 +1,20 @@
-﻿@model Job
+﻿@model AutoServiceManagementSystem.ViewModels.Jobs.DisplayJobViewModel
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Job Details";
+    var h2 = String.Format("{0}'s {1}", ViewBag.CustomerName, ViewBag.CarManufacturer);
+    var h3 = String.Format("{0}", ViewBag.CarPlateNumber ?? "");
 }
 
-<h2>Details</h2>
+
+<h2>
+    Job details for @h2
+</h2>
+<h3>
+    @h3
+</h3>
 <hr />
+
 <div class="row">
     <div class="container">
         <div class="row">
@@ -59,18 +68,27 @@
     </div>
     <hr />
     <h4>Spare Parts</h4>
-    <table class="table table-striped table-hover col-md-12">
+    <table class="table table-striped table-hover table-responsive col-md-12">
         <thead>
             <tr>
                 <th>Name</th>
                 <th>OEM Code</th>
                 <th>Supplier</th>
-                <th>Quantity</th>
+                <th>Qty</th>
                 <th>Price</th>
+                <th>Subtotal</th>
             </tr>
         </thead>
         <tbody>
             @Html.DisplayFor(j => j.SpareParts)
+            <tr>
+                <td colspan="5"></td>
+                <td><b>Total</b></td>
+            </tr>
+            <tr>
+                <td colspan="5"></td>
+                <td>@Model.Total</td>
+            </tr>
         </tbody>
     </table>
 </div>
