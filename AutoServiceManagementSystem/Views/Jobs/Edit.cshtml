@@ -4,56 +4,55 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
-
+<h2>Edit Task</h2>
 
 @using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "job-form" }))
 {
     @Html.AntiForgeryToken()
     
-    <div id="form-wrapper" class="form-horizontal">
-        <h4>Job</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group input-field">
-            @Html.LabelFor(model => model.Mileage, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Mileage, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Mileage, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group input-field">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group input-field">
-            @Html.LabelFor(model => model.Finished, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Finished)
-                    @Html.ValidationMessageFor(model => model.Finished, "", new { @class = "text-danger" })
+    <div id="job-form" class="form-horizontal">
+        <div class="row">
+            <fieldset class="job-details col-md-12 col-xs-offset-6">
+                <legend>Task details</legend>
+                <div class="form-group input-field col-md-offset-4">
+                    @Html.LabelFor(model => model.Mileage, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Mileage, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Mileage, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
-        </div>
 
-        <div class="form-group input-field">
-            @Html.LabelFor(model => model.Paid, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Paid)
-                    @Html.ValidationMessageFor(model => model.Paid, "", new { @class = "text-danger" })
+                <div class="form-group input-field">
+                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
+
+                <div class="form-group input-field">
+                    <div class="col-xs-4 col-md-3">
+                        @Html.LabelFor(model => model.Finished, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.Finished)
+                    </div>
+                    <div class="col-xs-4 col-md-3">
+                        @Html.LabelFor(model => model.Paid, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.Paid)
+                    </div>
+                </div>
+            </fieldset>
         </div>
         
+        <div class="row">
+            <fieldset>
+                <legend>Spare parts</legend>
+            </fieldset>
+
+        </div>
         <div id="spare-parts-list" class="form-group">
             @Html.EditorForMany(j => j.SpareParts)
         </div>
+        
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -68,5 +67,5 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval",
-        "~/bundles/app/job/edit");
+        "~/bundles/app/job/edit")
 }

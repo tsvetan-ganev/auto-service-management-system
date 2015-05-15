@@ -89,6 +89,7 @@ namespace AutoServiceManagementSystem.Controllers
 
         // GET: Customers/{id}/Cars
         [Route("Customers/{id}/Cars")]
+		[ActionName("Cars")]
         public ActionResult CarsByCustomer(int id)
         {
             var currentUser = manager.FindById(User.Identity.GetUserId());
@@ -153,6 +154,7 @@ namespace AutoServiceManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(EditCarViewModel viewModel, int customerId, int carId)
         {
+			var customer = customersRepo.GetCustomerById(customerId);
             if (ModelState.IsValid)
             {
                 var car = new Car()
@@ -170,6 +172,10 @@ namespace AutoServiceManagementSystem.Controllers
                 carsRepo.Save();
                 return RedirectToAction("CarsByCustomer", customerId);
             }
+
+			ViewBag.customerId = customerId;
+			ViewBag.CustomerName = customer.FirstName + " " + customer.LastName;
+
             return View(viewModel);
         }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AutoServiceManagementSystem.Models;
+using Newtonsoft.Json;
 
 namespace AutoServiceManagementSystem.Helpers
 {
@@ -81,6 +82,16 @@ namespace AutoServiceManagementSystem.Helpers
             string result = modelNames[rand.Next(0, modelNames.Length)];
             return result;
         }
+
+		/// <summary>
+		/// TODO
+		/// </summary>
+		/// <param name="manufacturer">Manufacturer name.</param>
+		/// <returns>Car model from the manufacturer.</returns>
+		public static string GenerateModel(string manufacturer)
+		{
+			throw new NotImplementedException();
+		}
 
         /// <summary>
         /// Randomly generates a plate number according to the Bulgarian

@@ -237,6 +237,18 @@
     <Compile Include="ViewModels\Suppliers\CreateSupplierViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Styles\Bootstrap\less\bootstrap.css">
+      <DependentUpon>bootstrap.less</DependentUpon>
+    </Content>
+    <Content Include="Styles\Bootstrap\less\bootstrap.min.css">
+      <DependentUpon>bootstrap.css</DependentUpon>
+    </Content>
+    <Content Include="Styles\Bootstrap\less\variables.css">
+      <DependentUpon>variables.less</DependentUpon>
+    </Content>
+    <Content Include="Styles\Bootstrap\less\variables.min.css">
+      <DependentUpon>variables.css</DependentUpon>
+    </Content>
     <Content Include="Styles\FontAwesome\font-awesome.css" />
     <Content Include="Styles\FontAwesome\font-awesome.min.css" />
     <Content Include="Styles\fonts\fontawesome-webfont.svg" />
@@ -326,7 +338,6 @@
     <Content Include="Views\Suppliers\Suppliers.cshtml" />
     <Content Include="Views\Home\_DailySupplier.cshtml" />
     <Content Include="Views\Manage\_EditUserDetails.cshtml" />
-    <Content Include="Views\Cars\CarsByCustomer.cshtml" />
     <Content Include="Views\Jobs\Create.cshtml" />
     <Content Include="Views\Jobs\Delete.cshtml" />
     <Content Include="Views\Jobs\Details.cshtml" />
@@ -356,6 +367,85 @@
     <Content Include="Styles\fonts\fontawesome-webfont.woff2" />
     <Content Include="Styles\fonts\FontAwesome.otf" />
     <Content Include="Views\Shared\DisplayTemplates\DisplaySparePartViewModel.cshtml" />
+    <Content Include="Styles\Bootstrap\less\.csscomb.json" />
+    <Content Include="Styles\Bootstrap\less\.csslintrc" />
+    <Content Include="Styles\Bootstrap\less\alerts.less" />
+    <Content Include="Styles\Bootstrap\less\badges.less" />
+    <Content Include="Styles\Bootstrap\less\bootstrap.less" />
+    <Content Include="Styles\Bootstrap\less\bootswatch.less" />
+    <Content Include="Styles\Bootstrap\less\breadcrumbs.less" />
+    <Content Include="Styles\Bootstrap\less\button-groups.less" />
+    <Content Include="Styles\Bootstrap\less\buttons.less" />
+    <Content Include="Styles\Bootstrap\less\carousel.less" />
+    <Content Include="Styles\Bootstrap\less\close.less" />
+    <Content Include="Styles\Bootstrap\less\code.less" />
+    <Content Include="Styles\Bootstrap\less\component-animations.less" />
+    <Content Include="Styles\Bootstrap\less\dropdowns.less" />
+    <Content Include="Styles\Bootstrap\less\forms.less" />
+    <Content Include="Styles\Bootstrap\less\glyphicons.less" />
+    <Content Include="Styles\Bootstrap\less\grid.less" />
+    <Content Include="Styles\Bootstrap\less\input-groups.less" />
+    <Content Include="Styles\Bootstrap\less\jumbotron.less" />
+    <Content Include="Styles\Bootstrap\less\labels.less" />
+    <Content Include="Styles\Bootstrap\less\list-group.less" />
+    <Content Include="Styles\Bootstrap\less\media.less" />
+    <Content Include="Styles\Bootstrap\less\mixins.less" />
+    <Content Include="Styles\Bootstrap\less\mixins\alerts.less" />
+    <Content Include="Styles\Bootstrap\less\mixins\background-variant.less" />
+    <Content Include="Styles\Bootstrap\less\mixins\border-radius.less" />
+    <Content Include="Styles\Bootstrap\less\mixins\buttons.less" />
+    <Content Include="Styles\Bootstrap\less\mixins\center-block.less" />
+    <Content Include="Styles\Bootstrap\less\mixins\clearfix.less" />
+    <Content Include="Styles\Bootstrap\less\mixins\forms.less" />
+    <Content Include="Styles\Bootstrap\less\mixins\gradients.less" />
+    <Content Include="Styles\Bootstrap\less\mixins\grid-framework.less" />
+    <Content Include="Styles\Bootstrap\less\mixins\grid.less" />
+    <Content Include="Styles\Bootstrap\less\mixins\hide-text.less" />
+    <Content Include="Styles\Bootstrap\less\mixins\image.less" />
+    <Content Include="Styles\Bootstrap\less\mixins\labels.less" />
+    <Content Include="Styles\Bootstrap\less\mixins\list-group.less" />
+    <Content Include="Styles\Bootstrap\less\mixins\nav-divider.less" />
+    <Content Include="Styles\Bootstrap\less\mixins\nav-vertical-align.less" />
+    <Content Include="Styles\Bootstrap\less\mixins\opacity.less" />
+    <Content Include="Styles\Bootstrap\less\mixins\pagination.less" />
+    <Content Include="Styles\Bootstrap\less\mixins\panels.less" />
+    <Content Include="Styles\Bootstrap\less\mixins\progress-bar.less" />
+    <Content Include="Styles\Bootstrap\less\mixins\reset-filter.less" />
+    <Content Include="Styles\Bootstrap\less\mixins\resize.less" />
+    <Content Include="Styles\Bootstrap\less\mixins\responsive-visibility.less" />
+    <Content Include="Styles\Bootstrap\less\mixins\size.less" />
+    <Content Include="Styles\Bootstrap\less\mixins\tab-focus.less" />
+    <Content Include="Styles\Bootstrap\less\mixins\table-row.less" />
+    <Content Include="Styles\Bootstrap\less\mixins\text-emphasis.less" />
+    <Content Include="Styles\Bootstrap\less\mixins\text-overflow.less" />
+    <Content Include="Styles\Bootstrap\less\mixins\vendor-prefixes.less" />
+    <Content Include="Styles\Bootstrap\less\modals.less" />
+    <Content Include="Styles\Bootstrap\less\navbar.less" />
+    <Content Include="Styles\Bootstrap\less\navs.less" />
+    <Content Include="Styles\Bootstrap\less\normalize.less" />
+    <Content Include="Styles\Bootstrap\less\pager.less" />
+    <Content Include="Styles\Bootstrap\less\pagination.less" />
+    <Content Include="Styles\Bootstrap\less\panels.less" />
+    <Content Include="Styles\Bootstrap\less\popovers.less" />
+    <Content Include="Styles\Bootstrap\less\print.less" />
+    <Content Include="Styles\Bootstrap\less\progress-bars.less" />
+    <Content Include="Styles\Bootstrap\less\responsive-embed.less" />
+    <Content Include="Styles\Bootstrap\less\responsive-utilities.less" />
+    <Content Include="Styles\Bootstrap\less\scaffolding.less" />
+    <Content Include="Styles\Bootstrap\less\tables.less" />
+    <Content Include="Styles\Bootstrap\less\theme.less" />
+    <Content Include="Styles\Bootstrap\less\thumbnails.less" />
+    <Content Include="Styles\Bootstrap\less\tooltip.less" />
+    <Content Include="Styles\Bootstrap\less\type.less" />
+    <Content Include="Styles\Bootstrap\less\utilities.less" />
+    <Content Include="Styles\Bootstrap\less\variables.less" />
+    <Content Include="Styles\Bootstrap\less\wells.less" />
+    <Content Include="Styles\Bootstrap\less\variables.css.map">
+      <DependentUpon>variables.css</DependentUpon>
+    </Content>
+    <Content Include="Styles\Bootstrap\less\bootstrap.css.map">
+      <DependentUpon>bootstrap.css</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

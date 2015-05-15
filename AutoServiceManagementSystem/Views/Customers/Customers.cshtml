@@ -39,7 +39,7 @@
             </div>
             <div class="row btn-group-actions text-center">
                 <div class="btn-group">
-                    @Html.ActionLink("Cars", "CarsByCustomer", "Cars",
+                    @Html.ActionLink("Cars", "Cars", "Cars",
                         new { id = customer.CustomerId }, new { @class = "btn btn-success" })
                     @Html.ActionLink("Edit", "Edit", new { id = customer.CustomerId }, new { @class = "btn btn-primary" })
                     @Html.ActionLink("Delete", "Delete", new { id = customer.CustomerId }, new { @class = "btn btn-danger" })
@@ -49,7 +49,7 @@
     }
 </section>
 
-<hr />
+<hr/>
 <div class="controls">
     <div class="row sort-buttons pull-left">
         @Html.ActionLink("First Name", null, new { sortOrder = "firstname_asc", currentFilter = ViewBag.CurrentFilter }) <span class="glyphicon glyphicon-sort-by-alphabet"></span> |

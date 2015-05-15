@@ -1,4 +1,5 @@
-﻿/*#region Size Variables */
+﻿@import "Bootstrap/less/variables.css";
+/*#region Size Variables */
 /*#endregion */
 /*#region Color Variables */
 /*#endregion */
@@ -46,7 +47,16 @@
 }
 /*#endregion */
 /*#region Tag Fixes */
+html {
+  background-color: #3c3c3c;
+}
+@media only screen and (max-width: 480px) {
+  html {
+    background-color: #f0f0f0;
+  }
+}
 body {
+  background-color: #f0f0f0;
   margin: 0 0;
   padding: 0 0;
 }
@@ -60,8 +70,9 @@ select,
 textarea {
   max-width: 20em;
 }
-i {
-  padding-right: 0.66em;
+input[type="checkbox"] {
+  width: 2em;
+  height: 2em;
 }
 /*#endregion */
 .body-content {
@@ -83,6 +94,13 @@ i {
 }
 #job-form {
   min-width: 30em;
+}
+#job-form fieldset {
+  display: block;
+  margin: 0 auto;
+}
+#job-form fieldset .input-field input[type="checkbox"] {
+  margin-left: 1em;
 }
 /*#region Suppliers View */
 #suppliers-list .supplier-container {
@@ -152,6 +170,23 @@ i {
 }
 /*#endregion */
 /*#region Cars View */
+#cars-list .car-container {
+  width: 20em;
+  background-color: ghostwhite;
+  text-align: center;
+  color: #3c3c3c;
+  float: left;
+  margin: 2em 1em 2em 0;
+  padding: 0 0 1em 0;
+}
+#cars-list .car-container .make-model {
+  margin-top: -1.5em;
+  padding: 0.5em 0;
+  background-color: #e6e6e6;
+}
+#cars-list .car-container .details {
+  padding: 1em 0;
+}
 /*#endregion */
 /*#region Layout */
 @media screen and (max-width: 720px) {
@@ -171,12 +206,14 @@ i {
     padding: 0 0;
   }
 }
+#landing-wrapper i {
+  padding-right: 0.66em;
+}
 footer {
   display: block;
   zoom: 1;
   min-height: 8em;
-  min-width: 420px;
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: #3c3c3c;
   color: ghostwhite;
   text-align: center;
 }
