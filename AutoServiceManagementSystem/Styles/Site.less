@@ -7,6 +7,7 @@
 @leading-image-h1-size: 3.5em;
 @leading-image-h2-size: 1.66em;
 @max-input-field-width: 20em;
+@text-area-height: 16em;
 
 @customer-container-min-height: 24em;
 @car-container-width: 20em;
@@ -96,7 +97,9 @@ input[type=number]::-webkit-outer-spin-button {
 input, select, textarea {
     max-width: @max-input-field-width;
 }
-
+textarea {
+       min-height: @text-area-height;
+}
 input[type="checkbox"] {
     width: 2em;
     height: 2em;
@@ -123,7 +126,6 @@ input[type="checkbox"] {
 }
 
 #job-form {
-    min-width: @max-input-field-width * 1.5;
     fieldset {
         display: block;
         margin: 0 auto;
@@ -132,6 +134,12 @@ input[type="checkbox"] {
             input[type="checkbox"] {
                 margin-left: 1em;
             }
+        }
+    }
+
+    @media screen and (min-width: 1440px) {
+        input, textarea {
+            max-width: @max-input-field-width * 2;
         }
     }
 }
@@ -166,6 +174,8 @@ input[type="checkbox"] {
 /*#endregion */
 
 /*#region Customers View */
+#search-box {
+}
 
 #customers-list {
     .customer-container {
@@ -209,6 +219,8 @@ input[type="checkbox"] {
 /*#region Cars View */
 
 #cars-list {
+    min-height: 720px;
+
     .car-container {
         width: 20em;
         background-color: ghostwhite;
@@ -253,14 +265,8 @@ input[type="checkbox"] {
 }
 
 #content-wrapper {
-    @media screen and (max-width: 720) {
-        padding: 0 0;
-    }
-}
-
-#landing-wrapper {
-    i {
-        padding-right: 0.66em;
+    @media screen and (max-height: 1080px) {
+        min-height: 840px;
     }
 }
 
@@ -283,6 +289,9 @@ footer {
 /*#region Landing Page */
 
 #landing-wrapper {
+    i {
+        padding-right: 0.66em;
+    }
 
     .row {
         margin-right: 0;

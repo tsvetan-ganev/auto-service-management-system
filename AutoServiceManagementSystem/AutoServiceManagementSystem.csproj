@@ -262,7 +262,7 @@
     <Content Include="Styles\Bootstrap\bootstrap.css" />
     <Content Include="Styles\Bootstrap\bootstrap.min.css" />
     <Content Include="favicon.ico" />
-    <Content Include="Styles\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Styles\Bootstrap\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Styles\Images\hero.jpg" />
     <Content Include="Styles\Site.css" />
@@ -451,9 +451,9 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Styles\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Styles\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="Styles\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Styles\Bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Styles\Bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Styles\Bootstrap\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>

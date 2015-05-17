@@ -31,12 +31,13 @@
                 </div>
 
                 <div class="form-group input-field">
-                    <div class="col-xs-4 col-md-3">
-                        @Html.LabelFor(model => model.Finished, htmlAttributes: new { @class = "control-label" })
+                    @Html.LabelFor(model => model.Finished, htmlAttributes: new { @class = "control-label col-xs-2" })
+                    <div class="col-xs-10">
                         @Html.EditorFor(model => model.Finished)
                     </div>
-                    <div class="col-xs-4 col-md-3">
-                        @Html.LabelFor(model => model.Paid, htmlAttributes: new { @class = "control-label" })
+
+                    @Html.LabelFor(model => model.Paid, htmlAttributes: new { @class = "control-label col-xs-2" })
+                    <div class="col-xs-10">
                         @Html.EditorFor(model => model.Paid)
                     </div>
                 </div>

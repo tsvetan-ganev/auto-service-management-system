@@ -70,6 +70,9 @@ select,
 textarea {
   max-width: 20em;
 }
+textarea {
+  min-height: 16em;
+}
 input[type="checkbox"] {
   width: 2em;
   height: 2em;
@@ -92,15 +95,18 @@ input[type="checkbox"] {
 .btn-group-actions {
   margin-top: 2em;
 }
-#job-form {
-  min-width: 30em;
-}
 #job-form fieldset {
   display: block;
   margin: 0 auto;
 }
 #job-form fieldset .input-field input[type="checkbox"] {
   margin-left: 1em;
+}
+@media screen and (min-width: 1440px) {
+  #job-form input,
+  #job-form textarea {
+    max-width: 40em;
+  }
 }
 /*#region Suppliers View */
 #suppliers-list .supplier-container {
@@ -170,6 +176,9 @@ input[type="checkbox"] {
 }
 /*#endregion */
 /*#region Cars View */
+#cars-list {
+  min-height: 720px;
+}
 #cars-list .car-container {
   width: 20em;
   background-color: ghostwhite;
@@ -201,13 +210,10 @@ input[type="checkbox"] {
     font-size: 1.33em;
   }
 }
-@media screen and (max-width: 720) {
+@media screen and (max-height: 1080px) {
   #content-wrapper {
-    padding: 0 0;
+    min-height: 840px;
   }
-}
-#landing-wrapper i {
-  padding-right: 0.66em;
 }
 footer {
   display: block;
@@ -231,6 +237,9 @@ footer p {
 }
 /*#endregion */
 /*#region Landing Page */
+#landing-wrapper i {
+  padding-right: 0.66em;
+}
 #landing-wrapper .row {
   margin-right: 0;
   margin-left: 0;
