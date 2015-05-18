@@ -237,6 +237,7 @@
     <Compile Include="ViewModels\Suppliers\CreateSupplierViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\App\jquery.validate.hooks.js" />
     <Content Include="Styles\Bootstrap\less\bootstrap.css">
       <DependentUpon>bootstrap.less</DependentUpon>
     </Content>

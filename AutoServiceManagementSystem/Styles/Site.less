@@ -1,5 +1,5 @@
 ﻿/*#region Size Variables */
-@import "Bootstrap/less/variables.css";
+@import "Bootstrap/less/variables.less";
 
 @body-padding-offset: 5em;
 @info-panel-padding: 1em;
@@ -22,6 +22,10 @@
 @primary-blue: #00A1F1;
 @primary-blue-darker: #0072C6;
 @dark-gray: #3C3C3C;
+
+// validation
+@input-validation-error-color: @brand-danger;
+@input-validation-valid-color: @brand-success;
 /*#endregion */
 
 /*#region Mixins */
@@ -112,6 +116,14 @@ input[type="checkbox"] {
     @media screen and (max-width: 720px) {
         padding-left: @body-padding-offset/4;
         padding-right: @body-padding-offset/4;
+    }
+
+    .valid {
+        border-color: @brand-success;
+    }
+
+    .input-validation-error {
+        border-color: @brand-danger;
     }
 }
 

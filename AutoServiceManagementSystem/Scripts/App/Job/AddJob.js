@@ -1,5 +1,5 @@
 ﻿/// <reference path="../../Vendor/jquery-1.10.2.js" />
-/// <reference path="../../Vendor/jquery-1.10.2.intellisense.js" 
+/// <reference path="../../Vendor/jquery-1.10.2.intellisense.js" /> 
 
 $(document).ready(function () {
     
@@ -15,7 +15,7 @@ $(document).ready(function () {
     $(document).on('click', '.remove-item', function (event) {
         event.preventDefault()
         $(this).parents('.spare-part-form').remove()
-    })
+    });
 
     // Add new spare part button event
     $('#add-spare-part').on('click', function addSparePart(event) {
@@ -25,6 +25,6 @@ $(document).ready(function () {
             var form = $('#job-form')
             validateDynamicFormInput( form )
             $.validator.methods.subscribeUIToValidation();
-        })
-    })
+        });
+    });
 });

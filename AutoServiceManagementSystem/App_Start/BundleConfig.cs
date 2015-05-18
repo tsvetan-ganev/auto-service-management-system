@@ -14,7 +14,8 @@ namespace AutoServiceManagementSystem
 
 			bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
 						"~/Scripts/Vendor/jquery.validate*",
-						"~/Scripts/App/jquery.validate.fixes.js"));
+						"~/Scripts/App/jquery.validate.fixes.js",
+						"~/Scripts/App/jquery.validate.hooks.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/ajax").Include(
 						"~/Scripts/Vendor/jquery.unobtrusive-ajax*"));
