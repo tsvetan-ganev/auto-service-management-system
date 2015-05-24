@@ -46,7 +46,7 @@ namespace AutoServiceManagementSystem.Controllers
         /// <returns>SelectList of Suppliers</returns>
         private IEnumerable<SelectListItem> GetUserSuppliers()
         {
-            var suppliers = suppliersRepo.GetSuppliersByUserId(User.Identity.GetUserId())
+            var suppliers = suppliersRepo.GetSupplierForSelectList(User.Identity.GetUserId())
                 .Select(s => new SelectListItem
                 {
                     Value = s.SupplierId.ToString(),

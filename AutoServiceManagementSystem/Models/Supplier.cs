@@ -37,6 +37,8 @@ namespace AutoServiceManagementSystem.Models
 
         public bool IsDeleted { get; set; }
 
+		public bool IsDefault { get; set; }
+
 		public ApplicationUser User { get; set; }
 	}
 }

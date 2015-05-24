@@ -18,21 +18,20 @@
             @Html.EditorFor(model => model.Suppliers)
         </p>
     </div>
-    <div class="col-xs-3 col-md-1 input-field">
-        @Html.LabelFor(model => model.Quantity)
-        @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control", placeholder = "Quantity", value = "" } })
-        @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
-    </div>
     <div class="col-xs-4 col-md-2 input-field">
         @Html.LabelFor(model => model.Price)
         @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", placeholder = "Price", value = "" } })
         @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
     </div>
+    <div class="col-xs-3 col-md-1 input-field">
+        @Html.LabelFor(model => model.Quantity)
+        @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control", placeholder = "Quantity", value = "" } })
+        @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+    </div>
     <div class="col-xs-12 col-md-1">
         <label class="visible-lg visible-md">Remove</label>
         <a href="#" class="btn btn-danger remove-item col-xs-12"><i class="fa fa-remove"></i></a>
     </div>
-    <hr />
 </div>
 
 

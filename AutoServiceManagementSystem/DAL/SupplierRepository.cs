@@ -33,6 +33,14 @@ namespace AutoServiceManagementSystem.DAL
                 .ToList();
         }
 
+		public IEnumerable<Supplier> GetSupplierForSelectList(string userId)
+		{
+			var suppliers =  context.Suppliers
+				.Where(s => (s.User.Id == userId && !s.IsDeleted) || s.IsDefault)
+				.ToList();
+			return suppliers;
+		}
+
 		public Supplier GetSupplierById(int supplierId)
 		{
 			return context.Suppliers.Find(supplierId);
@@ -77,5 +85,6 @@ namespace AutoServiceManagementSystem.DAL
 			Dispose(true);
 			GC.SuppressFinalize(this);
 		}
-    }
+
+	}
 }

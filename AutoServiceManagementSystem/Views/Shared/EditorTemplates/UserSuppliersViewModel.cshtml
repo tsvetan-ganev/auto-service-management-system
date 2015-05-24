@@ -1,4 +1,3 @@
-﻿
-@model AutoServiceManagementSystem.ViewModels.Jobs.UserSuppliersViewModel
+﻿@model AutoServiceManagementSystem.ViewModels.Jobs.UserSuppliersViewModel
 
-@Html.DropDownListFor(m => m.SelectedSupplierId, Model.UserSuppliers, new { @class = "form-control" })
+@Html.DropDownListFor(m => m.SelectedSupplierId, Model.UserSuppliers, new { @class = "form-control", @data_discount = Model.SelectedSupplierDiscount })

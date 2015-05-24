@@ -53,7 +53,7 @@ namespace AutoServiceManagementSystem.Migrations
                     }
                 };
 
-                manager.Create(user, "Password@123");
+                manager.Create(user, "password");
             #endregion
 
                 #region Seeding customers and their cars
@@ -61,10 +61,10 @@ namespace AutoServiceManagementSystem.Migrations
                 var customersList = new List<Customer>();
                 var cars = new List<Car>();
 
-                for (int i = 0; i < 250; i++)
+                for (int i = 0; i < 40; i++)
                 {
                     var customer = CustomerSeeder.NextCustomer(currentUser);
-                    for (int j = 0; j < 5; j++)
+                    for (int j = 0; j < 3; j++)
                     {
                         var car = CarSeeder.NextCar(currentUser, customer);
                         cars.Add(car);
@@ -80,12 +80,22 @@ namespace AutoServiceManagementSystem.Migrations
                 #region Suppliers seeding
                 var suppliersToAdd = new List<Supplier>
                 {
+					new Supplier
+					{
+						Name = "No supplier",
+						DiscountPercentage = 0.0m,
+						User = currentUser,
+						IsDeleted = true,
+						IsDefault = true
+					},
                     new Supplier
                     {
-                        Name = "Euro07",
+                        Name = "Euro 07",
                         DiscountPercentage = 45.0m,
                         City = "Rousse",
                         WebsiteUrl = "http://euro07.bg",
+						EmailAddress = "shop@euro07.bg",
+						SkypeName = "euro07.ruse",
                         User = currentUser
                     },
                     new Supplier
@@ -94,6 +104,8 @@ namespace AutoServiceManagementSystem.Migrations
                         DiscountPercentage = 33.0m,
                         City = "Rousse",
                         WebsiteUrl = "http://autoplus.bg",
+						EmailAddress = "shop@autoplus.bg",
+						SkypeName = "autoplus",
                         User = currentUser
                     },
                     new Supplier
@@ -110,6 +122,7 @@ namespace AutoServiceManagementSystem.Migrations
                         DiscountPercentage = 10.0m,
                         City = "Sofia",
                         WebsiteUrl = "http://megaparts.bg",
+						EmailAddress = "support@megaparts.bg",
                         User = currentUser
                     },
                     new Supplier
@@ -118,6 +131,7 @@ namespace AutoServiceManagementSystem.Migrations
                         DiscountPercentage = 40.0m,
                         City = "Rousse",
                         WebsiteUrl = "http://intercars.bg",
+						SkypeName = "intercars-bg",
                         User = currentUser
                     },
 					new Supplier
