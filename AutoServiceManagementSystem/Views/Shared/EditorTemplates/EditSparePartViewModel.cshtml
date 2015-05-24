@@ -3,28 +3,28 @@
 <div class="form-group form-horizontal spare-part-form">
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(x => Model.SparePartId)
-    <div class="col-xs-6 col-md-3  input-field">
+    <div class="col-xs-6 col-md-3  spare-part-name">
         @Html.LabelFor(model => model.Name)
         @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Name" } })
         @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
     </div>
-    <div class="col-xs-6 col-md-3  input-field">
+    <div class="col-xs-6 col-md-3  spare-part-code">
         @Html.LabelFor(model => model.Code)
         @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control", placeholder = "Code" } })
         @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
     </div>
-    <div class="col-xs-5 col-md-2 ">
+    <div class="col-xs-5 col-md-2 spare-part-supplier">
         @Html.Label("Supplier")
         <p>
             @Html.EditorFor(model => model.Suppliers)
         </p>
     </div>
-    <div class="col-xs-4 col-md-2 input-field">
+    <div class="col-xs-4 col-md-2 spare-part-price">
         @Html.LabelFor(model => model.Price)
         @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", placeholder = "Price", value = "" } })
         @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
     </div>
-    <div class="col-xs-3 col-md-1 input-field">
+    <div class="col-xs-3 col-md-1 spare-part-quantity">
         @Html.LabelFor(model => model.Quantity)
         @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control", placeholder = "Quantity", value = "" } })
         @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })

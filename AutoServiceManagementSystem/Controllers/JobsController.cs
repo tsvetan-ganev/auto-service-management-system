@@ -11,6 +11,7 @@ using AutoServiceManagementSystem.DAL;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity;
 using AutoServiceManagementSystem.ViewModels.Jobs;
+using Newtonsoft.Json;
 
 namespace AutoServiceManagementSystem.Controllers
 {
@@ -376,6 +377,8 @@ namespace AutoServiceManagementSystem.Controllers
             return RedirectToAction("Index");
         }
 
+
+		// AJAX
         [Route("Jobs/AddSparePart")]
         [OutputCache(NoStore = true, Duration = 0, VaryByParam="*")]
         public ActionResult AddSparePart()
@@ -392,6 +395,13 @@ namespace AutoServiceManagementSystem.Controllers
             };
             return View(new List<EditSparePartViewModel>() { sparePart });
         }
+
+		[Route("Jobs/GetSupplierDiscountById")]
+		public JsonResult GetSupplierDiscountById()
+		{
+			var supplier = suppliersRepo.GetSupplierById(3);
+			return Json(supplier.DiscountPercentage, JsonRequestBehavior.AllowGet);
+		}
 
         protected override void Dispose(bool disposing)
         {

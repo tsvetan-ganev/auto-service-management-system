@@ -28,12 +28,10 @@
                         @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="form-group container">
-                    <div class="pull-left col-xs-offset-1 col-md-offset-1">
-                        <div class="checkbox">
-                            @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.LabelFor(m => m.RememberMe)
-                        </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.RememberMe, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(m => m.RememberMe)
                     </div>
                 </div>
                 <div class="form-group">

@@ -258,6 +258,13 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <None Include="Scripts\Vendor\jquery-2.1.4.intellisense.js" />
+    <Content Include="Scripts\Vendor\jquery-2.1.4.js" />
+    <Content Include="Scripts\Vendor\jquery-2.1.4.min.js" />
+    <Content Include="Scripts\Vendor\modernizr-2.8.3.js" />
+    <Content Include="Scripts\Vendor\npm.js" />
+    <Content Include="Scripts\Vendor\respond.matchmedia.addListener.js" />
+    <Content Include="Scripts\Vendor\respond.matchmedia.addListener.min.js" />
     <Content Include="Styles\Bootstrap\less\bootstrap.css">
       <DependentUpon>bootstrap.less</DependentUpon>
     </Content>
@@ -289,9 +296,7 @@
     <Content Include="Styles\Site.css" />
     <Content Include="Scripts\Vendor\bootstrap.js" />
     <Content Include="Scripts\Vendor\bootstrap.min.js" />
-    <None Include="Scripts\Vendor\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\Vendor\jquery-1.10.2.js" />
-    <Content Include="Scripts\Vendor\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\Vendor\jquery-2.1.4.min.map" />
     <None Include="Scripts\Vendor\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\Vendor\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\Vendor\jquery.unobtrusive-ajax.min.js" />
@@ -299,7 +304,6 @@
     <Content Include="Scripts\Vendor\jquery.validate.min.js" />
     <Content Include="Scripts\Vendor\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\Vendor\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\Vendor\modernizr-2.6.2.js" />
     <Content Include="Scripts\Vendor\respond.js" />
     <Content Include="Scripts\Vendor\respond.min.js" />
     <Content Include="Scripts\Vendor\_references.js" />
@@ -324,7 +328,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Scripts\Vendor\jquery-1.10.2.min.map" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
