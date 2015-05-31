@@ -378,8 +378,9 @@ namespace AutoServiceManagementSystem.Controllers
         }
 
 
-		// AJAX
-        [Route("Jobs/AddSparePart")]
+		#region Ajax Calls
+
+		[Route("Jobs/AddSparePart")]
         [OutputCache(NoStore = true, Duration = 0, VaryByParam="*")]
         public ActionResult AddSparePart()
         {
@@ -396,18 +397,22 @@ namespace AutoServiceManagementSystem.Controllers
             return View(new List<EditSparePartViewModel>() { sparePart });
         }
 
-		[Route("Jobs/GetSupplierDiscountById")]
-		public JsonResult GetSupplierDiscountById()
+		public JsonResult GetSupplierDiscountById(int supplierId)
 		{
-			var supplier = suppliersRepo.GetSupplierById(3);
+			var supplier = suppliersRepo.GetSupplierById(supplierId);
 			return Json(supplier.DiscountPercentage, JsonRequestBehavior.AllowGet);
 		}
 
-        protected override void Dispose(bool disposing)
+		#endregion
+
+		protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
+				jobsRepo.Dispose();
                 carsRepo.Dispose();
+				customersRepo.Dispose();
+				sparePartsRepo.Dispose();
             }
             base.Dispose(disposing);
         }

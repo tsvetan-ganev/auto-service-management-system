@@ -73,10 +73,6 @@ textarea {
 textarea {
   min-height: 16em;
 }
-input[type="checkbox"] {
-  width: 2em;
-  height: 2em;
-}
 /*#endregion */
 .body-content {
   padding: 5em;
@@ -115,6 +111,9 @@ input[type="checkbox"] {
   }
 }
 /*#region Suppliers View */
+#suppliers-list {
+  min-height: 66vh;
+}
 #suppliers-list .supplier-container {
   text-align: center;
   background-color: #25b7ff;
@@ -147,21 +146,22 @@ input[type="checkbox"] {
 }
 /*#endregion */
 /*#region Customers View */
+#customers-list {
+  min-height: 66vh;
+}
 #customers-list .customer-container {
   background-color: #00a1f1;
   color: white;
-  padding: 1em;
+  padding: 0;
   margin: 1em 1em;
-  min-height: 24em;
-  min-width: 14em;
-  max-width: 24em;
+  min-width: 16em;
 }
-#customers-list .customer-container .customer-actions {
-  margin-top: 1em;
+#customers-list .customer-container .customer-info {
+  padding: 1em;
+  font-size: 1.1em;
 }
-#customers-list .customer-container #customer-icon {
-  text-align: center;
-  font-size: 4em;
+#customers-list .customer-container i {
+  margin-right: 1em;
 }
 #customers-list .customer-container .lead {
   min-height: 1em;
@@ -183,7 +183,7 @@ input[type="checkbox"] {
 /*#endregion */
 /*#region Cars View */
 #cars-list {
-  min-height: 720px;
+  min-height: 66vh;
 }
 #cars-list .car-container {
   width: 20em;

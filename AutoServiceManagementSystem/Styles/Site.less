@@ -8,8 +8,11 @@
 @leading-image-h2-size: 1.66em;
 @max-input-field-width: 20em;
 @text-area-height: 16em;
+@icon-margin-right: 1em;
+@items-list-min-height: 66vh;
 
 @customer-container-min-height: 24em;
+@customer-container-min-width: 16em;
 @car-container-width: 20em;
 /*#endregion */
 
@@ -104,9 +107,8 @@ input, select, textarea {
 textarea {
        min-height: @text-area-height;
 }
-input[type="checkbox"] {
-    width: 2em;
-    height: 2em;
+input[type=checkbox] {
+ // need to find a shiv
 }
 /*#endregion */
 
@@ -159,7 +161,7 @@ input[type="checkbox"] {
 /*#region Suppliers View */
 
 #suppliers-list {
-
+    min-height: @items-list-min-height;
     .supplier-container {
         .info-panel;
         width: 26em;
@@ -190,24 +192,22 @@ input[type="checkbox"] {
 }
 
 #customers-list {
+    min-height: @items-list-min-height;
     .customer-container {
         background-color: @primary-blue;
         color: white;
-        padding: 1em;
+        padding: 0;
         margin: 1em 1em;
-        min-height: @customer-container-min-height;
-        min-width: 14em;
-        max-width: 24em;
+        min-width: @customer-container-min-width;
 
-        .customer-actions {
-            margin-top: 1em;
+        .customer-info {
+            padding: 1em;
+            font-size: 1.1em;
         }
 
-        #customer-icon {
-            text-align: center;
-            font-size: 4em;
+        i {
+            margin-right: @icon-margin-right;
         }
-
         .lead {
             min-height: 1em;
         }
@@ -226,12 +226,13 @@ input[type="checkbox"] {
     }
 }
 
+
 /*#endregion */
 
 /*#region Cars View */
 
 #cars-list {
-    min-height: 720px;
+    min-height: @items-list-min-height;
 
     .car-container {
         width: 20em;
@@ -280,6 +281,8 @@ input[type="checkbox"] {
     @media screen and (max-height: 1080px) {
         min-height: 840px;
     }
+
+    
 }
 
 footer {

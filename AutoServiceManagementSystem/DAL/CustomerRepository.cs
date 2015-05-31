@@ -28,6 +28,11 @@ namespace AutoServiceManagementSystem.DAL
 			return context.Customers.Find(customerId);
 		}
 
+		public int GetCustomerCarsCountById(int customerId)
+		{
+			return context.Customers.Find(customerId).Cars.Count();
+		}		
+
 		public void InsertCustomer(Customer customer)
 		{
 			context.Customers.Add(customer);
@@ -67,5 +72,6 @@ namespace AutoServiceManagementSystem.DAL
 			Dispose(true);
 			GC.SuppressFinalize(this);
 		}
+
 	}
 }

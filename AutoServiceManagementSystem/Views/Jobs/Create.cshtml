@@ -31,7 +31,6 @@
                 </div>
             </div>
 
-
             <div class="row">
                 <fieldset>
                     <legend>Spare parts</legend>
@@ -40,6 +39,20 @@
             <div id="spare-parts-list" class="form-group">
                 @Html.EditorForMany(j => j.SpareParts)
             </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-md-4 pull-right">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Total</h3>
+                        </div>
+                        <div id="total" class="panel-body">
+                            0.00
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
 
             <!--SUBMIT-->
             <div class="form-group">
@@ -53,8 +66,7 @@
     }
 </div>
 
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval",
-        "~/bundles/app/job/add");
+        "~/bundles/app/job/add")
 }

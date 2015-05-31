@@ -241,6 +241,9 @@ namespace AutoServiceManagementSystem.Controllers
             if (disposing)
             {
                 carsRepo.Dispose();
+				customersRepo.Dispose();
+				sparePartsRepo.Dispose();
+				jobsRepo.Dispose();
             }
             base.Dispose(disposing);
         }

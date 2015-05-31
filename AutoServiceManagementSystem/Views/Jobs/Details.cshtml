@@ -92,8 +92,8 @@
         </tbody>
     </table>
 </div>
-<p>
+<div class="pull-right">
     @Html.ActionLink("Edit", "Edit", "Jobs",
                 new { customerId = ViewBag.CustomerId, carId = ViewBag.CarId, jobId = Model.JobId }, new { @class = "btn btn-primary" })
     @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-default" })
-</p>
+</div>

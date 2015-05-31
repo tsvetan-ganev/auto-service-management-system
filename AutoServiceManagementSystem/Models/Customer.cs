@@ -19,6 +19,7 @@ namespace AutoServiceManagementSystem.Models
         public Customer()
         {
             this.cars = new List<Car>();
+			DateAdded = DateTime.Now;
         }
 
         // properties
@@ -44,6 +45,9 @@ namespace AutoServiceManagementSystem.Models
 		[MaxLength(10, ErrorMessage = "Phone number length is exactly 10 digits.")]
 		[Display(Name = "Phone Number")]
 		public string PhoneNumber { get; set; }
+
+		[DataType(DataType.Date)]
+		public DateTime DateAdded { get; set; }
 
 		public ApplicationUser User { get; set; }
 

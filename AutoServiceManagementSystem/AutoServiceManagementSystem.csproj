@@ -231,6 +231,7 @@
     <Compile Include="ViewModels\Cars\DisplayCarViewModel.cs" />
     <Compile Include="ViewModels\Cars\EditCarViewModel.cs" />
     <Compile Include="ViewModels\Cars\CreateCarViewModel.cs" />
+    <Compile Include="ViewModels\Customers\DisplayCustomerViewModel.cs" />
     <Compile Include="ViewModels\Customers\EditCustomerViewModel.cs" />
     <Compile Include="ViewModels\Customers\CreateCustomerViewModel.cs" />
     <Compile Include="ViewModels\Jobs\CreateJobViewModel.cs" />
@@ -251,13 +252,8 @@
     <Compile Include="ViewModels\Suppliers\CreateSupplierViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Icon.png" />
     <Content Include="Scripts\App\jquery.validate.hooks.js" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="Scripts\Vendor\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\Vendor\jquery-2.1.4.js" />
     <Content Include="Scripts\Vendor\jquery-2.1.4.min.js" />
@@ -287,8 +283,6 @@
     <Content Include="Scripts\App\jquery.validate.fixes.js" />
     <Content Include="Scripts\App\Supplier\Index.js" />
     <Content Include="Scripts\Vendor\skype-uri.js" />
-    <Content Include="Styles\Bootstrap\bootstrap.css" />
-    <Content Include="Styles\Bootstrap\bootstrap.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Styles\Bootstrap\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

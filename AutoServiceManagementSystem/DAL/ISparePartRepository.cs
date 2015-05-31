@@ -6,7 +6,7 @@ using AutoServiceManagementSystem.Models;
 
 namespace AutoServiceManagementSystem.DAL
 {
-    public interface ISparePartRepository
+    public interface ISparePartRepository : IDisposable
     {
         IEnumerable<SparePart> GetSpareParts();
         IEnumerable<SparePart> GetSparePartsByJob(Job job);

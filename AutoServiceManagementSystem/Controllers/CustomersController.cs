@@ -83,13 +83,27 @@ namespace AutoServiceManagementSystem.Controllers
 					customers = customers.OrderBy(c => c.LastName);
 					break;
 				default:
+					customers = customers.OrderByDescending(c => c.DateAdded);
 					break;
 			}
 
 			int pageNumber = (page ?? 1);
-			int pageSize = 8;
+			int pageSize = 12;
 
-            return View("Customers", customers.ToPagedList(pageNumber, pageSize));
+			// populating the viewmodel
+			var viewModel = new List<DisplayCustomerViewModel>();
+			foreach (var customer in customers)
+			{
+				viewModel.Add(new DisplayCustomerViewModel() {
+					Id = customer.CustomerId,
+					FirstName = customer.FirstName,
+					LastName = customer.LastName,
+					DateAdded = customer.DateAdded,
+					PhoneNumber = customer.PhoneNumber,
+					CarsCount = customersRepo.GetCustomerCarsCountById(customer.CustomerId)
+				});
+			}
+            return View("Customers", viewModel.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Customers/Details/5
@@ -128,6 +142,7 @@ namespace AutoServiceManagementSystem.Controllers
                     FirstName = viewModel.FirstName,
                     LastName = viewModel.LastName,
                     PhoneNumber = viewModel.PhoneNumber,
+					DateAdded = DateTime.Now,
                     User = currentUser
                 };
                 customersRepo.InsertCustomer(customer);
@@ -242,6 +257,9 @@ namespace AutoServiceManagementSystem.Controllers
             if (disposing)
             {
                 customersRepo.Dispose();
+				carsRepo.Dispose();
+				sparePartsRepo.Dispose();
+				jobsRepo.Dispose();
             }
             base.Dispose(disposing);
         }
