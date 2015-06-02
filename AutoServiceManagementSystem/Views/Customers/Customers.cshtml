@@ -31,9 +31,23 @@
                     <i class="fa fa-phone"></i>
                     @Html.DisplayFor(c => customer.PhoneNumber)
                 </p>
+                <p class="customer-city">
+                    <i class="fa fa-home"></i>
+                    @Html.DisplayFor(c => customer.City)
+                </p>
                 <p class="customer-cars">
                     <i class="fa fa-car"></i>
                     @Html.DisplayFor(c => customer.CarsCount)
+                </p>
+                <p class="repairs-count">
+                    <i class="fa fa-wrench">
+                    </i>
+                    @Html.DisplayFor(c => customer.PastRepairsCount)
+                    (@Html.DisplayFor(c => customer.ActiveRepairsCount) Active)
+                </p>
+                <p class="money-owed">
+                    <i class="fa fa-money"></i>
+                    @Html.DisplayFor(c => customer.MoneyOwed)
                 </p>
                 <p class="date-added">
                     <i class="fa fa-calendar"></i>

@@ -35,8 +35,11 @@ namespace AutoServiceManagementSystem
 			// Application scripts
 			bundles.Add(new ScriptBundle("~/bundless/app").Include(
 					"~/Scripts/App/app.js"));
+
 			bundles.Add(new ScriptBundle("~/bundles/app/job/add").Include(
+					"~/Scripts/App/Job/autocomplete.js",
 					"~/Scripts/App/Job/AddJob.js"));
+
 			bundles.Add(new ScriptBundle("~/bundles/app/job/edit").Include(
 					"~/Scripts/App/Job/EditJob.js"));
 

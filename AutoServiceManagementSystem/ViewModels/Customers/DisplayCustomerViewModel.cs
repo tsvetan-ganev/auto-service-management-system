@@ -20,9 +20,22 @@ namespace AutoServiceManagementSystem.ViewModels.Customers
 		[Display(Name = "Phone Number")]
 		public string PhoneNumber { get; set; }
 
+		public string City { get; set; }
+
 		[DataType(DataType.Date)]
 		public DateTime DateAdded { get; set; }
 
+		[Display(Name = "Cars")]
 		public int CarsCount { get; set; }
+
+		[Display(Name = "Past Repairs")]
+		public int PastRepairsCount { get; set; }
+
+		[Display(Name = "Active Repairs")]
+		public int ActiveRepairsCount { get; set; }
+
+		[Display(Name = "Money Owed")]
+		[DataType(DataType.Currency)]
+		public decimal MoneyOwed { get; set; }
 	}
 }

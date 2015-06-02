@@ -31,7 +31,33 @@ namespace AutoServiceManagementSystem.DAL
 		public int GetCustomerCarsCountById(int customerId)
 		{
 			return context.Customers.Find(customerId).Cars.Count();
-		}		
+		}
+
+		public int GetCustomerPastRepairsCount(int customerId)
+		{
+			int count = context.Jobs.Where(j => j.Customer.CustomerId == customerId && j.IsFinished)
+				.Count();
+			return count;
+		}
+
+		public int GetCustomerActiveRepairsCount(int customerId)
+		{
+			int count = context.Jobs.Where(j => j.Customer.CustomerId == customerId && !j.IsFinished)
+				.Count();
+			return count;
+		}
+
+		public decimal GetCustomerMoneyOwed(int customerId)
+		{
+			decimal moneyOwed = 0.0m;
+			var unpaidRepairs = context.Jobs.Where(j => j.Customer.CustomerId == customerId && j.IsFinished && !j.IsPaid);
+			if (unpaidRepairs.Count() > 0)
+			{
+				moneyOwed = (from repair in unpaidRepairs
+							  select repair.SpareParts.Sum(sp => sp.Price * sp.Quantity)).Sum();
+			}
+			return moneyOwed;
+		}	
 
 		public void InsertCustomer(Customer customer)
 		{

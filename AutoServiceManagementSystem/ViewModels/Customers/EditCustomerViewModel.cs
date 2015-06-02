@@ -28,5 +28,10 @@ namespace AutoServiceManagementSystem.ViewModels.Customers
         [MaxLength(10, ErrorMessage = "Phone number length is exactly 10 digits.")]
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
+
+		[Required]
+		[MaxLength(24, ErrorMessage = "City name must be no longer than 24 symbols.")]
+		[MinLength(3, ErrorMessage = "City name must be no shorter than 3 symbols.")]
+		public string City { get; set; }
     }
 }

@@ -1,32 +1,20 @@
 ﻿/// <reference path="../../Vendor/jquery-2.1.4.js" />
 /// <reference path="../../Vendor/jquery-2.1.4.intellisense.js" /> 
+/// <reference path="../app.js" />
 
 $(document).ready(function () {
 
-  function validateDynamicFormInput(element) {
-    var currForm = element.closest("form");
-    currForm.removeData("validator");
-    currForm.removeData("unobtrusiveValidation");
-    $.validator.unobtrusive.parse(currForm);
-    currForm.validate(); // This line is important and added for client side validation to trigger, without this it didn't fire client side errors.
-  }
+
+  app.subscribeInputsToAutocomplete('.spare-part-name-input', app.sparePartNamesAutocompleteSource);
+
 
   // dynamically subscribes all remove item buttons
-  $(document).on('click', '.remove-item', function (event) {
-    event.preventDefault();
-    $(this).parents('.spare-part-form').remove();
-    getTotal();
-  });
+  $(document).on('click', '.remove-item', app.removeSparePartForm);
 
   // Add new spare part button event
-  $('#add-spare-part').on('click', function addSparePart(event) {
-    event.preventDefault();
-    $.get('/Jobs/AddSparePart').done(function (html) {
-      $('#spare-parts-list').append(html);
-      var form = $('#job-form');
-      validateDynamicFormInput(form);
-    });
-  });
+  $('#add-spare-part').on('click', app.addSparePartForm);
+
+  // TODO : Subscribe newly created input elements.
 
   // test
   //$.ajax({
@@ -42,33 +30,5 @@ $(document).ready(function () {
   //  console.log(err.statusCode);
   //});
 
-
-  function getTotal() {
-    var i,
-      $total = document.getElementById('total'),
-      $quantities = $('.spare-part-form > .spare-part-quantity input'),
-      $prices = $('.spare-part-form > .spare-part-price input'),
-      quantities = [],
-      prices = [],
-      total = 0.0;
-
-    $quantities.each(function () {
-      quantities.push(parseInt($(this).val()));
-    });
-
-    $prices.each(function () {
-      prices.push(parseFloat($(this).val()));
-    });
-
-    for (i = 0; i < prices.length; i++) {
-      total += quantities[i] * prices[i];
-    }
-
-    console.log(total);
-    $total.innerHTML = total.toFixed(2);
-  }
-
-  $(document).on('click', '.spare-part-form', getTotal);
-
-
+  $(document).on('click blur', '.spare-part-form', app.getTotal);
 });

@@ -192,12 +192,12 @@
     <Compile Include="DAL\MyDbContext.cs" />
     <Compile Include="DAL\SparePartRepository.cs" />
     <Compile Include="DAL\SupplierRepository.cs" />
-    <Compile Include="Helpers\CarSeeder.cs" />
-    <Compile Include="Helpers\CustomerSeeder.cs" />
+    <Compile Include="Helpers\FakeDataGenerators\CarSeeder.cs" />
+    <Compile Include="Helpers\FakeDataGenerators\CustomerSeeder.cs" />
     <Compile Include="Helpers\DataBinders\DecimalModelBinder.cs" />
     <Compile Include="Helpers\HTML\HtmlHelperExtensions.cs" />
-    <Compile Include="Helpers\JobSeeder.cs" />
-    <Compile Include="Helpers\SparePartSeeder.cs" />
+    <Compile Include="Helpers\FakeDataGenerators\JobSeeder.cs" />
+    <Compile Include="Helpers\FakeDataGenerators\SparePartSeeder.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\FuelType.cs" />
@@ -222,7 +222,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\ManufacturersList.cs" />
+    <Compile Include="Helpers\FakeDataGenerators\ManufacturersList.cs" />
     <Compile Include="ViewModels\Account\AccountViewModels.cs" />
     <Compile Include="Models\Car.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -252,7 +252,13 @@
     <Compile Include="ViewModels\Suppliers\CreateSupplierViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\ASMSApp.mdf" />
+    <Content Include="App_Data\ASMSApp_log.ldf">
+      <DependentUpon>ASMSApp.mdf</DependentUpon>
+    </Content>
     <Content Include="Icon.png" />
+    <Content Include="Scripts\App\Job\autocomplete.js" />
+    <Content Include="Scripts\App\Job\SparePartsSuggestions.js" />
     <Content Include="Scripts\App\jquery.validate.hooks.js" />
     <None Include="Scripts\Vendor\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\Vendor\jquery-2.1.4.js" />
@@ -465,9 +471,7 @@
       <DependentUpon>bootstrap.css</DependentUpon>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Styles\Bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Styles\Bootstrap\fonts\glyphicons-halflings-regular.ttf" />

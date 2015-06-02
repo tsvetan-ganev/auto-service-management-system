@@ -98,29 +98,24 @@ namespace AutoServiceManagementSystem.Controllers
 					Id = customer.CustomerId,
 					FirstName = customer.FirstName,
 					LastName = customer.LastName,
-					DateAdded = customer.DateAdded,
 					PhoneNumber = customer.PhoneNumber,
-					CarsCount = customersRepo.GetCustomerCarsCountById(customer.CustomerId)
+					City = customer.City,
+					DateAdded = customer.DateAdded,
+					CarsCount = customersRepo.GetCustomerCarsCountById(customer.CustomerId),
+					PastRepairsCount = customersRepo.GetCustomerPastRepairsCount(customer.CustomerId),
+					ActiveRepairsCount = customersRepo.GetCustomerActiveRepairsCount(customer.CustomerId),
+					MoneyOwed = customersRepo.GetCustomerMoneyOwed(customer.CustomerId)
 				});
 			}
+
             return View("Customers", viewModel.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Customers/Details/5
         public ActionResult Details(int customerId)
         {
-            var currentUser = manager.FindById(User.Identity.GetUserId());
-
-            Customer customer = customersRepo.GetCustomerById(customerId);
-            if (customer == null)
-            {
-                return HttpNotFound();
-            }
-            if (customer.User != currentUser)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
-            }
-            return View(customer);
+			// TODO: Stats about cars, repairs history, payments
+			throw new NotImplementedException();
         }
 
         // GET: Customers/Create
@@ -142,6 +137,7 @@ namespace AutoServiceManagementSystem.Controllers
                     FirstName = viewModel.FirstName,
                     LastName = viewModel.LastName,
                     PhoneNumber = viewModel.PhoneNumber,
+					City = viewModel.City,
 					DateAdded = DateTime.Now,
                     User = currentUser
                 };
@@ -169,7 +165,8 @@ namespace AutoServiceManagementSystem.Controllers
                 CustomerId = customer.CustomerId,
                 FirstName = customer.FirstName,
                 LastName = customer.LastName,
-                PhoneNumber = customer.PhoneNumber
+                PhoneNumber = customer.PhoneNumber,
+				City = customer.City
             };
 
             return View(viewModel);
@@ -187,7 +184,8 @@ namespace AutoServiceManagementSystem.Controllers
                     CustomerId = viewModel.CustomerId,
                     FirstName = viewModel.FirstName,
                     LastName = viewModel.LastName,
-                    PhoneNumber = viewModel.PhoneNumber
+                    PhoneNumber = viewModel.PhoneNumber,
+					City = viewModel.City
                 };
                 customersRepo.UpdateCustomer(customer);
                 customersRepo.Save();

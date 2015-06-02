@@ -10,6 +10,9 @@ namespace AutoServiceManagementSystem.DAL
 		IEnumerable<Customer> GetCustomers();
 		Customer GetCustomerById(int? customerId);
 		int GetCustomerCarsCountById(int customerId);
+		int GetCustomerPastRepairsCount(int customerId);
+		int GetCustomerActiveRepairsCount(int customerId);
+		decimal GetCustomerMoneyOwed(int customerId);
 		void InsertCustomer(Customer customer);
 		void DeleteCustomer(int customerId);
 		void UpdateCustomer(Customer customer);

@@ -33,6 +33,11 @@ namespace AutoServiceManagementSystem.Helpers
             "Kirilov", "Ganev", "Manolov", "Kovachev", "Dimov", "Yavorov", "Popov", "Zidarov"
         };
 
+		private static string[] cityNames = 
+		{
+			"Ruse", "Sofia", "Varna", "Lom", "Burgas", "Stara Zagora", "Gorna Oryahovica", "Byala", "Dve mogili", "Veliko Tyrnovo"
+		};
+
         public enum Sex
         {
             Male,
@@ -81,6 +86,15 @@ namespace AutoServiceManagementSystem.Helpers
             return phoneNumber.ToString();
         }
 
+		/// <summary>
+		/// Randomly generates a city from a given list.
+		/// </summary>
+		/// <returns>City name</returns>
+		public static string GenerateCity()
+		{
+			return cityNames[rand.Next(0, cityNames.Length)];
+		}
+
         public static Customer NextCustomer(ApplicationUser user = null)
         {
             var customer = new Customer();
@@ -89,6 +103,7 @@ namespace AutoServiceManagementSystem.Helpers
             customer.FirstName = name["first"];
             customer.LastName = name["last"];
             customer.PhoneNumber = GeneratePhoneNumber();
+			customer.City = GenerateCity();
             customer.User = user;
 
             return customer;

@@ -37,6 +37,10 @@ namespace AutoServiceManagementSystem.Models
 		[Display(Name = "Last Name")]
 		public string LastName { get; set; }
 
+		[MaxLength(24, ErrorMessage = "City name must be no longer than 24 symbols.")]
+		[MinLength(3, ErrorMessage = "City name must be no shorter than 3 symbols.")]
+		public string City { get; set; }
+
 		// Mobile phone numbers in BG: 
 		// 08YXXXXXXX or +3598YXXXXXXX
 		// TODO: Custom validation for phone numbers.
@@ -45,6 +49,7 @@ namespace AutoServiceManagementSystem.Models
 		[MaxLength(10, ErrorMessage = "Phone number length is exactly 10 digits.")]
 		[Display(Name = "Phone Number")]
 		public string PhoneNumber { get; set; }
+
 
 		[DataType(DataType.Date)]
 		public DateTime DateAdded { get; set; }
