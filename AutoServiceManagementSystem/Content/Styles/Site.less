@@ -1,5 +1,5 @@
 ﻿/*#region Size Variables */
-@import "Bootstrap/less/variables.less";
+
 
 @body-padding-offset: 5em;
 @info-panel-padding: 1em;
@@ -27,10 +27,11 @@
 @dark-gray: #3C3C3C;
 
 // validation
-@input-validation-error-color: @brand-danger;
-@input-validation-valid-color: @brand-success;
+@brand-success: rgba(63, 181, 24, 1);
+@brand-danger: rgba(254, 0, 57, 1);
+@input-validation-error-color: rgba(254, 0, 57, 1);
+@input-validation-valid-color: rgba(63, 181, 24, 1);
 /*#endregion */
-
 /*#region Mixins */
 
 .clearfix {
@@ -328,7 +329,7 @@ footer {
 
     .leading-image {
         margin-top: @leading-image-margin-top;
-        background: no-repeat url(Images/hero.jpg) center scroll;
+        background: no-repeat url('css/Images/hero.jpg') center scroll;
         min-height: 100vh;
 
         .hero {
@@ -382,10 +383,22 @@ footer {
 
 /* autocomplete */
 .autocomplete-suggestions {
-    text-align: left; cursor: default; border: 1px solid #ccc; border-top: 0; background: #fff; box-shadow: -1px 1px 3px rgba(0,0,0,.1);
-
+    text-align: left;
+    cursor: default;
+    border: 1px solid #ccc;
+    border-top: 0;
+    background: #fff;
+    box-shadow: -1px 1px 3px rgba(0,0,0,.1);
     /* core styles should not be changed */
-    position: absolute; display: none; z-index: 9999; max-height: 254px; overflow: hidden; overflow-y: auto; box-sizing: border-box;
+    position: absolute;
+    display: none;
+    z-index: 9999;
+    max-height: 254px;
+    overflow: hidden;
+    overflow-y: auto;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }
 .autocomplete-suggestion { position: relative; padding: 0 .6em; line-height: 23px; white-space: nowrap; overflow: hidden; font-size: 1.02em; color: #333; }
 .autocomplete-suggestion b { font-weight: normal; color: #1f8dd6; }

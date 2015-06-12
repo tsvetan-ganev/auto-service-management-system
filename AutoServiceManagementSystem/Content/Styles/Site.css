@@ -1,5 +1,4 @@
 ﻿/*#region Size Variables */
-/* bug fix comment */
 /*#endregion */
 /*#region Color Variables */
 /*#endregion */
@@ -84,10 +83,10 @@ textarea {
   }
 }
 .body-content .valid {
-  border-color: #3fb618;
+  border-color: #3fb518;
 }
 .body-content .input-validation-error {
-  border-color: #ff0039;
+  border-color: #fe0039;
 }
 .metro-container {
   background-color: #e6e6e6;
@@ -263,7 +262,7 @@ footer p {
 }
 #landing-wrapper .leading-image {
   margin-top: -3em;
-  background: no-repeat url(Images/hero.jpg) center scroll;
+  background: no-repeat url('css/Images/hero.jpg') center scroll;
   min-height: 100vh;
 }
 #landing-wrapper .leading-image .hero {
@@ -331,6 +330,8 @@ footer p {
   max-height: 254px;
   overflow: hidden;
   overflow-y: auto;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 .autocomplete-suggestion {

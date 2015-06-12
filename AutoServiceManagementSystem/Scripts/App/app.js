@@ -79,7 +79,7 @@ app.subscribeInsertedInputToAutocomplete = function (inputSelector, autocomplete
   })
 }
 
-app.addSparePartForm = function(event, autocompleteSource) {
+app.addSparePartForm = function(event) {
   event.preventDefault();
   $.get('/Jobs/AddSparePart').done(function (html) {
     $('#spare-parts-list').append(html);
