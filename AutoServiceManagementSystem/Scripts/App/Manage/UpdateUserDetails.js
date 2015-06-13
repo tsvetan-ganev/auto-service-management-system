@@ -1,14 +1,14 @@
 ﻿/// <reference path="../../Vendor/jquery-2.1.4.js" />
 
-//$(function () {
-  var displaySuccessMessage = function() {
+$(function () {
+  var displaySuccessMessage = function () {
     var msg = document.getElementById('update-on-success');
-    $(msg).toggleClass('hidden');
+    $(msg).show('slow').hide(4000);
   }
 
   var displayErrorMessage = function () {
     var msg = document.getElementById('update-on-error');
-    $(msg).toggleClass('hidden');
+    $(msg).show('slow').hide(4000);
   }
 
   $(document.getElementById('submit-btn')).click(function (event) {
@@ -20,3 +20,5 @@
       .success(displaySuccessMessage)
       .error(displayErrorMessage)
   });
+
+});

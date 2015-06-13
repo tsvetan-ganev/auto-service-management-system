@@ -48,8 +48,8 @@ namespace AutoServiceManagementSystem
 			bundles.Add(new ScriptBundle("~/js/app/supplier/index").Include(
 					"~/Scripts/App/Supplier/Index.js"));
 
-
 			// Stylesheets
+			// TODO: Fix 404 for images.
 			bundles.Add(new StyleBundle("~/Content/css").Include(
 					  "~/Content/Styles/bootstrap.min.css",
 					  "~/Content/Styles/font-awesome.min.css",
