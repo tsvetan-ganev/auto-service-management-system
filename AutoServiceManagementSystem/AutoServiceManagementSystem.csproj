@@ -258,6 +258,7 @@
     </Content>
     <Content Include="Content\Styles\bootstrap.min.css" />
     <Content Include="Icon.png" />
+    <Content Include="Scripts\App\Manage\UpdateUserDetails.js" />
     <Content Include="Scripts\Vendor\autocomplete.min.js" />
     <Content Include="Scripts\App\Job\SparePartsSuggestions.js" />
     <Content Include="Scripts\App\jquery.validate.hooks.js" />

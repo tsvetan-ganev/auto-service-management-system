@@ -1,21 +1,20 @@
 ﻿@model AutoServiceManagementSystem.Models.UserDetails
+
 @{
-    var ajaxOptions = new AjaxOptions {
-        HttpMethod = "POST",
-        UpdateTargetId = "user-details",
-        InsertionMode = InsertionMode.Replace
-    };
+    Layout = null;
+    //var ajaxOptions = new AjaxOptions {
+    //    HttpMethod = "POST",
+    //    AllowCache = false,
+    //    LoadingElementId = "loading-user-update",
+    //    //OnSuccess = "displaySuccessMessage",
+    //    //OnComplete = "displaySuccessMessage"
+    //};
 }
 
 
-@using(Ajax.BeginForm("EditUserDetails", "Manage",
-    null, ajaxOptions,
-    new { encType = "multipart/form-data", id = "user-details"}))
+@using(Html.BeginForm("_EditUserDetails", "Manage",
+    FormMethod.Post, new { encType = "multipart/form-data", id = "user-details"}))
 {
-    @Html.AntiForgeryToken()
-    
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    
     <div class="form-horizontal">
         <div class="form-group">
             @Html.LabelFor(m => m.FirstName,
@@ -63,9 +62,9 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input id="submit-btn" type="button" value="Save" class="btn btn-default" />
+                <p>@Html.ActionLink("Change your password", "ChangePassword")</p>
             </div>
         </div>
     </div>
-   
 }

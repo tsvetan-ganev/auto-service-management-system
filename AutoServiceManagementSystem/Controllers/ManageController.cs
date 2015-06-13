@@ -57,38 +57,24 @@ namespace AutoServiceManagementSystem.Controllers
 
         //
         // GET: /Manage/Index
-        public async Task<ActionResult> Index(ManageMessageId? message)
+        public async Task<ActionResult> Index()
         {
-            ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
-                : message == ManageMessageId.Error ? "An error has occurred."
-                : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
-                : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
-                : "";
-
             var userId = User.Identity.GetUserId();
 			var user = UserManager.FindById(userId);
-            ViewBag.UserDetails = user.UserDetails;
+
             var model = new AccountDetailsViewModel
             {
                 HasPassword = HasPassword(),
-                PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
-                TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
-                Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+				UserDetails = user.UserDetails
             };
 
             return View(model);
         }
 
         /* not working */
+		/* removed antiforgery token */
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult EditUserDetails(
-            [Bind(Include="FirstName,LastName,City,CompanyName")]
-            UserDetails userDetails)
+        public ActionResult _EditUserDetails(UserDetails userDetails)
         {
             if (ModelState.IsValid)
             {
@@ -99,9 +85,12 @@ namespace AutoServiceManagementSystem.Controllers
                 }
 
                 user.UserDetails = userDetails;
+				UserManager.Update(user);
             }
-            return View(userDetails);
+
+			return View(userDetails);
         }
+
         //
         // POST: /Manage/RemoveLogin
         [HttpPost]
