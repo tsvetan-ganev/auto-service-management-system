@@ -234,6 +234,7 @@
     <Compile Include="ViewModels\Customers\DisplayCustomerViewModel.cs" />
     <Compile Include="ViewModels\Customers\EditCustomerViewModel.cs" />
     <Compile Include="ViewModels\Customers\CreateCustomerViewModel.cs" />
+    <Compile Include="ViewModels\Home\HomeViewModel.cs" />
     <Compile Include="ViewModels\Jobs\CreateJobViewModel.cs" />
     <Compile Include="ViewModels\Jobs\DisplayJobViewModel.cs" />
     <Compile Include="ViewModels\Jobs\DisplaySparePartViewModel.cs" />
@@ -315,9 +316,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
@@ -376,6 +374,7 @@
     <Content Include="Content\Styles\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\Styles\fonts\FontAwesome.otf" />
     <Content Include="Views\Shared\DisplayTemplates\DisplaySparePartViewModel.cshtml" />
+    <Content Include="Views\Home\Home.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

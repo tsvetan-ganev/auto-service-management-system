@@ -74,7 +74,7 @@ namespace AutoServiceManagementSystem.Controllers
         /* not working */
 		/* removed antiforgery token */
         [HttpPost]
-        public async Task<ActionResult> _EditUserDetails(UserDetails userDetails)
+        public ActionResult _EditUserDetails(UserDetails userDetails)
         {
             if (ModelState.IsValid)
             {
@@ -86,9 +86,12 @@ namespace AutoServiceManagementSystem.Controllers
 
                 user.UserDetails = userDetails;
 				UserManager.Update(user);
+				return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
 
-			return View(userDetails);
+			//return View(userDetails);
+			return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
         }
 
         //

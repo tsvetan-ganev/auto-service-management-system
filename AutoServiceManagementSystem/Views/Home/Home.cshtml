@@ -1,0 +1,27 @@
+﻿@model AutoServiceManagementSystem.ViewModels.Home.HomeViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div>Hello!</div>
+
+<ul>
+    @foreach (var customer in Model.RecentCustomers)
+    {
+        <li>@customer.FirstName @customer.LastName</li>
+    }
+</ul>
+
+<ul>
+    @foreach (var task in Model.RecentActiveTasks)
+    {
+        <li>
+            @task.DateStarted
+            <p>
+                @task.Description
+            </p>
+        </li>
+    }
+</ul>

@@ -8,18 +8,28 @@ using AutoServiceManagementSystem.Models;
 using AutoServiceManagementSystem.DAL;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity;
+using AutoServiceManagementSystem.ViewModels.Home;
 
 namespace AutoServiceManagementSystem.Controllers
 {
 	public class HomeController : Controller
 	{
+		private ICustomerRepository customersRepo;
+        private ICarRepository carsRepo;
         private ISupplierRepository suppliersRepo;
+        private IJobRepository jobsRepo;
+		private ISparePartRepository sparePartsRepo;
         private ApplicationUserManager manager;
 
         public HomeController()
         {
             var context = new MyDbContext();
+            this.jobsRepo = new JobRepository(context);
+            this.customersRepo = new CustomerRepository(context);
+            this.carsRepo = new CarRepository(context);
             this.suppliersRepo = new SupplierRepository(context);
+			this.sparePartsRepo = new SparePartRepository(context);
+
             var store = new UserStore<ApplicationUser>(context);
             store.AutoSaveChanges = false;
             this.manager = new ApplicationUserManager(store);
@@ -30,37 +40,27 @@ namespace AutoServiceManagementSystem.Controllers
 			return View("Landing");
 		}
 
-        /* AJAX TEST BEGIN */
-        public ActionResult DailySupplier()
-        {
-            var supplier = GetDailySupplier();
-            return PartialView("_DailySupplier", supplier);
-        }
-
-        private Supplier GetDailySupplier()
-        {
-            var currentUser = manager.FindById(User.Identity.GetUserId());
-            var supplier = suppliersRepo.GetSuppliers()
-                .Where(s => s.User == currentUser)
-                .OrderBy(s => System.Guid.NewGuid())
-                .FirstOrDefault();
-            
-            return supplier;
-        }
-        /* AJAX TEST END */
-
-		public ActionResult About()
+		public ActionResult Home()
 		{
-			ViewBag.Message = "Your application description page.";
+			var currentUser = manager.FindById(User.Identity.GetUserId());
 
-			return View();
-		}
+			var recentCustomers = customersRepo.GetCustomers()
+				.Where(c => c.User == currentUser)
+				.OrderByDescending(c => c.DateAdded)
+				.Take<Customer>(5);
 
-		public ActionResult Contact()
-		{
-			ViewBag.Message = "Your contact page.";
+			var recentActiveJobs = jobsRepo.GetJobs()
+				.Where(j => j.User == currentUser && !j.IsFinished)
+				.OrderByDescending(j => j.DateStarted)
+				.Take<Job>(5);
 
-			return View();
+			var model = new HomeViewModel
+			{
+				RecentCustomers = recentCustomers,
+				RecentActiveTasks = recentActiveJobs
+			};
+
+			return View(model);
 		}
 	}
 }
