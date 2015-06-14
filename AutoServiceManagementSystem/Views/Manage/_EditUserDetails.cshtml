@@ -2,21 +2,14 @@
 
 @{
     Layout = null;
-    //var ajaxOptions = new AjaxOptions {
-    //    HttpMethod = "POST",
-    //    AllowCache = false,
-    //    LoadingElementId = "loading-user-update",
-    //    //OnSuccess = "displaySuccessMessage",
-    //    //OnComplete = "displaySuccessMessage"
-    //};
 }
-
 
 @using(Html.BeginForm("_EditUserDetails", "Manage",
     FormMethod.Post, new { encType = "multipart/form-data", id = "user-details"}))
 {
     <div class="form-horizontal">
-        <div class="form-group">
+
+        <div class="form-group user-first-name">
             @Html.LabelFor(m => m.FirstName,
             htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -27,7 +20,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group user-last-name">
             @Html.LabelFor(m => m.LastName,
             htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -38,7 +31,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group user-company-name">
             @Html.LabelFor(m => m.CompanyName,
             htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -49,7 +42,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group user-city">
             @Html.LabelFor(m => m.City,
             htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -62,8 +55,8 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input id="submit-btn" type="button" value="Save" class="btn btn-default" />
-                <p>@Html.ActionLink("Change your password", "ChangePassword")</p>
+                <input id="submit-btn" type="button" value="Save" class="btn btn-success" />
+                @Html.ActionLink("Change your password", "ChangePassword", null, htmlAttributes: new { @class = "btn btn-default" })
             </div>
         </div>
     </div>

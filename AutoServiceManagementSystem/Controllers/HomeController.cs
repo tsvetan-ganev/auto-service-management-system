@@ -49,7 +49,7 @@ namespace AutoServiceManagementSystem.Controllers
 				.OrderByDescending(c => c.DateAdded)
 				.Take<Customer>(5);
 
-			var recentActiveJobs = jobsRepo.GetJobs()
+			var recentActiveTasks = jobsRepo.GetJobs()
 				.Where(j => j.User == currentUser && !j.IsFinished)
 				.OrderByDescending(j => j.DateStarted)
 				.Take<Job>(5);
@@ -57,7 +57,7 @@ namespace AutoServiceManagementSystem.Controllers
 			var model = new HomeViewModel
 			{
 				RecentCustomers = recentCustomers,
-				RecentActiveTasks = recentActiveJobs
+				RecentActiveTasks = recentActiveTasks
 			};
 
 			return View(model);

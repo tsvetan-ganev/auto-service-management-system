@@ -7,21 +7,37 @@
 
 <div>Hello!</div>
 
-<ul>
-    @foreach (var customer in Model.RecentCustomers)
-    {
-        <li>@customer.FirstName @customer.LastName</li>
-    }
-</ul>
+<div class="col-md-4">
+    <h3 class="list-group-item active">
+        <i class="fa fa-users" style="padding-right: 1em">
+        </i>Recently added customers
+    </h3>
+    <div class="list-group">
+        @foreach (var customer in Model.RecentCustomers)
+        {
+            var customerName = customer.FirstName + " " + customer.LastName;
+            @Html.ActionLink(customerName, "Details", "Customers", new { customerId = customer.CustomerId }, new { @class = "list-group-item lead" })
+        }
+    </div>
+</div>
 
-<ul>
-    @foreach (var task in Model.RecentActiveTasks)
-    {
-        <li>
-            @task.DateStarted
-            <p>
-                @task.Description
-            </p>
-        </li>
-    }
-</ul>
+<div class="col-md-6">
+    <h3 class="list-group-item active">
+        <i class="fa fa-tasks" style="padding-right: 1em">
+        </i>Recent active tasks
+    </h3>
+    <div class="list-group">
+        @foreach (var task in Model.RecentActiveTasks)
+        {
+            @Html.ActionLink(@task.Description, "Details", "Jobs",
+                new
+                {
+                    customerId = task.Customer.CustomerId,
+                    carId = task.Car.CarId,
+                    jobId = task.JobId
+                },
+                new { @class = "list-group-item" })
+        }
+    </div>
+</div>
+
