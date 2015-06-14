@@ -1,0 +1,48 @@
+﻿@{
+    Layout = null;
+}
+
+@model AutoServiceManagementSystem.ViewModels.Customers.DisplayCustomerViewModel
+
+<div class="customer-container col-xs-5 col-lg-3">
+    <div class="customer-info">
+        <p class="customer-name">
+            <i class="fa fa-user"></i>
+            @Html.DisplayFor(c => Model.FirstName)
+            @Html.DisplayFor(c => Model.LastName)
+        </p>
+        <p class="customer-phone-number">
+            <i class="fa fa-phone"></i>
+            @Html.DisplayFor(c => Model.PhoneNumber)
+        </p>
+        <p class="customer-city">
+            <i class="fa fa-home"></i>
+            @Html.DisplayFor(c => Model.City)
+        </p>
+        <p class="customer-cars">
+            <i class="fa fa-car"></i>
+            @Html.DisplayFor(c => Model.CarsCount)
+        </p>
+        <p class="repairs-count">
+            <i class="fa fa-wrench">
+            </i>
+            @Html.DisplayFor(c => Model.PastRepairsCount)
+            (@Html.DisplayFor(c => Model.ActiveRepairsCount) Active)
+        </p>
+        <p class="money-owed">
+            <i class="fa fa-money"></i>
+            @Html.DisplayFor(c => Model.MoneyOwed)
+        </p>
+        <p class="date-added">
+            <i class="fa fa-calendar"></i>
+            @Html.DisplayFor(c => Model.DateAdded)
+        </p>
+    </div>
+
+    <div class="btn-group-sm">
+        @Html.ActionLink("Cars", "Cars", "Cars",
+                        new { id = Model.Id }, new { @class = "btn btn-success col-xs-4" })
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary col-xs-4" })
+        @Html.ActionLink("Delete", "Delete", new { id = Model.Id }, new { @class = "btn btn-danger col-xs-4" })
+    </div>
+</div>

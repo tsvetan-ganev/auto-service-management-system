@@ -115,7 +115,29 @@ namespace AutoServiceManagementSystem.Controllers
         public ActionResult Details(int customerId)
         {
 			// TODO: Stats about cars, repairs history, payments
-			throw new NotImplementedException();
+			var user = manager.FindById(User.Identity.GetUserId());
+			var customer = customersRepo.GetCustomerById(customerId);
+
+			if (customer.User != user)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+			}
+
+			var model = new DisplayCustomerViewModel
+			{
+				Id = customer.CustomerId,
+				FirstName = customer.FirstName,
+				LastName = customer.LastName,
+				City = customer.City,
+				PhoneNumber = customer.PhoneNumber,
+				DateAdded = customer.DateAdded,
+				CarsCount = customersRepo.GetCustomerCarsCountById(customer.CustomerId),
+				PastRepairsCount = customersRepo.GetCustomerPastRepairsCount(customer.CustomerId),
+				ActiveRepairsCount = customersRepo.GetCustomerActiveRepairsCount(customer.CustomerId),
+				MoneyOwed = customersRepo.GetCustomerMoneyOwed(customer.CustomerId)
+			};
+
+			return View(model);
         }
 
         // GET: Customers/Create

@@ -4,6 +4,8 @@
 
 $(document).ready(function () {
 
+  app.getTotal();
+
   app.subscribeInputsToAutocomplete('.spare-part-name-input', app.sparePartNamesAutocompleteSource);
 
   // dynamically subscribes all remove item buttons
