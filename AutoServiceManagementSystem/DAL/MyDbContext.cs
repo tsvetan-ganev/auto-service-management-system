@@ -1,4 +1,5 @@
-﻿using AutoServiceManagementSystem.Models;
+﻿using AutoServiceManagementSystem.Migrations;
+using AutoServiceManagementSystem.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,8 @@ namespace AutoServiceManagementSystem.DAL
 
             modelBuilder.Entity<ApplicationUser>()
             .ToTable("AppUsers");
+
+			Database.SetInitializer(new MigrateDatabaseToLatestVersion<MyDbContext, Configuration>());
 		}
 
 		public DbSet<Customer> Customers { get; set; }
