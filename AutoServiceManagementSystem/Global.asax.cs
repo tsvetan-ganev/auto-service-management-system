@@ -16,11 +16,11 @@ namespace AutoServiceManagementSystem
     {
         protected void Application_Start()
 		{
+
+			ViewEngines.Engines.Clear();
+			ViewEngines.Engines.Add(new RazorViewEngine());
+
 			Database.SetInitializer<MyDbContext>(new InitializeIdentity());
-			//Database.SetInitializer<MyDbContext>(
-			//	new DropCreateDatabaseIfModelChanges<MyDbContext>());
-			//Database.SetInitializer<ASMSContext>(
-			//	new DropCreateDatabaseIfModelChanges<ASMSContext>());
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
