@@ -47,17 +47,32 @@ namespace AutoServiceManagementSystem.Controllers
 			var recentCustomers = customersRepo.GetCustomers()
 				.Where(c => c.User == currentUser)
 				.OrderByDescending(c => c.DateAdded)
-				.Take<Customer>(5);
+				.Take<Customer>(5)
+				.ToList();
 
 			var recentActiveTasks = jobsRepo.GetJobs()
 				.Where(j => j.User == currentUser && !j.IsFinished)
 				.OrderByDescending(j => j.DateStarted)
-				.Take<Job>(5);
+				.Take<Job>(5)
+				.ToList();
+
+			var customersOwingMoney = customersRepo.GetCustomers()
+				.Where(c => c.User == currentUser
+					&& customersRepo.GetCustomerMoneyOwed(c.CustomerId) > 0)
+				.Select(c => new DebtorViewModel
+				{
+					CustomerId = c.CustomerId,
+					Name = (c.FirstName + " " + c.LastName).Trim(),
+					MoneyOwed = customersRepo.GetCustomerMoneyOwed(c.CustomerId)
+				})
+				.OrderByDescending(c => c.MoneyOwed)
+				.ToList();
 
 			var model = new HomeViewModel
 			{
 				RecentCustomers = recentCustomers,
-				RecentActiveTasks = recentActiveTasks
+				RecentActiveTasks = recentActiveTasks,
+				CustomersOwingMoney = customersOwingMoney
 			};
 
 			return View(model);

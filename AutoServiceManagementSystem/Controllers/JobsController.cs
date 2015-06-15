@@ -45,6 +45,7 @@ namespace AutoServiceManagementSystem.Controllers
         /// Used to generate the dropdown list used in the Create and Edit views.
         /// </summary>
         /// <returns>SelectList of Suppliers</returns>
+		[ChildActionOnly]
         private IEnumerable<SelectListItem> GetUserSuppliers()
         {
             var suppliers = suppliersRepo.GetSupplierForSelectList(User.Identity.GetUserId())
@@ -339,6 +340,7 @@ namespace AutoServiceManagementSystem.Controllers
                 jobsRepo.Save();
 				return RedirectToAction("Details", new { customerId = customerId, carId = carId, jobId = jobId });
             }
+
             return View(viewModel);
         }
 
@@ -379,7 +381,6 @@ namespace AutoServiceManagementSystem.Controllers
 
 
 		#region Ajax Calls
-
 		[Route("Jobs/AddSparePart")]
         [OutputCache(NoStore = true, Duration = 0, VaryByParam="*")]
         public ActionResult AddSparePart()

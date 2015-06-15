@@ -7,6 +7,11 @@
 <h2>@ViewBag.Title</h2>
 
 <section id="suppliers-list">
+    @if (Model.Count() == 0)
+    {
+        <h3>It seems that you haven't added any suppliers yet.</h3>
+    }
+
     @foreach (var item in Model)
     {
         <div class="supplier-container thumbnail col-sm-2 col-md-4">
@@ -96,6 +101,8 @@
         </div>
     }
 </section>
+
+
 
 <div class="clearfix"></div>
 <div id="btn-add-supplier" class="row text-right">

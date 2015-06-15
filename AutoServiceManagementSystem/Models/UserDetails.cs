@@ -11,12 +11,12 @@ namespace AutoServiceManagementSystem.Models
 	{
 		[Display(Name = "First Name")]
         [Column("FirstName")]
-		[Required]
+		//[Required]
 		public string FirstName { get; set; }
 
 		[Display(Name = "Last Name")]
         [Column("LastName")]
-		[Required]
+		//[Required]
 		public string LastName { get; set; }
 
 		[Display(Name = "Company Name")]

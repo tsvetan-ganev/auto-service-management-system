@@ -234,6 +234,7 @@
     <Compile Include="ViewModels\Customers\DisplayCustomerViewModel.cs" />
     <Compile Include="ViewModels\Customers\EditCustomerViewModel.cs" />
     <Compile Include="ViewModels\Customers\CreateCustomerViewModel.cs" />
+    <Compile Include="ViewModels\Home\DebtorViewModel.cs" />
     <Compile Include="ViewModels\Home\HomeViewModel.cs" />
     <Compile Include="ViewModels\Jobs\CreateJobViewModel.cs" />
     <Compile Include="ViewModels\Jobs\DisplayJobViewModel.cs" />

@@ -11,5 +11,7 @@ namespace AutoServiceManagementSystem.ViewModels.Home
 		public IEnumerable<Customer> RecentCustomers { get; set; }
 
 		public IEnumerable<Job> RecentActiveTasks { get; set; }
+
+		public IEnumerable<DebtorViewModel> CustomersOwingMoney { get; set; }
 	}
 }

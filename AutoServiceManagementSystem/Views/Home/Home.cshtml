@@ -8,16 +8,48 @@
 <h1>Your home page.</h1>
 
 <div class="col-md-4">
-    <h4 class="list-group-item active">
-        <i class="fa fa-users" style="padding-right: 1em">
-        </i>Recently added customers
-    </h4>
-    <div class="list-group">
-        @foreach (var customer in Model.RecentCustomers)
-        {
-            var customerName = customer.FirstName + " " + customer.LastName;
-            @Html.ActionLink(customerName, "Details", "Customers", new { customerId = customer.CustomerId }, new { @class = "list-group-item" })
-        }
+    <div class="recent-customers-list">
+        <h4 class="list-group-item active">
+            <i class="fa fa-users" style="padding-right: 1em">
+            </i>Recently added customers
+        </h4>
+        <div class="list-group">
+            @if (Model.RecentCustomers.Count() == 0)
+            {
+                <div class="list-group-item">
+                    At the moment there are no customers added. Why don't you
+                    <a href="@Url.Action("Create", "Customers")">add one right now?</a>
+                </div>
+            }
+
+            @foreach (var customer in Model.RecentCustomers)
+            {
+                var customerName = customer.FirstName + " " + customer.LastName;
+                @Html.ActionLink(customerName, "Details", "Customers", new { customerId = customer.CustomerId }, new { @class = "list-group-item" })
+            }
+        </div>
+    </div>
+
+    <div class="customers-owe-money">
+        <h4 class="list-group-item active">
+            <i class="fa fa-money" style="padding-right: 1em">
+            </i>Customers who owe you money
+        </h4>
+        <div class="list-group success">
+            @if (Model.CustomersOwingMoney.Count() == 0)
+            {
+                <div class="list-group-item">
+                    Congratulations! Nobody owes you any money.
+                </div>
+            }
+            @foreach (var customer in Model.CustomersOwingMoney)
+            {
+                <div class="list-group-item">
+                    @Html.ActionLink(customer.Name, "Details", "Customers", new { customerId = customer.CustomerId })
+                    @Html.DisplayFor(c => customer.MoneyOwed)
+                </div>
+            }
+        </div>
     </div>
 </div>
 
@@ -27,9 +59,15 @@
         </i>Recent active tasks
     </h4>
     <div class="list-group">
+        @if (Model.RecentActiveTasks.Count() == 0)
+        {
+            <div class="list-group-item">
+                Currently there are no active tasks.
+            </div>
+        }
         @foreach (var task in Model.RecentActiveTasks)
         {
-            @Html.ActionLink(@task.Description, "Details", "Jobs",
+            @Html.ActionLink(@task.Description ?? "No description", "Details", "Jobs",
                 new
                 {
                     customerId = task.Customer.CustomerId,

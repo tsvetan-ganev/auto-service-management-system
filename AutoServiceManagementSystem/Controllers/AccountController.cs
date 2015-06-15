@@ -160,12 +160,12 @@ namespace AutoServiceManagementSystem.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email};
-				var result = await UserManager.CreateAsync(user, model.Password);
-
+				//var result = await UserManager.CreateAsync(user, model.Password);
+				var result = UserManager.Create(user, model.Password);
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-					//var currentUser = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+					var currentUser = await UserManager.FindByIdAsync(User.Identity.GetUserId());
 
 					//if (currentUser == null)
 					//{
