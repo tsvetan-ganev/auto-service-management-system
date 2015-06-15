@@ -31,8 +31,8 @@ namespace AutoServiceManagementSystem.DAL
             modelBuilder.Entity<ApplicationUser>()
             .ToTable("AppUsers");
 
-			// Database.SetInitializer(new MigrateDatabaseToLatestVersion<MyDbContext, Configuration>());
-			Database.SetInitializer(new DropCreateDatabaseAlways<MyDbContext>());
+			Database.SetInitializer(new MigrateDatabaseToLatestVersion<MyDbContext, Configuration>());
+			//Database.SetInitializer(new DropCreateDatabaseAlways<MyDbContext>());
 		}
 
 		public DbSet<Customer> Customers { get; set; }
