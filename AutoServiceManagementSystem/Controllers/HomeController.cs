@@ -40,6 +40,7 @@ namespace AutoServiceManagementSystem.Controllers
 			return View("Landing");
 		}
 
+		[Authorize()]
 		public ActionResult Home()
 		{
 			var currentUser = manager.FindById(User.Identity.GetUserId());

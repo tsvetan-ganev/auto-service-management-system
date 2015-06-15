@@ -11,7 +11,7 @@ namespace AutoServiceManagementSystem.DAL
 	public class MyDbContext : IdentityDbContext<ApplicationUser>
 	{
 		public MyDbContext()
-			: base("ASMSApp")
+			: base()
 		{
 		}
 
