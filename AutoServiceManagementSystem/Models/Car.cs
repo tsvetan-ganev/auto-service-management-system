@@ -22,6 +22,7 @@ namespace AutoServiceManagementSystem.Models
         public int CarId { get; set; }
 
         [Required()]
+		[MaxLength(32)]
         public string Manufacturer { get; set; }
 
         [MaxLength(20)]
@@ -42,6 +43,7 @@ namespace AutoServiceManagementSystem.Models
 
         // TODO: improve on live error display
         [Vin]
+		[MaxLength(17)]
         public string VIN
         {
             get { return vin; }
@@ -53,6 +55,7 @@ namespace AutoServiceManagementSystem.Models
 
         [DisallowSpecialCharacters(allowDigits: true)]
         [Display(Name = "Engine Code")]
+		[MaxLength(12)]
         public string EngineCode { get; set; }
 
         [Range(1950, 2021)]

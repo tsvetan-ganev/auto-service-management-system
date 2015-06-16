@@ -12,9 +12,11 @@ namespace AutoServiceManagementSystem.Models
         public int SparePartId { get; set; }
 
 		[Required]
+		[MaxLength(100)]
         public string Name { get; set; }
 
 		[DisallowSpecialCharacters(allowDigits: true)]
+		[MaxLength(100)]
         public string Code { get; set; }
 
         public Supplier Supplier { get; set; }

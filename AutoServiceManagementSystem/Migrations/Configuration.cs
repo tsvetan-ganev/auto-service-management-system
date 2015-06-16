@@ -29,12 +29,12 @@ namespace AutoServiceManagementSystem.Migrations
         protected override void Seed(MyDbContext context)
         {
             //  This method will be called after migrating to the latest version.
-            ClearDatabase<MyDbContext>();
+            //ClearDatabase<MyDbContext>();
             context = new MyDbContext();
 
             #region Seeding ApplicationUsers
             bool exists = context.Users
-                .Any(u => u.UserName == "test1@test.com");
+                .Any(u => u.UserName == "test@test.com");
 
             if (!exists)
             {
@@ -42,14 +42,15 @@ namespace AutoServiceManagementSystem.Migrations
                 var manager = new UserManager<ApplicationUser>(store);
                 var user = new ApplicationUser
                 {
-                    UserName = "test1@test.com",
-                    Email = "test1@test.com",
+					UserName = "test@test.com",
+					Email = "test@test.com",
                     PhoneNumber = "088888888",
                     UserDetails = new UserDetails
                     {
                         FirstName = "Ivan",
                         LastName = "Petrov",
-                        CompanyName = "Auto Repair"
+                        CompanyName = "Auto Repair",
+						City = "Ruse"
                     }
                 };
 
@@ -57,7 +58,7 @@ namespace AutoServiceManagementSystem.Migrations
             #endregion
 
                 #region Seeding customers and their cars
-                var currentUser = manager.FindByEmail("test1@test.com");
+				var currentUser = manager.FindByEmail("test@test.com");
                 var customersList = new List<Customer>();
                 var cars = new List<Car>();
 

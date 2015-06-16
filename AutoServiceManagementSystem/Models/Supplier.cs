@@ -23,6 +23,7 @@ namespace AutoServiceManagementSystem.Models
 		public decimal DiscountPercentage { get; set; }
 
         [Display(Name = "Skype")]
+		[StringLength(120, MinimumLength = 6)]
         public string SkypeName { get; set; }
 
         [DataType(DataType.EmailAddress)]

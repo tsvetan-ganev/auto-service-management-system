@@ -21,10 +21,12 @@ namespace AutoServiceManagementSystem.Models
 
 		[Display(Name = "Company Name")]
         [Column("CompanyName")]
+		[StringLength(120, MinimumLength=3)]
 		public string CompanyName { get; set; }
 
 		[Display(Name = "City")]
         [Column("City")]
+		[StringLength(120, MinimumLength = 3)]
 		public string City { get; set; }
 	}
 }

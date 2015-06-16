@@ -16,9 +16,11 @@ namespace AutoServiceManagementSystem.ViewModels.Jobs
 		}
 
 		[Required]
+		[MaxLength(100)]
         public string Name { get; set; }
 
         [DisallowSpecialCharacters(allowDigits: true)]
+		[MaxLength(100)]
         public string Code { get; set; }
 
 		[Required]

@@ -13,6 +13,7 @@ namespace AutoServiceManagementSystem.ViewModels.Cars
         public int CarId { get; set; }
 
         [Required()]
+		[MaxLength(32)]
         public string Manufacturer { get; set; }
 
         [MaxLength(20)]

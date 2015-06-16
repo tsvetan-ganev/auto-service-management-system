@@ -22,6 +22,7 @@ namespace AutoServiceManagementSystem.Models
         public int Mileage { get; set; }
 
 		[DataType(DataType.MultilineText)]
+		[MaxLength(240)]
 		public string Description { get; set; }
 
 		[DataType(DataType.Date)]
