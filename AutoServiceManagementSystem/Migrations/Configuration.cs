@@ -22,8 +22,8 @@ namespace AutoServiceManagementSystem.Migrations
         {
             AutomaticMigrationsEnabled = true;
             AutomaticMigrationDataLossAllowed = true;
-            var migrator = new DbMigrator(this);
-            pendingMigrations = migrator.GetPendingMigrations().Any();
+            //var migrator = new DbMigrator(this);
+            //pendingMigrations = migrator.GetPendingMigrations().Any();
         }
 
         protected override void Seed(MyDbContext context)
