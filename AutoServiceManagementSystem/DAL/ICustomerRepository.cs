@@ -8,6 +8,7 @@ namespace AutoServiceManagementSystem.DAL
 	public interface ICustomerRepository : IDisposable
 	{
 		IEnumerable<Customer> GetCustomers();
+		IQueryable<Customer> Query(string userId);
 		Customer GetCustomerById(int? customerId);
 		int GetCustomerCarsCountById(int customerId);
 		int GetCustomerPastRepairsCount(int customerId);

@@ -25,7 +25,14 @@ namespace AutoServiceManagementSystem.DAL
 
 		public Customer GetCustomerById(int? customerId)
 		{
-			return context.Customers.Find(customerId);
+			this.context.Configuration.LazyLoadingEnabled = true;
+			return context.Customers
+				.Find(customerId);
+		}
+
+		public IQueryable<Customer> Query(string userId)
+		{
+			return this.context.Customers.Include("User").Where(c => c.User.Id == userId);
 		}
 
 		public int GetCustomerCarsCountById(int customerId)
@@ -54,10 +61,10 @@ namespace AutoServiceManagementSystem.DAL
 			if (unpaidRepairs.Count() > 0)
 			{
 				moneyOwed = (from repair in unpaidRepairs
-							  select repair.SpareParts.Sum(sp => sp.Price * sp.Quantity)).Sum();
+							 select repair.SpareParts.Sum(sp => sp.Price * sp.Quantity)).Sum();
 			}
 			return moneyOwed;
-		}	
+		}
 
 		public void InsertCustomer(Customer customer)
 		{
@@ -98,6 +105,5 @@ namespace AutoServiceManagementSystem.DAL
 			Dispose(true);
 			GC.SuppressFinalize(this);
 		}
-
 	}
 }

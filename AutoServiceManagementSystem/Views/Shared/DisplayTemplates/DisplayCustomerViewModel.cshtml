@@ -23,15 +23,16 @@
             <i class="fa fa-car"></i>
             @Html.DisplayFor(c => Model.CarsCount)
         </p>
-        <p class="repairs-count">
-            <i class="fa fa-wrench">
-            </i>
-            @Html.DisplayFor(c => Model.PastRepairsCount)
-            (@Html.DisplayFor(c => Model.ActiveRepairsCount) Active)
-        </p>
         <p class="money-owed">
             <i class="fa fa-money"></i>
-            @Html.DisplayFor(c => Model.MoneyOwed)
+            @if (Model.MoneyOwed != null)
+            {
+                @Html.DisplayFor(c => Model.MoneyOwed);
+            }
+            else
+            {
+                <span>Everything is paid.</span>
+            }
         </p>
         <p class="date-added">
             <i class="fa fa-calendar"></i>

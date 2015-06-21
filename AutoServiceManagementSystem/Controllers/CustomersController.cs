@@ -12,6 +12,8 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity;
 using AutoServiceManagementSystem.ViewModels.Customers;
 using PagedList;
+using System.Threading.Tasks;
+using System.Linq.Expressions;
 
 namespace AutoServiceManagementSystem.Controllers
 {
@@ -30,6 +32,7 @@ namespace AutoServiceManagementSystem.Controllers
         public CustomersController()
         {
             var context = new MyDbContext();
+			context.Configuration.LazyLoadingEnabled = false;
             this.customersRepo = new CustomerRepository(context);
             this.carsRepo = new CarRepository(context);
             this.jobsRepo = new JobRepository(context);
@@ -40,30 +43,33 @@ namespace AutoServiceManagementSystem.Controllers
             this.manager = new ApplicationUserManager(store);
         }
 
-        // GET: Customers
-        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
-        {
-            var currentUser = manager.FindById(User.Identity.GetUserId());
-            var customers = customersRepo.GetCustomers()
-                .Where(c => c.User == currentUser);
+		// GET: Customers/
+		public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
+		{
+			var query = this.customersRepo.Query(User.Identity.GetUserId());
+			Expression<Func<Customer, DateTime>> sortByDateAdded = c => c.DateAdded; // default sort
+			Expression<Func<Customer, string>> sortByFirstName = c => c.FirstName; // first name sort
+			Expression<Func<Customer, string>> sortByLastName = c => c.LastName; // last name sort
+			Expression<Func<Customer, string, bool>> searchByName =
+				(c, s) => c.FirstName.ToLower().Contains(s.ToLower()) ||
+							c.LastName.ToLower().Contains(s.ToLower()); // search by name
+
+			int pageNumber = (page ?? 1);
+			const int pageSize = 12;
 
 			ViewBag.CurrentSort = sortOrder;
 			ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "firstname_asc" : "";
 
 			if (searchString != null)
-			{
 				page = 1;
-			}
 			else
-			{
 				searchString = currentFilter;
-			}
 
 			ViewBag.CurrentFilter = searchString;
 
 			if (!String.IsNullOrEmpty(searchString))
 			{
-				customers = customers
+				query = query
 					.Where(c => c.FirstName.ToLower().Contains(searchString.ToLower()) ||
 					c.LastName.ToLower().Contains(searchString.ToLower()));
 			}
@@ -71,45 +77,44 @@ namespace AutoServiceManagementSystem.Controllers
 			switch (sortOrder)
 			{
 				case "firstname_desc":
-					customers = customers.OrderByDescending(c => c.FirstName);
+					query = query.OrderByDescending(sortByFirstName);
 					break;
 				case "firstname_asc":
-					customers = customers.OrderBy(c => c.FirstName);
+					query = query.OrderBy(sortByFirstName);
 					break;
 				case "lastname_desc":
-					customers = customers.OrderByDescending(c => c.LastName);
+					query = query.OrderByDescending(sortByLastName);
 					break;
 				case "lastname_asc":
-					customers = customers.OrderBy(c => c.LastName);
+					query = query.OrderBy(sortByLastName);
 					break;
 				default:
-					customers = customers.OrderByDescending(c => c.DateAdded);
+					query = query.OrderByDescending(sortByDateAdded);
 					break;
 			}
 
-			int pageNumber = (page ?? 1);
-			int pageSize = 12;
+			var model = query
+				.Include(c => c.Cars)
+				.Select(c => new DisplayCustomerViewModel
+				{
+					Id = c.CustomerId,
+					FirstName = c.FirstName,
+					LastName = c.LastName,
+					PhoneNumber = c.PhoneNumber,
+					City = c.City,
+					DateAdded = c.DateAdded,
+					CarsCount = c.Cars.Count,
+					MoneyOwed =
+							(from car in c.Cars
+							 from job in car.Jobs
+							 where job.IsFinished && !job.IsPaid
+							 select job.SpareParts.Sum(x => x.Quantity * x.Price)).Sum<decimal>(x => x)
+				})
+				.ToPagedList<DisplayCustomerViewModel>(pageNumber, pageSize);
 
-			// populating the viewmodel
-			var viewModel = new List<DisplayCustomerViewModel>();
-			foreach (var customer in customers)
-			{
-				viewModel.Add(new DisplayCustomerViewModel() {
-					Id = customer.CustomerId,
-					FirstName = customer.FirstName,
-					LastName = customer.LastName,
-					PhoneNumber = customer.PhoneNumber,
-					City = customer.City,
-					DateAdded = customer.DateAdded,
-					CarsCount = customersRepo.GetCustomerCarsCountById(customer.CustomerId),
-					PastRepairsCount = customersRepo.GetCustomerPastRepairsCount(customer.CustomerId),
-					ActiveRepairsCount = customersRepo.GetCustomerActiveRepairsCount(customer.CustomerId),
-					MoneyOwed = customersRepo.GetCustomerMoneyOwed(customer.CustomerId)
-				});
-			}
-
-            return View("Customers", viewModel.ToPagedList(pageNumber, pageSize));
-        }
+			return View("Customers", model);
+		}
+        
 
         // GET: Customers/Details/5
         public ActionResult Details(int customerId)
@@ -131,10 +136,8 @@ namespace AutoServiceManagementSystem.Controllers
 				City = customer.City,
 				PhoneNumber = customer.PhoneNumber,
 				DateAdded = customer.DateAdded,
-				CarsCount = customersRepo.GetCustomerCarsCountById(customer.CustomerId),
-				PastRepairsCount = customersRepo.GetCustomerPastRepairsCount(customer.CustomerId),
-				ActiveRepairsCount = customersRepo.GetCustomerActiveRepairsCount(customer.CustomerId),
-				MoneyOwed = customersRepo.GetCustomerMoneyOwed(customer.CustomerId)
+				CarsCount = this.customersRepo.GetCustomerCarsCountById(customerId),
+				MoneyOwed = this.customersRepo.GetCustomerMoneyOwed(customerId)
 			};
 
 			return View(model);
@@ -271,6 +274,9 @@ namespace AutoServiceManagementSystem.Controllers
             
             return RedirectToAction("Index");
         }
+
+
+
 
         protected override void Dispose(bool disposing)
         {

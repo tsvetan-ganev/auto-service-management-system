@@ -22,14 +22,12 @@
     {
         <h3>It seems that you haven't added any customers yet.</h3>
     }
-    
+
     @foreach (var customer in Model)
     {
         @Html.DisplayFor(c => customer)
     }
 </section>
-
-
 
 <hr />
 <div class="controls">
@@ -46,7 +44,7 @@
 </div>
 <div class="clearfix"></div>
 <div class="text-center">
-    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }), new PagedListRenderOptions
+    @Html.PagedListPager(Model, page => Url.Action("Index", "Customers", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }), new PagedListRenderOptions
     {
         DisplayLinkToFirstPage = PagedListDisplayMode.Always,
         DisplayLinkToLastPage = PagedListDisplayMode.Always

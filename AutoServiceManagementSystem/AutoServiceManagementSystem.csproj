@@ -383,7 +383,6 @@
     </Content>
     <Content Include="Views\Home\Landing.cshtml" />
     <Content Include="Views\Shared\_LandingLayout.cshtml" />
-    <Content Include="Views\Customers\Customers.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\CreateSparePartViewModel.cshtml" />
     <Content Include="Views\Cars\Cars.cshtml" />
     <Content Include="Content\Styles\fonts\fontawesome-webfont.eot" />
@@ -394,6 +393,7 @@
     <Content Include="Views\Shared\DisplayTemplates\DisplaySparePartViewModel.cshtml" />
     <Content Include="Views\Home\Home.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\DisplayCustomerViewModel.cshtml" />
+    <Content Include="Views\Customers\Customers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

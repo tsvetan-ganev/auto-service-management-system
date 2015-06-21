@@ -28,14 +28,8 @@ namespace AutoServiceManagementSystem.ViewModels.Customers
 		[Display(Name = "Cars")]
 		public int CarsCount { get; set; }
 
-		[Display(Name = "Past Repairs")]
-		public int PastRepairsCount { get; set; }
-
-		[Display(Name = "Active Repairs")]
-		public int ActiveRepairsCount { get; set; }
-
 		[Display(Name = "Money Owed")]
 		[DataType(DataType.Currency)]
-		public decimal MoneyOwed { get; set; }
+		public decimal? MoneyOwed { get; set; }
 	}
 }
